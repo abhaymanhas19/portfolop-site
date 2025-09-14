@@ -1,0 +1,1 @@
+export default function Certifications(){ return (<section className='mx-auto max-w-4xl px-4 py-16'><h1 className='text-3xl font-semibold'>Certifications</h1><ul className='mt-6 list-disc pl-6 space-y-2 text-[#FFFFFF]'><li>Example: Microsoft Azure Fundamentals (AZ-900)</li><li>Example: Kubernetes and Cloud Native Associate (KCNA)</li></ul></section>) }
