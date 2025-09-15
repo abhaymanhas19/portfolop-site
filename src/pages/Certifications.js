@@ -1,0 +1,2 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+export default function Certifications() { return (_jsxs("section", { className: 'mx-auto max-w-4xl px-4 py-16', children: [_jsx("h1", { className: 'text-3xl font-semibold', children: "Certifications" }), _jsxs("ul", { className: 'mt-6 list-disc pl-6 space-y-2 text-[#FFFFFF]', children: [_jsx("li", { children: "Example: Microsoft Azure Fundamentals (AZ-900)" }), _jsx("li", { children: "Example: Kubernetes and Cloud Native Associate (KCNA)" })] })] })); }

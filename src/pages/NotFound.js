@@ -1,0 +1,3 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { Link } from 'react-router-dom';
+export default function NotFound() { return (_jsx("section", { className: 'min-h-[60vh] grid place-items-center px-4', children: _jsxs("div", { className: 'text-center', children: [_jsx("h1", { className: 'text-5xl font-bold', children: "404" }), _jsx("p", { className: 'mt-2 text-[#030753]', children: "The page you\u2019re looking for doesn\u2019t exist." }), _jsx(Link, { to: '/', className: 'mt-6 inline-block bg-gradient-brand text-[#1A1A1A] font-medium px-5 py-2 rounded-xl', children: "Go Home" })] }) })); }
