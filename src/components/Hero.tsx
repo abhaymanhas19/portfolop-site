@@ -28,7 +28,7 @@ export default function Hero(){
           </motion.div>
           <motion.span initial={{opacity:0,y:-6}} animate={ready?{opacity:1,y:0}:{}} transition={{delay:.45}} className="mt-6 inline-flex items-center gap-2 text-xs bg-[#222] border border-border px-3 py-1 rounded-full shadow-soft text-[#FFFFFF] opacity-80"><Sparkles className="h-3.5 w-3.5"/> Open to opportunities</motion.span>
         </div>
-        <div className="relative z-10">{!imgLoaded && <div className="w-full aspect-[8/5] rounded-2xl skeleton"/>}<img src="/demo-hero.svg" alt="Demo of projects" className="w-full aspect-[8/5] rounded-2xl border border-border shadow-[0_30px_80px_rgba(0,0,0,0.45)] object-cover" onLoad={()=>setImgLoaded(true)} style={{display: imgLoaded? 'block':'none'}}/></div>
+        <div className="relative z-10">{!imgLoaded && <div className="w-full aspect-[8/5] rounded-2xl skeleton"/>}<img src="/display.png" alt="Demo of projects" className="w-full aspect-[8/5] rounded-2xl border border-border shadow-[0_30px_80px_rgba(0,0,0,0.45)] object-cover" onLoad={()=>setImgLoaded(true)} style={{display: imgLoaded? 'block':'none'}}/></div>
       </div>
     </div>
   </section>)
