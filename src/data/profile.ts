@@ -22,7 +22,7 @@ export type Certification = {
   year: string
   description: string
   tags?: string[]
-  credentialUrl?: string
+  credentialUrl?: string[]
 }
 
 export type ProfileContent = {
@@ -73,14 +73,25 @@ export const profile: ProfileContent = {
       },
       {
         role: 'Senior Backend Engineer',
-        company: 'Product Labs',
-        period: '2019 — 2022',
+        company: 'Shubpy Solution private limited,Chandigarh',
+        period: '2023 — present',
         summary:
           'Led Python squads modernising legacy systems with event-driven patterns and cloud-native deployments.',
         achievements: [
           'Introduced observability instrumentation that reduced mean time to detect incidents by 45%.',
           'Migrated monolith workloads to Kubernetes with zero downtime releases.',
           'Mentored engineers on async workflows, testing strategy, and AI feature integration.'
+        ]
+      },
+      {
+        role: 'Junior Backend Engineer',
+        company: 'CNT Technologies,Chandigarh',
+        period: '2022— 2023',
+        summary:
+          'Learned and implemented Python standards to build the seamless Websites.',
+        achievements: [
+          'Built real time chat application, Utilized technologies are Python,Django,Websockets and Async Programming.',
+          'Utilized the concepts of Multithreading and Multiprocessing to reduce response latency.',
         ]
       }
     ],
@@ -101,32 +112,45 @@ export const profile: ProfileContent = {
   },
   certifications: [
     {
-      title: 'Microsoft Certified: Azure AI Engineer Associate',
-      issuer: 'Microsoft',
-      year: '2023',
-      description: 'Designing and deploying AI solutions on Azure—covering Cognitive Services, OpenAI, and responsible AI patterns.',
-      tags: ['Azure AI', 'Responsible AI', 'OpenAI']
+      title: 'CrewAI Certified',
+      issuer: 'CrewAI - Leading Multi Agent platform',
+      year: '2025',
+      description: 'Delve into the operational methodologies governing multi-agent AI architectures, specifically elucidating inter-agent invocation protocols contingent upon dynamic task execution prerequisites ',
+      tags: ['AI Agents', 'Streamline workflows'],
+      credentialUrl: ["https://shorturl.at/tKln2"]
     },
     {
-      title: 'TensorFlow Developer Certificate',
-      issuer: 'Google',
+      title: 'Python Certified',
+      issuer: 'HackerRank',
       year: '2022',
-      description: 'Hands-on neural network design, model optimisation, and production deployment best practices.',
-      tags: ['Deep Learning', 'Model Ops']
+      description: 'Studied and Mastered Python Core Concepts, Understands the python Standards.',
+      tags: ['Python', 'Basics of python'],
+      credentialUrl: ["https://shorturl.at/xSlfD"]
+    },
+    {
+      title: 'Web Development Certified',
+      issuer: 'CNT Technologies',
+      year: '2022',
+      description: "Hands-on Web development design, Web Api's optimizations, and production deployment best practices.",
+      tags: ['Python', 'Django',"DRF","Postgres"],
+      credentialUrl:["#"]
     },
     {
       title: 'Kubernetes and Cloud Native Associate (KCNA)',
       issuer: 'Cloud Native Computing Foundation',
-      year: '2021',
+      year: '2024',
       description: 'Core Kubernetes concepts, observability, and security fundamentals for cloud-native delivery.',
-      tags: ['Kubernetes', 'Cloud Native'],
-      credentialUrl: 'https://www.cncf.io/training/certification/kcna/'
+      tags: ['Kubernetes','Docker', 'Cloud Native'],
+      credentialUrl: ['https://www.cncf.io/training/certification/kcna/']
     },
     {
-      title: 'Microsoft Certified: Azure Fundamentals (AZ-900)',
-      issuer: 'Microsoft',
+      title: 'Problem Solving Certifed',
+      issuer: 'HackerRank',
       year: '2020',
-      description: 'Azure architectural foundations, governance, and cost management for scaled deployments.'
+      description: 'Understand the problem, plan the solution using pseudocode or by breaking the problem into smaller parts, write the code, and then test and debug it rigorously',
+      tags: ["Problem Solving","Critical Thinking"],
+      credentialUrl:["https://shorturl.at/9SQfY","https://shorturl.at/2qlXU"]
+
     }
   ]
 }

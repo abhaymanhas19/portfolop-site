@@ -74,15 +74,20 @@ export default function Certifications() {
                 </div>
               )}
 
-              {cert.credentialUrl && (
-                <a
-                  href={cert.credentialUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#ff5a1c] hover:text-[#ff7b4d]"
-                >
-                  <ExternalLink className="h-4 w-4" /> View credential
-                </a>
+              {cert.credentialUrl && cert.credentialUrl.length > 0 && (
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {cert.credentialUrl.map((url, idx) => (
+                    <a
+                      key={url || idx}
+                      href={url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 text-sm font-semibold text-[#ff5a1c] hover:text-[#ff7b4d]"
+                    >
+                      <ExternalLink className="h-4 w-4" /> View credential
+                    </a>
+                  ))}
+                </div>
               )}
             </motion.article>
           ))}

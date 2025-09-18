@@ -5,7 +5,7 @@ import { ExternalLink, Github, Image as ImageIcon } from 'lucide-react'
 import TiltCard from './TiltCard'
 
 export default function Projects() {
-  const previewProjects = projects.slice(0, 3)
+  const previewProjects = projects.slice(0, 2)
   const remaining = projects.length - previewProjects.length
 
   return (
