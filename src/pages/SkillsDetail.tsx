@@ -1,0 +1,117 @@
+import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
+import TiltCard from '../components/TiltCard'
+import { skills } from '../data/skills'
+import { ArrowLeft, ArrowRight, Sparkles, ServerCog, BrainCircuit, Cloud, MessageSquare, Gauge, FlaskConical } from 'lucide-react'
+
+const icons = { ServerCog, BrainCircuit, Cloud, MessageSquare, Gauge, FlaskConical } as const
+
+export default function SkillsDetail() {
+  return (
+    <div className="relative isolate overflow-hidden bg-black text-white">
+      <div className="pointer-events-none absolute inset-0 opacity-60">
+        <div className="absolute -top-16 -right-32 h-72 w-72 rounded-full bg-[#ff5a1c33] blur-[120px]" aria-hidden />
+        <div className="absolute bottom-0 left-1/3 h-80 w-80 rounded-full bg-[#ff5a1c1a] blur-[160px]" aria-hidden />
+      </div>
+
+      <section className="mx-auto max-w-6xl px-4 md:px-6 lg:px-8 py-20 md:py-24">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
+        >
+          <div className="space-y-4 max-w-3xl">
+            <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-white/60">
+              <Sparkles className="h-3.5 w-3.5 text-[#ff5a1c]" /> Core Expertise
+            </span>
+            <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
+              Technical skills that ship reliable, intelligent products.
+            </h1>
+            <p className="text-base md:text-lg text-white/70">
+              From Python backends to production RAG pipelines, these are the capabilities I use to deliver resilient, data-driven platforms.
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-3 md:items-end">
+            <Link
+              to="/"
+              className="inline-flex items-center justify-center rounded-full border border-white/30 px-5 py-2.5 text-sm font-semibold text-white hover:border-white/60 hover:bg-white/10 transition"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" /> Back to home
+            </Link>
+            <Link
+              to="/#contact"
+              className="inline-flex items-center justify-center rounded-full bg-[#FF6B35] px-5 py-2.5 text-sm font-semibold text-black shadow-[0_10px_30px_rgba(255,90,28,0.45)] hover:shadow-[0_16px_36px_rgba(255,90,28,0.55)] transition"
+            >
+              Let’s build together <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </div>
+        </motion.div>
+
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          {skills.map((group, index) => {
+            const Icon = (icons as any)[group.icon] || ServerCog
+            return (
+              <motion.div
+                key={group.domain}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.05 + 0.2, duration: 0.5 }}
+              >
+                <TiltCard className="rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 via-black/60 to-black/80 p-6 backdrop-blur">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <span className="grid h-11 w-11 place-items-center rounded-xl bg-black/50 border border-white/10">
+                        <Icon className="h-5 w-5 text-[#ff5a1c]" />
+                      </span>
+                      <div>
+                        <h3 className="text-lg font-semibold text-white">{group.domain}</h3>
+                        {group.description && (
+                          <p className="mt-1 text-sm text-white/60 leading-relaxed">
+                            {group.description}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                    <span className="hidden text-xs font-medium uppercase tracking-widest text-white/50 sm:block">
+                      {String(group.skills.length).padStart(2, '0')} skills
+                    </span>
+                  </div>
+
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {group.skills.map(skill => (
+                      <span
+                        key={skill}
+                        className="rounded-full border border-[#ff5a1c40] bg-[#1c1c1f] px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-white/80 shadow-[0_0_0_1px_rgba(255,90,28,0.25)]"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </TiltCard>
+              </motion.div>
+            )
+          })}
+        </div>
+
+        <div className="mt-16 rounded-3xl border border-white/10 bg-gradient-to-r from-black/70 via-[#1c1c1f] to-black/70 p-8 md:p-10">
+          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+            <div className="max-w-3xl space-y-3">
+              <h2 className="text-2xl font-semibold text-white">Need a hand with your next project?</h2>
+              <p className="text-sm md:text-base text-white/70">
+                I love partnering with teams to architect reliable AI-powered products. Share the challenge on your mind and we can map the solution together.
+              </p>
+            </div>
+            <Link
+              to="/#contact"
+              className="inline-flex items-center justify-center rounded-full bg-[#FF6B35] px-6 py-3 text-base font-semibold text-black shadow-[0_12px_36px_rgba(255,90,28,0.5)] hover:shadow-[0_18px_44px_rgba(255,90,28,0.6)] transition"
+            >
+              Start the conversation
+            </Link>
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}

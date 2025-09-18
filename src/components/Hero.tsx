@@ -13,22 +13,26 @@ export default function HeroSection() {
     // Exact-fit height: viewport minus ~64px sticky navbar (adjust if your navbar is taller/shorter)
     <section className="relative bg-black overflow-hidden min-h-[calc(100vh-64px)]">
       {/* RIGHT background photo */}
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-[52%] sm:w-1/2 lg:w-[56%]">
-        <div className="h-full w-full rounded-l-3xl lg:rounded-l-[36px] overflow-hidden ring-1 ring-white/10 shadow-[0_40px_120px_rgba(0,0,0,0.45)]">
-          <img src="/display.png" alt="Portrait / showcase" className="h-full w-full object-cover object-center" />
+      <div className="pointer-events-none hidden md:block absolute inset-y-0 right-0 w-[52%] md:w-1/2 lg:w-[56%]">
+        <div className="h-full w-full rounded-l-3xl lg:rounded-l-[36px] overflow-hidden ring-1 ring-white/10 shadow-[0_0_45px_#ff5a1c99,_0_40px_120px_rgba(0,0,0,0.45)]">
+          <img
+            src="/display.png"
+            alt="Portrait / showcase"
+            className="h-full w-full object-cover object-center drop-shadow-[0_0_32px_#ff5a1c99]"
+          />
         </div>
       </div>
 
       {/* LEFT overlay for readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-transparent" aria-hidden />
-      <div className="absolute inset-x-0 top-0 h-14 bg-gradient-to-b from-black/80 to-transparent" aria-hidden />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/20 to-transparent" aria-hidden />
+      <div className="absolute inset-x-0 top-0 h-14 bg-gradient-to-b from-black/10 to-transparent" aria-hidden />
 
       {/* Content aligned with Navbar container; vertically centered */}
       <div className="relative">
         <div className="mx-auto max-w-6xl px-4 md:px-6 lg:px-8 min-h-[calc(100vh-64px)] flex items-center">
           <div className="grid md:grid-cols-12 items-center gap-10 w-full">
             {/* LEFT column: text */}
-            <div className="relative z-10 md:col-span-7">
+            <div className="relative z-10 md:col-span-6 md:pr-10 lg:pr-16">
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={ready ? { opacity: 1, y: 0 } : {}}
@@ -63,7 +67,7 @@ export default function HeroSection() {
                 className="mt-8 flex flex-col sm:flex-row items-center gap-3"
               >
                 <Link
-                  to="/#projects"
+                  to="/projects"
                   className="inline-flex items-center justify-center px-6 py-3 rounded-full text-base sm:text-lg font-semibold bg-[#FF6B35] text-white shadow-lg shadow-black/40 hover:shadow-2xl hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black transition-all"
                 >
                   View Projects <ArrowRight className="ml-2 h-4 w-4" />
@@ -83,12 +87,24 @@ export default function HeroSection() {
                 transition={{ delay: 0.45 }}
                 className="mt-6 inline-flex items-center gap-2 text-xs bg-[#222] border border-white/10 px-3 py-1 rounded-full shadow-sm text-white/80"
               >
-                <Sparkles className="h-3.5 w-3.5" /> Open to opportunities
+              <Sparkles className="h-3.5 w-3.5" /> Open to opportunities
               </motion.span>
+
+              {/* Mobile image presentation */}
+              <div className="mt-12 md:hidden">
+                <div className="relative mx-auto max-w-xl overflow-hidden rounded-3xl border border-white/5 shadow-[0_0_45px_#ff5a1c99,_0_30px_90px_rgba(0,0,0,0.35)]">
+                  <img
+                    src="/display.png"
+                    alt="Portrait / showcase"
+                    className="h-full w-full object-cover object-center"
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" aria-hidden />
+                </div>
+              </div>
             </div>
 
             {/* RIGHT spacer column */}
-            <div className="md:col-span-5" />
+            <div className="hidden md:block md:col-span-5" aria-hidden />
           </div>
         </div>
       </div>

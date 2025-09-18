@@ -5,6 +5,8 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Resume from './pages/Resume'
 import Certifications from './pages/Certifications'
+import SkillsDetail from './pages/SkillsDetail'
+import ProjectsDetail from './pages/ProjectsDetail'
 import NotFound from './pages/NotFound'
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -32,7 +34,17 @@ export default function App() {
         initial={{opacity:1}} exit={{opacity:0}} transition={{duration:.35}}>
         <motion.div initial={{scale:.9,opacity:0}} animate={{scale:1,opacity:1}} className="text-2xl font-bold text-gradient">Loading…</motion.div>
       </motion.div>)}</AnimatePresence>
-      <main className="flex-1"><Routes><Route path="/" element={<Home/>}/><Route path="/about" element={<About/>}/><Route path="/resume" element={<Resume/>}/><Route path="/certifications" element={<Certifications/>}/><Route path="*" element={<NotFound/>}/></Routes></main>
+      <main className="flex-1">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/skills" element={<SkillsDetail />} />
+          <Route path="/projects" element={<ProjectsDetail />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/resume" element={<Resume />} />
+          <Route path="/certifications" element={<Certifications />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
       <Footer />
     </div>
   )

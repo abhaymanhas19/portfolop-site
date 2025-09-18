@@ -22,8 +22,8 @@ export default function Footer(){
 
         {/* Nav */}
         <nav className="flex flex-wrap justify-center gap-4 text-sm text-white/80">
-          <Link to="/#skills" className="hover:opacity-100 hover:text-[#ff5a1c] transition">Skills</Link>
-          <Link to="/#projects" className="hover:opacity-100 hover:text-[#ff5a1c] transition">Projects</Link>
+          <Link to="/skills" className="hover:opacity-100 hover:text-[#ff5a1c] transition">Skills</Link>
+          <Link to="/projects" className="hover:opacity-100 hover:text-[#ff5a1c] transition">Projects</Link>
           <Link to="/certifications" className="hover:opacity-100 hover:text-[#ff5a1c] transition">Certifications</Link>
           <Link to="/about" className="hover:opacity-100 hover:text-[#ff5a1c] transition">About</Link>
           <Link to="/resume" className="hover:opacity-100 hover:text-[#ff5a1c] transition">Resume</Link>
