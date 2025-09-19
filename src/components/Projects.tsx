@@ -1,12 +1,21 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { projects } from '../data/projects'
 import { ExternalLink, Github, Image as ImageIcon } from 'lucide-react'
 import TiltCard from './TiltCard'
+import TagListModal from './TagListModal'
 
 export default function Projects() {
   const previewProjects = projects.slice(0, 2)
   const remaining = projects.length - previewProjects.length
+  const [modalData, setModalData] = useState<{ title: string; items: string[] } | null>(null)
+
+  const handleOpenModal = (title: string, items: string[]) => {
+    setModalData({ title, items })
+  }
+
+  const handleCloseModal = () => setModalData(null)
 
   return (
     <section id="projects" className="mx-auto max-w-6xl px-4 py-16">
@@ -84,9 +93,13 @@ export default function Projects() {
                     </span>
                   ))}
                   {p.tags.length > 3 && (
-                    <span className="text-xs px-2 py-1 rounded-full border border-[#ff5a1c33] text-[#ff5a1c]">
+                    <button
+                      type="button"
+                      onClick={() => handleOpenModal(p.title, p.tags)}
+                      className="text-xs px-2 py-1 rounded-full border border-[#ff5a1c33] text-[#ff5a1c] hover:border-[#ff5a1c66] hover:bg-[#ff5a1c0d] transition"
+                    >
                       +{p.tags.length - 3} more
-                    </span>
+                    </button>
                   )}
                 </div>
                 <div className="mt-4 flex gap-3 text-sm">
@@ -133,6 +146,13 @@ export default function Projects() {
           +{remaining} additional projects in the library
         </p>
       )}
+
+      <TagListModal
+        isOpen={!!modalData}
+        title={modalData?.title ?? ''}
+        items={modalData?.items ?? []}
+        onClose={handleCloseModal}
+      />
     </section>
   )
 }

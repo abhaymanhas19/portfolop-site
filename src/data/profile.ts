@@ -133,7 +133,7 @@ export const profile: ProfileContent = {
       year: '2022',
       description: "Hands-on Web development design, Web Api's optimizations, and production deployment best practices.",
       tags: ['Python', 'Django',"DRF","Postgres"],
-      credentialUrl:["#"]
+      credentialUrl:["https://rb.gy/n5e7fn"]
     },
     {
       title: 'Kubernetes and Cloud Native Associate (KCNA)',

@@ -1,13 +1,23 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { skills } from '../data/skills'
 import TiltCard from './TiltCard'
 import { ServerCog, BrainCircuit, Cloud, MessageSquare, Gauge, FlaskConical } from 'lucide-react'
+import TagListModal from './TagListModal'
 
 const icons = { ServerCog, BrainCircuit, Cloud, MessageSquare, Gauge, FlaskConical } as const
 
 export default function Skills() {
   const previewGroups = skills.slice(0, 4)
+  const [modalData, setModalData] = useState<{ title: string; items: string[] } | null>(null)
+
+  const handleOpenModal = (title: string, items: string[]) => {
+    setModalData({ title, items })
+  }
+
+  const handleCloseModal = () => setModalData(null)
+
   return (
     <section id="skills" className="mx-auto max-w-6xl px-4 py-16">
       <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
@@ -76,9 +86,13 @@ export default function Skills() {
                     </span>
                   ))}
                   {remaining > 0 && (
-                    <span className="px-3 py-1.5 rounded-full bg-transparent text-[#ff5a1c] text-sm border border-[#ff5a1c]/40">
+                    <button
+                      type="button"
+                      onClick={() => handleOpenModal(group.domain, group.skills)}
+                      className="px-3 py-1.5 rounded-full bg-transparent text-[#ff5a1c] text-sm border border-[#ff5a1c]/40 hover:border-[#ff5a1c]/70 hover:bg-[#ff5a1c]/10 transition"
+                    >
                       +{remaining} more
-                    </span>
+                    </button>
                   )}
                 </div>
               </TiltCard>
@@ -107,6 +121,13 @@ export default function Skills() {
           View the complete list
         </Link>
       </motion.div>
+
+      <TagListModal
+        isOpen={!!modalData}
+        title={modalData?.title ?? ''}
+        items={modalData?.items ?? []}
+        onClose={handleCloseModal}
+      />
     </section>
   )
 }
