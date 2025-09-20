@@ -1,113 +1,130 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { site } from '../data/site'
 import { Link } from 'react-router-dom'
 import Typing from './Typing'
 import { ArrowRight, Download, Sparkles } from 'lucide-react'
+import SplitText from './SplitText'
+import LetterGlitch from './LetterGlitch'
 
 export default function HeroSection() {
   const [ready, setReady] = useState(false)
-  useEffect(() => { const t = setTimeout(() => setReady(true), 150); return () => clearTimeout(t) }, [])
+
+  useEffect(() => {
+    const t = setTimeout(() => setReady(true), 150)
+    return () => clearTimeout(t)
+  }, [])
 
   return (
-    // Exact-fit height: viewport minus ~64px sticky navbar (adjust if your navbar is taller/shorter)
-    <section className="relative bg-black overflow-hidden min-h-[calc(100vh-64px)]">
-      {/* RIGHT background photo */}
-      <div className="pointer-events-none hidden md:block absolute inset-y-0 right-0 w-[52%] md:w-1/2 lg:w-[56%]">
-        <div className="h-full w-full rounded-l-3xl lg:rounded-l-[36px] overflow-hidden ring-1 ring-white/10 shadow-[0_0_45px_#ff5a1c99,_0_40px_120px_rgba(0,0,0,0.45)]">
-          <img
-            src="/display.png"
-            alt="Portrait / showcase"
-            className="h-full w-full object-cover object-center drop-shadow-[0_0_32px_#ff5a1c99]"
-          />
-        </div>
-      </div>
-
-      {/* LEFT overlay for readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/20 to-transparent" aria-hidden />
-      <div className="absolute inset-x-0 top-0 h-14 bg-gradient-to-b from-black/10 to-transparent" aria-hidden />
-
-      {/* Content aligned with Navbar container; vertically centered */}
-      <div className="relative">
-        <div className="mx-auto max-w-6xl px-4 md:px-6 lg:px-8 min-h-[calc(100vh-64px)] flex items-center">
-          <div className="grid md:grid-cols-12 items-center gap-10 w-full">
-            {/* LEFT column: text */}
-            <div className="relative z-10 md:col-span-6 md:pr-10 lg:pr-16">
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={ready ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6 }}
-                className="text-5xl md:text-6xl font-extrabold leading-tight tracking-tight text-white drop-shadow-xl"
-              >
-                Hi, I’m {site.NAME}
-              </motion.h1>
-
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                animate={ready ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.05 }}
-                className="mt-2 text-2xl md:text-3xl text-white/85 font-semibold"
-              >
-                <span className="text-[#ff5a1c]">Python</span> & <span className="text-[#ff5a1c]">AI/ML</span> Engineer
-              </motion.h2>
-
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                animate={ready ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                className="mt-4 text-white/90 max-w-xl"
-              >
-                <Typing words={[site.TAGLINE, 'Python • Django • DRF • Realtime • RAG', 'Azure • OpenAI • Redis • Postgres']} speed={40} pause={1400} />
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={ready ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.15 }}
-                className="mt-8 flex flex-col sm:flex-row items-center gap-3"
-              >
-                <Link
-                  to="/projects"
-                  className="inline-flex items-center justify-center px-6 py-3 rounded-full text-base sm:text-lg font-semibold bg-[#FF6B35] text-white shadow-lg shadow-black/40 hover:shadow-2xl hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black transition-all"
-                >
-                  View Projects <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-
-                <Link
-                  to="/resume"
-                  className="inline-flex items-center justify-center px-6 py-3 rounded-full text-base sm:text-lg font-semibold border-2 border-white/80 text-white hover:bg-white hover:text-black shadow-md shadow-black/30 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black transition-all"
-                >
-                  <Download className="mr-2 h-4 w-4" /> Download Resume
-                </Link>
-              </motion.div>
-
-              <motion.span
-                initial={{ opacity: 0, y: -6 }}
-                animate={ready ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.45 }}
-                className="mt-6 inline-flex items-center gap-2 text-xs bg-[#222] border border-white/10 px-3 py-1 rounded-full shadow-sm text-white/80"
-              >
-              <Sparkles className="h-3.5 w-3.5" /> Open to opportunities
-              </motion.span>
-
-              {/* Mobile image presentation */}
-              <div className="mt-12 md:hidden">
-                <div className="relative mx-auto max-w-xl overflow-hidden rounded-3xl border border-white/5 shadow-[0_0_45px_#ff5a1c99,_0_30px_90px_rgba(0,0,0,0.35)]">
-                  <img
-                    src="/display.png"
-                    alt="Portrait / showcase"
-                    className="h-full w-full object-cover object-center"
-                  />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" aria-hidden />
-                </div>
-              </div>
-            </div>
-
-            {/* RIGHT spacer column */}
-            <div className="hidden md:block md:col-span-5" aria-hidden />
+    <section className="relative min-h-screen w-full overflow-hidden bg-black">
+      <LetterGlitch
+        glitchSpeed={42}
+        centerVignette
+        outerVignette
+        smooth
+        className="min-h-screen w-full"
+        overlayClassName="flex items-center justify-center px-6"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={ready ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          className="relative mx-auto flex w-full max-w-5xl flex-col items-center justify-center gap-6 text-center text-white"
+        >
+          <div className="relative mx-auto w-full max-w-4xl px-4">
+            <SplitText
+              text={`Hi, I’m ${site.NAME}`}
+              className="mx-auto max-w-3xl text-4xl font-extrabold leading-tight tracking-tight text-white drop-shadow-[0_0_35px_rgba(0,0,0,0.9)] md:text-6xl"
+              delay={90}
+              duration={0.6}
+              ease="power3.out"
+              splitType="chars"
+              from={{ opacity: 0, y: 28 }}
+              to={{ opacity: 1, y: 0 }}
+              threshold={0.05}
+              rootMargin="-120px"
+              tag="h1"
+              textAlign="center"
+            />
           </div>
-        </div>
-      </div>
+
+          <div className="relative mx-auto w-full max-w-2xl px-4">
+            <SplitText
+              text="Python & AI/ML Engineer"
+              className="mx-auto text-2xl font-semibold text-white md:text-3xl"
+              delay={120}
+              duration={0.6}
+              ease="power3.out"
+              splitType="words, chars"
+              from={{ opacity: 0, y: 22 }}
+              to={{ opacity: 1, y: 0 }}
+              threshold={0.05}
+              rootMargin="-120px"
+              tag="h2"
+              textAlign="center"
+              mutateSplit={(split) => {
+                split.words?.forEach((word) => {
+                  const content = word.textContent?.trim();
+                  if (content === 'Python' || content === 'AI/ML') {
+                    word.classList.add('text-[#FF6B35]');
+                  }
+                  if (content === 'Engineer') {
+                    word.classList.add('text-white');
+                  }
+                });
+                split.chars?.forEach((char) => {
+                  if (char.textContent === '&') {
+                    char.classList.add('text-white');
+                  }
+                });
+              }}
+            />
+          </div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={ready ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.18 }}
+            className="mx-auto max-w-xl text-base text-white/80 md:text-lg"
+          >
+            <Typing
+              words={[site.TAGLINE, 'Python • Django • DRF • Realtime • RAG', 'Azure • OpenAI • Redis • Postgres']}
+              speed={40}
+              pause={1400}
+            />
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={ready ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.24 }}
+            className="flex flex-col items-center justify-center gap-3 sm:flex-row"
+          >
+            <Link
+              to="/projects"
+              className="inline-flex items-center justify-center rounded-full bg-[#FF6B35] px-6 py-3 text-base font-semibold text-white shadow-lg shadow-black/40 transition-all hover:shadow-2xl hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:text-lg"
+            >
+              View Projects <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+
+            <Link
+              to="/resume"
+              className="inline-flex items-center justify-center rounded-full border-2 border-white/80 px-6 py-3 text-base font-semibold text-white shadow-md shadow-black/30 transition-all hover:bg-white hover:text-black hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:text-lg"
+            >
+              <Download className="mr-2 h-4 w-4" /> Download Resume
+            </Link>
+          </motion.div>
+
+          <motion.span
+            initial={{ opacity: 0, y: -8 }}
+            animate={ready ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.35 }}
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-black/60 px-3 py-1 text-xs text-white/80 shadow-sm"
+          >
+            <Sparkles className="h-3.5 w-3.5" /> Open to opportunities
+          </motion.span>
+        </motion.div>
+      </LetterGlitch>
     </section>
   )
 }

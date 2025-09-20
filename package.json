@@ -5,12 +5,14 @@
   "type": "module",
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "dev": "vite",            
-    "build": "vite build"     
+    "dev": "vite",
+    "build": "vite build"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
+    "@gsap/react": "^2.1.2",
     "framer-motion": "^11.0.0",
+    "gsap": "^3.13.0",
     "lucide-react": "^0.441.0",
     "pdfjs-dist": "^3.11.174",
     "react": "^18.2.0",

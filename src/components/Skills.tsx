@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { skills } from '../data/skills'
-import TiltCard from './TiltCard'
+import MagicBento, { type MagicBentoItem } from './MagicBento'
 import { ServerCog, BrainCircuit, Cloud, MessageSquare, Gauge, FlaskConical } from 'lucide-react'
 import TagListModal from './TagListModal'
 
@@ -10,13 +10,51 @@ const icons = { ServerCog, BrainCircuit, Cloud, MessageSquare, Gauge, FlaskConic
 
 export default function Skills() {
   const previewGroups = skills.slice(0, 4)
-  const [modalData, setModalData] = useState<{ title: string; items: string[] } | null>(null)
 
-  const handleOpenModal = (title: string, items: string[]) => {
-    setModalData({ title, items })
-  }
+  const items: MagicBentoItem[] = previewGroups.map((group, index) => {
+    const Icon = (icons as any)[group.icon] || ServerCog
+    const accentVariants = [
+      'from-[#FF6B35]/25 via-[#311b10]/60 to-transparent',
+      'from-[#FF6B35]/20 via-[#18212b]/60 to-transparent',
+      'from-[#FF6B35]/20 via-[#1a2422]/60 to-transparent',
+      'from-[#FF6B35]/20 via-[#261a2b]/60 to-transparent',
+    ]
+    const chips = group.skills.slice(0, 6)
+    const remaining = group.skills.length - chips.length
 
-  const handleCloseModal = () => setModalData(null)
+    const modalContent = (
+      <div className="space-y-5">
+        {group.description && (
+          <p className="text-sm leading-relaxed text-white/75 md:text-base">{group.description}</p>
+        )}
+        <div className="flex flex-wrap gap-2">
+          {group.skills.map(skill => (
+            <span
+              key={skill}
+              className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-white/80"
+            >
+              {skill}
+            </span>
+          ))}
+        </div>
+      </div>
+    )
+
+    const overflowLabel = remaining > 0 ? `+${remaining} more skills` : undefined
+
+    return {
+      id: group.domain,
+      icon: <Icon className="h-5 w-5 text-[#FF6B35]" />,
+      badge: 'Skills Snapshot',
+      title: group.domain,
+      description: group.description,
+      chips,
+      meta: `${String(group.skills.length).padStart(2, '0')} skills`,
+      accent: accentVariants[index % accentVariants.length],
+      overflowLabel,
+      modalContent,
+    }
+  })
 
   return (
     <section id="skills" className="mx-auto max-w-6xl px-4 py-16">
@@ -29,12 +67,12 @@ export default function Skills() {
           className="space-y-2"
         >
           <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-white/60">
-            <span className="h-1 w-3 rounded-full bg-[#ff5a1c]" aria-hidden /> Skills Snapshot
+            <span className="h-1 w-3 rounded-full bg-[#FF6B35]" aria-hidden /> Skills Snapshot
           </span>
-          <h2 className="text-2xl md:text-3xl font-semibold text-white">
+          <h2 className="text-2xl font-semibold text-white md:text-3xl">
             A quick tour of my core stacks
           </h2>
-          <p className="text-sm md:text-base text-white/70 max-w-2xl">
+          <p className="max-w-2xl text-sm text-white/70 md:text-base">
             These are the disciplines I lean on most often. Dive into the full skills page for detailed coverage and tooling notes.
           </p>
         </motion.div>
@@ -47,58 +85,15 @@ export default function Skills() {
         >
           <Link
             to="/skills"
-            className="inline-flex items-center justify-center rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-white hover:border-white/50 hover:bg-white/10 transition"
+            className="inline-flex items-center justify-center rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-white/50 hover:bg-white/10"
           >
             Explore the full skillset
           </Link>
         </motion.div>
       </div>
 
-      <div className="mt-10 grid gap-6 md:grid-cols-2">
-        {previewGroups.map((group, i) => {
-          const Icon = (icons as any)[group.icon] || ServerCog
-          const visibleSkills = group.skills.slice(0, 4)
-          const remaining = group.skills.length - visibleSkills.length
-          return (
-            <motion.div
-              key={group.domain}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
-            >
-              <TiltCard className="rounded-2xl bg-card border border-border p-6 gradient-border">
-                <div className="flex items-center gap-3">
-                  {/* Icon tinted to your SVG favicon color */}
-                  <div className="h-10 w-10 rounded-xl grid place-items-center bg-black/30 backdrop-blur-sm border border-white/10 ring-1 ring-inset ring-white/5">
-                    <Icon className="h-5 w-5 text-[#ff5a1c]" />
-                  </div>
-                  <h3 className="font-medium text-fg">{group.domain}</h3>
-                </div>
-
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {visibleSkills.map(s => (
-                    <span
-                      key={s}
-                      className="px-3 py-1.5 rounded-full bg-[#222] text-[#FFFFFF] opacity-85 text-sm border border-border hover:border-[#ff5a1c]/40 hover:shadow-[0_0_0_1px_rgba(255,90,28,0.35)_inset] transition"
-                    >
-                      {s}
-                    </span>
-                  ))}
-                  {remaining > 0 && (
-                    <button
-                      type="button"
-                      onClick={() => handleOpenModal(group.domain, group.skills)}
-                      className="px-3 py-1.5 rounded-full bg-transparent text-[#ff5a1c] text-sm border border-[#ff5a1c]/40 hover:border-[#ff5a1c]/70 hover:bg-[#ff5a1c]/10 transition"
-                    >
-                      +{remaining} more
-                    </button>
-                  )}
-                </div>
-              </TiltCard>
-            </motion.div>
-          )
-        })}
+      <div className="mt-10">
+        <MagicBento items={items} />
       </div>
 
       <motion.div
@@ -116,7 +111,7 @@ export default function Skills() {
         </div>
         <Link
           to="/skills"
-          className="inline-flex items-center justify-center rounded-full bg-[#FF6B35] px-6 py-3 text-sm font-semibold text-black shadow-[0_8px_24px_rgba(255,90,28,0.4)] hover:shadow-[0_12px_32px_rgba(255,90,28,0.5)] transition"
+          className="inline-flex items-center justify-center rounded-full bg-[#FF6B35] px-6 py-3 text-sm font-semibold text-black shadow-[0_8px_24px_rgba(255,90,28,0.4)] transition hover:shadow-[0_12px_32px_rgba(255,90,28,0.5)]"
         >
           View the complete list
         </Link>

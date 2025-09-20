@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import TiltCard from '../components/TiltCard'
 import { skills } from '../data/skills'
+import MagicBento, { type MagicBentoItem } from '../components/MagicBento'
 import { ArrowLeft, ArrowRight, Sparkles, ServerCog, BrainCircuit, Cloud, MessageSquare, Gauge, FlaskConical } from 'lucide-react'
 
 const icons = { ServerCog, BrainCircuit, Cloud, MessageSquare, Gauge, FlaskConical } as const
@@ -49,50 +49,30 @@ export default function SkillsDetail() {
           </div>
         </motion.div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-          {skills.map((group, index) => {
-            const Icon = (icons as any)[group.icon] || ServerCog
-            return (
-              <motion.div
-                key={group.domain}
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 + 0.2, duration: 0.5 }}
-              >
-                <TiltCard className="rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 via-black/60 to-black/80 p-6 backdrop-blur">
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <span className="grid h-11 w-11 place-items-center rounded-xl bg-black/50 border border-white/10">
-                        <Icon className="h-5 w-5 text-[#ff5a1c]" />
-                      </span>
-                      <div>
-                        <h3 className="text-lg font-semibold text-white">{group.domain}</h3>
-                        {group.description && (
-                          <p className="mt-1 text-sm text-white/60 leading-relaxed">
-                            {group.description}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                    <span className="hidden text-xs font-medium uppercase tracking-widest text-white/50 sm:block">
-                      {String(group.skills.length).padStart(2, '0')} skills
-                    </span>
-                  </div>
-
-                  <div className="mt-6 flex flex-wrap gap-2">
-                    {group.skills.map(skill => (
-                      <span
-                        key={skill}
-                        className="rounded-full border border-[#ff5a1c40] bg-[#1c1c1f] px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-white/80 shadow-[0_0_0_1px_rgba(255,90,28,0.25)]"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </TiltCard>
-              </motion.div>
-            )
-          })}
+        <div className="mt-12">
+          <MagicBento
+            items={skills.map((group, index) => {
+              const Icon = (icons as any)[group.icon] || ServerCog
+              const item: MagicBentoItem = {
+                id: group.domain,
+                icon: <Icon className="h-5 w-5 text-[#FF6B35]" />,
+                badge: 'Core discipline',
+                title: group.domain,
+                description: group.description,
+                chips: group.skills,
+                meta: `${String(group.skills.length).padStart(2, '0')} skills`,
+                accent:
+                  index % 3 === 0
+                    ? 'from-[#FF6B35]/24 via-[#261c18]/55 to-transparent'
+                    : index % 3 === 1
+                      ? 'from-[#FF6B35]/20 via-[#192227]/55 to-transparent'
+                      : 'from-[#FF6B35]/20 via-[#1f1a27]/55 to-transparent',
+              }
+              return item
+            })}
+            columnsClassName="sm:grid-cols-2 xl:grid-cols-3"
+            motionFrom={{ opacity: 0, y: 28 }}
+          />
         </div>
 
         <div className="mt-16 rounded-3xl border border-white/10 bg-gradient-to-r from-black/70 via-[#1c1c1f] to-black/70 p-8 md:p-10">

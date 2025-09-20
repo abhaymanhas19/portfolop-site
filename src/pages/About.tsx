@@ -3,9 +3,41 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, Sparkles, Target, Workflow, Heart } from 'lucide-react'
 import { site } from '../data/site'
 import { profile } from '../data/profile'
+import MagicBento from '../components/MagicBento'
 
 export default function About() {
   const { about } = profile
+  const experienceItems = about.experience.map((item, index) => (
+    {
+      id: `${item.company}-${item.role}`,
+      badge: item.company,
+      meta: item.period,
+      title: item.role,
+      description: item.summary,
+      chips: item.achievements.slice(0, 2),
+      overflowLabel:
+        item.achievements.length > 2 ? `+${item.achievements.length - 2} more wins` : undefined,
+      accent:
+        index % 3 === 0
+          ? 'from-[#FF6B35]/24 via-[#1f1814]/55 to-transparent'
+          : index % 3 === 1
+            ? 'from-[#FF6B35]/20 via-[#1a2128]/55 to-transparent'
+            : 'from-[#FF6B35]/20 via-[#1f1b28]/55 to-transparent',
+      modalContent: (
+        <div className="space-y-5">
+          <p className="text-sm leading-relaxed text-white/75 md:text-base">{item.summary}</p>
+          <div className="space-y-2 text-sm text-white/80">
+            {item.achievements.map(point => (
+              <div key={point} className="flex gap-2">
+                <span className="mt-1 h-1 w-1 flex-none rounded-full bg-[#FF6B35]" aria-hidden />
+                <span>{point}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ),
+    }
+  ))
 
   return (
     <section className="relative mx-auto max-w-6xl px-4 py-20">
@@ -47,17 +79,19 @@ export default function About() {
             </div>
           </div>
 
-          <div className="mt-10 grid gap-4 sm:grid-cols-3">
-            {about.focusAreas.map(area => (
-              <div
-                key={area.title}
-                className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm"
-              >
-                <p className="text-xs uppercase tracking-[0.3em] text-white/60">{area.title}</p>
-                <p className="mt-2 text-sm text-white/75 leading-relaxed">{area.description}</p>
-              </div>
-            ))}
-          </div>
+          <MagicBento
+            items={about.focusAreas.map((area, index) => ({
+              id: area.title,
+              badge: 'Focus area',
+              title: area.title,
+              description: area.description,
+              accent:
+                index % 2 === 0
+                  ? 'from-[#FF6B35]/22 via-[#201b18]/55 to-transparent'
+                  : 'from-[#FF6B35]/18 via-[#181f24]/55 to-transparent',
+            }))}
+            columnsClassName="sm:grid-cols-2 lg:grid-cols-3"
+          />
         </motion.div>
 
         <section className="space-y-6">
@@ -67,35 +101,7 @@ export default function About() {
             </span>
             <h2 className="text-2xl font-semibold text-white">Experience snapshots</h2>
           </div>
-          <div className="space-y-6">
-            {about.experience.map(item => (
-              <motion.article
-                key={`${item.company}-${item.role}`}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.45 }}
-                className="rounded-3xl border border-white/10 bg-[#101013]/90 p-6 md:p-8"
-              >
-                <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-                  <div className="space-y-2">
-                    <h3 className="text-xl font-semibold text-white">{item.role}</h3>
-                    <p className="text-sm text-white/60">{item.company}</p>
-                  </div>
-                  <p className="text-xs uppercase tracking-[0.2em] text-white/60">{item.period}</p>
-                </div>
-                <p className="mt-4 text-sm md:text-base text-white/70 leading-relaxed">{item.summary}</p>
-                <ul className="mt-4 space-y-2 text-sm text-white/75">
-                  {item.achievements.map(point => (
-                    <li key={point} className="flex gap-2">
-                      <span className="mt-2 h-1 w-1 flex-none rounded-full bg-[#ff5a1c]" aria-hidden />
-                      <span>{point}</span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.article>
-            ))}
-          </div>
+          <MagicBento items={experienceItems} />
         </section>
 
         <section className="space-y-6">
@@ -105,16 +111,16 @@ export default function About() {
             </span>
             <h2 className="text-2xl font-semibold text-white">Working principles</h2>
           </div>
-          <div className="grid gap-4 md:grid-cols-3">
-            {about.values.map(val => (
-              <div key={val.title} className="rounded-2xl border border-white/10 bg-[#111]/80 p-5">
-                <p className="text-sm font-semibold text-white flex items-center gap-2">
-                  <Heart className="h-4 w-4 text-[#ff5a1c]" /> {val.title}
-                </p>
-                <p className="mt-2 text-sm text-white/70 leading-relaxed">{val.description}</p>
-              </div>
-            ))}
-          </div>
+          <MagicBento
+            items={about.values.map(val => ({
+              id: val.title,
+              icon: <Heart className="h-5 w-5 text-[#FF6B35]" />,
+              title: val.title,
+              description: val.description,
+              accent: 'from-[#FF6B35]/18 via-[#1d1d21]/55 to-transparent',
+            }))}
+            columnsClassName="md:grid-cols-3"
+          />
         </section>
       </div>
     </section>
