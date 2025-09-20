@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { projects } from '../data/projects'
@@ -8,13 +7,6 @@ import MagicBento, { type MagicBentoItem } from './MagicBento'
 export default function Projects() {
   const previewProjects = projects.slice(0, 2)
   const remaining = projects.length - previewProjects.length
-  const [modalData, setModalData] = useState<{ title: string; items: string[] } | null>(null)
-
-  const handleOpenModal = (title: string, items: string[]) => {
-    setModalData({ title, items })
-  }
-
-  const handleCloseModal = () => setModalData(null)
 
   const items: MagicBentoItem[] = previewProjects.map((project, index) => {
     const chips = project.tags.slice(0, 4)
@@ -172,13 +164,6 @@ export default function Projects() {
           +{remaining} additional projects in the library
         </p>
       )}
-
-      <TagListModal
-        isOpen={!!modalData}
-        title={modalData?.title ?? ''}
-        items={modalData?.items ?? []}
-        onClose={handleCloseModal}
-      />
     </section>
   )
 }

@@ -1,10 +1,8 @@
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { skills } from '../data/skills'
 import MagicBento, { type MagicBentoItem } from './MagicBento'
 import { ServerCog, BrainCircuit, Cloud, MessageSquare, Gauge, FlaskConical } from 'lucide-react'
-import TagListModal from './TagListModal'
 
 const icons = { ServerCog, BrainCircuit, Cloud, MessageSquare, Gauge, FlaskConical } as const
 
@@ -116,13 +114,6 @@ export default function Skills() {
           View the complete list
         </Link>
       </motion.div>
-
-      <TagListModal
-        isOpen={!!modalData}
-        title={modalData?.title ?? ''}
-        items={modalData?.items ?? []}
-        onClose={handleCloseModal}
-      />
     </section>
   )
 }
