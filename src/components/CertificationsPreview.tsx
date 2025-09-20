@@ -2,9 +2,65 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Award, ArrowRight } from 'lucide-react'
 import { profile } from '../data/profile'
+import MagicBento, { type MagicBentoItem } from './MagicBento'
 
 export default function CertificationsPreview() {
   const previewCerts = profile.certifications.slice(0, 3)
+
+  const items: MagicBentoItem[] = previewCerts.map(cert => ({
+    id: cert.title,
+    icon: <Award className="h-5 w-5 text-[#FF6B35]" />,
+    badge: 'Proof of expertise',
+    title: cert.title,
+    description: cert.description,
+    meta: `${cert.issuer} · ${cert.year}`,
+    accent: 'from-[#FF6B35]/20 via-[#1c1a22]/60 to-transparent',
+    footer:
+      cert.tags && cert.tags.length > 0 ? (
+        <div className="flex flex-wrap gap-2">
+          {cert.tags.map(tag => (
+            <span
+              key={tag}
+              className="rounded-full border border-white/12 bg-white/5 px-3 py-1 text-xs font-medium uppercase tracking-wide text-white/75"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      ) : undefined,
+    modalContent: (
+      <div className="space-y-5">
+        <p className="text-sm leading-relaxed text-white/75 md:text-base">{cert.description}</p>
+        {cert.tags && cert.tags.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {cert.tags.map(tag => (
+              <span
+                key={tag}
+                className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-white/80"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+        {cert.credentialUrl && cert.credentialUrl.length > 0 && (
+          <div className="flex flex-wrap gap-3 text-sm">
+            {cert.credentialUrl.map((url, idx) => (
+              <a
+                key={url || idx}
+                href={url}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-white/85 transition hover:border-white/50 hover:bg-white/10"
+              >
+                <ArrowRight className="h-4 w-4" /> View credential
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    ),
+  }))
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-16">
@@ -17,12 +73,12 @@ export default function CertificationsPreview() {
           className="space-y-2"
         >
           <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-white/60">
-            <Award className="h-3.5 w-3.5 text-[#ff5a1c]" /> Proof of expertise
+            <Award className="h-3.5 w-3.5 text-[#FF6B35]" /> Proof of expertise
           </span>
-          <h2 className="text-2xl md:text-3xl font-semibold text-white">
+          <h2 className="text-2xl font-semibold text-white md:text-3xl">
             Certifications that keep skills sharp
           </h2>
-          <p className="text-sm md:text-base text-white/70 max-w-2xl">
+          <p className="max-w-2xl text-sm text-white/70 md:text-base">
             Highlights from the credential stack backing every project—from Azure AI implementations to modern Kubernetes delivery.
           </p>
         </motion.div>
@@ -35,37 +91,15 @@ export default function CertificationsPreview() {
         >
           <Link
             to="/certifications"
-            className="inline-flex items-center justify-center rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-white hover:border-white/50 hover:bg-white/10 transition"
+            className="inline-flex items-center justify-center rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-white/50 hover:bg-white/10"
           >
             View all credentials <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </motion.div>
       </div>
 
-      <div className="mt-10 grid gap-4 md:grid-cols-3">
-        {previewCerts.map((cert, index) => (
-          <motion.div
-            key={cert.title}
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.45, delay: index * 0.05 }}
-            className="rounded-2xl border border-white/10 bg-[#111]/70 p-6"
-          >
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <h3 className="text-lg font-semibold text-white">{cert.title}</h3>
-                <p className="text-xs uppercase tracking-[0.2em] text-white/60 mt-2">
-                  {cert.issuer} · {cert.year}
-                </p>
-              </div>
-              <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl border border-white/10 bg-white/5">
-                <Award className="h-4 w-4 text-[#ff5a1c]" />
-              </span>
-            </div>
-            <p className="mt-3 text-sm text-white/70 leading-relaxed line-clamp-4">{cert.description}</p>
-          </motion.div>
-        ))}
+      <div className="mt-10">
+        <MagicBento items={items} columnsClassName="md:grid-cols-3" />
       </div>
     </section>
   )

@@ -1,220 +1,243 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react';
 
 type LetterGlitchProps = {
-  glitchSpeed?: number
-  centerVignette?: boolean
-  outerVignette?: boolean
-  smooth?: boolean
-  characters?: string
-  colors?: string[]
-  className?: string
-}
+  glitchColors?: string[];
+  glitchSpeed?: number;
+  centerVignette?: boolean;
+  outerVignette?: boolean;
+  smooth?: boolean;
+  characters?: string;
+  className?: string;
+  overlayClassName?: string;
+  children?: ReactNode;
+};
 
-type Glyph = {
-  char: string
-  color: string
-  startColor: string
-  targetColor: string
-  progress: number
-}
-
-const DEFAULT_CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&?/<>'
-const DEFAULT_COLORS = ['#FF6B35', '#F5F5F5', '#D1D1D1']
-
-const toRgb = (hex: string) => {
-  const normalized = hex.replace('#', '')
-  if (normalized.length === 3) {
-    const [r, g, b] = normalized.split('')
-    return {
-      r: parseInt(`${r}${r}`, 16),
-      g: parseInt(`${g}${g}`, 16),
-      b: parseInt(`${b}${b}`, 16),
-    }
-  }
-  if (normalized.length !== 6) return null
-  return {
-    r: parseInt(normalized.slice(0, 2), 16),
-    g: parseInt(normalized.slice(2, 4), 16),
-    b: parseInt(normalized.slice(4, 6), 16),
-  }
-}
-
-const lerpColor = (fromHex: string, toHex: string, t: number) => {
-  const from = toRgb(fromHex)
-  const to = toRgb(toHex)
-  if (!from || !to) return toHex
-  const clampT = Math.min(1, Math.max(0, t))
-  const r = Math.round(from.r + (to.r - from.r) * clampT)
-  const g = Math.round(from.g + (to.g - from.g) * clampT)
-  const b = Math.round(from.b + (to.b - from.b) * clampT)
-  return `rgb(${r}, ${g}, ${b})`
-}
-
-export default function LetterGlitch({
-  glitchSpeed = 55,
-  centerVignette = true,
-  outerVignette = false,
+const LetterGlitch = ({
+  glitchColors = ['#FF6B35', '#F5F5F5', '#D1D1D1'],
+  glitchSpeed = 50,
+  centerVignette = false,
+  outerVignette = true,
   smooth = true,
-  characters = DEFAULT_CHARACTERS,
-  colors = DEFAULT_COLORS,
+  characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$&*()-_+=/[]{};:<>.,0123456789',
   className = '',
-}: LetterGlitchProps) {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null)
-  const contextRef = useRef<CanvasRenderingContext2D | null>(null)
-  const glyphsRef = useRef<Glyph[]>([])
-  const gridRef = useRef({ columns: 0, rows: 0 })
-  const frameRef = useRef<number>()
-  const lastUpdateRef = useRef(performance.now())
-  const spacingRef = useRef({ fontSize: 20, charWidth: 16, charHeight: 28, letterSpacing: 6 })
+  overlayClassName,
+  children
+}: LetterGlitchProps) => {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const animationRef = useRef<number | null>(null);
+  const letters = useRef<
+    {
+      char: string;
+      color: string;
+      targetColor: string;
+      colorProgress: number;
+    }[]
+  >([]);
+  const grid = useRef({ columns: 0, rows: 0 });
+  const context = useRef<CanvasRenderingContext2D | null>(null);
+  const lastGlitchTime = useRef(Date.now());
 
-  const letters = useRef(Array.from(characters))
+  const lettersAndSymbols = Array.from(characters);
 
-  const pickChar = () => letters.current[Math.floor(Math.random() * letters.current.length)]
-  const pickColor = () => colors[Math.floor(Math.random() * colors.length)]
+  const fontSize = 16;
+  const charWidth = 10;
+  const charHeight = 20;
+
+  const getRandomChar = () => {
+    return lettersAndSymbols[Math.floor(Math.random() * lettersAndSymbols.length)];
+  };
+
+  const getRandomColor = () => {
+    return glitchColors[Math.floor(Math.random() * glitchColors.length)];
+  };
+
+  const hexToRgb = (hex: string) => {
+    const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, (_m, r, g, b) => {
+      return r + r + g + g + b + b;
+    });
+
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result
+      ? {
+          r: parseInt(result[1], 16),
+          g: parseInt(result[2], 16),
+          b: parseInt(result[3], 16)
+        }
+      : null;
+  };
+
+  const interpolateColor = (
+    start: { r: number; g: number; b: number },
+    end: { r: number; g: number; b: number },
+    factor: number
+  ) => {
+    const result = {
+      r: Math.round(start.r + (end.r - start.r) * factor),
+      g: Math.round(start.g + (end.g - start.g) * factor),
+      b: Math.round(start.b + (end.b - start.b) * factor)
+    };
+    return `rgb(${result.r}, ${result.g}, ${result.b})`;
+  };
 
   const calculateGrid = (width: number, height: number) => {
-    const { charWidth, charHeight } = spacingRef.current
-    const columns = Math.ceil(width / charWidth) + 2
-    const rows = Math.ceil(height / charHeight) + 2
-    return { columns, rows }
-  }
+    const columns = Math.ceil(width / charWidth);
+    const rows = Math.ceil(height / charHeight);
+    return { columns, rows };
+  };
 
-  const initialiseGlyphs = (columns: number, rows: number) => {
-    gridRef.current = { columns, rows }
-    const total = columns * rows
-    glyphsRef.current = Array.from({ length: total }, () => {
-      const color = pickColor()
-      return {
-        char: pickChar(),
-        color,
-        startColor: color,
-        targetColor: pickColor(),
-        progress: 1,
-      }
-    })
-  }
-
-  const drawGlyphs = () => {
-    const ctx = contextRef.current
-    const canvas = canvasRef.current
-    if (!ctx || !canvas || glyphsRef.current.length === 0) return
-
-    const { width, height } = canvas
-    ctx.clearRect(0, 0, width, height)
-    const { fontSize, charWidth, charHeight } = spacingRef.current
-
-    ctx.font = `600 ${fontSize}px "IBM Plex Mono", monospace`
-    ctx.textBaseline = 'top'
-
-    glyphsRef.current.forEach((glyph, index) => {
-      const col = index % gridRef.current.columns
-      const row = Math.floor(index / gridRef.current.columns)
-      const x = col * charWidth
-      const y = row * charHeight
-      ctx.fillStyle = glyph.color
-      ctx.fillText(glyph.char, x, y)
-    })
-  }
-
-  const updateGlyphs = () => {
-    if (glyphsRef.current.length === 0) return
-    const count = Math.max(1, Math.floor(glyphsRef.current.length * 0.05))
-    for (let i = 0; i < count; i++) {
-      const idx = Math.floor(Math.random() * glyphsRef.current.length)
-      const glyph = glyphsRef.current[idx]
-      const nextColor = pickColor()
-      glyph.char = pickChar()
-      glyph.startColor = smooth ? glyph.color : nextColor
-      glyph.targetColor = nextColor
-      glyph.progress = smooth ? 0 : 1
-      if (!smooth) {
-        glyph.color = nextColor
-      }
-    }
-  }
-
-  const stepColours = () => {
-    let dirty = false
-    glyphsRef.current.forEach((glyph) => {
-      if (glyph.progress < 1) {
-        glyph.progress = Math.min(1, glyph.progress + 0.05)
-        glyph.color = lerpColor(glyph.startColor, glyph.targetColor, glyph.progress)
-        dirty = true
-      }
-    })
-    if (dirty) drawGlyphs()
-  }
+  const initializeLetters = (columns: number, rows: number) => {
+    grid.current = { columns, rows };
+    const totalLetters = columns * rows;
+    letters.current = Array.from({ length: totalLetters }, () => ({
+      char: getRandomChar(),
+      color: getRandomColor(),
+      targetColor: getRandomColor(),
+      colorProgress: 1
+    }));
+  };
 
   const resizeCanvas = () => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const parent = canvas.parentElement
-    if (!parent) return
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const parent = canvas.parentElement;
+    if (!parent) return;
 
-    const dpr = window.devicePixelRatio || 1
-    const { width, height } = parent.getBoundingClientRect()
-    canvas.width = width * dpr
-    canvas.height = height * dpr
-    canvas.style.width = `${width}px`
-    canvas.style.height = `${height}px`
+    const dpr = window.devicePixelRatio || 1;
+    const rect = parent.getBoundingClientRect();
 
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
-    contextRef.current = ctx
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-    ctx.font = `600 ${spacingRef.current.fontSize}px "IBM Plex Mono", monospace`
-    const measuredWidth = ctx.measureText('M').width
-    spacingRef.current.charWidth = measuredWidth + spacingRef.current.letterSpacing
-    spacingRef.current.charHeight = spacingRef.current.fontSize * 1.35
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
 
-    const { columns, rows } = calculateGrid(width, height)
-    initialiseGlyphs(columns, rows)
-    drawGlyphs()
-  }
+    canvas.style.width = `${rect.width}px`;
+    canvas.style.height = `${rect.height}px`;
+
+    if (context.current) {
+      context.current.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    const { columns, rows } = calculateGrid(rect.width, rect.height);
+    initializeLetters(columns, rows);
+    drawLetters();
+  };
+
+  const drawLetters = () => {
+    if (!context.current || letters.current.length === 0) return;
+    const ctx = context.current;
+    const { width, height } = canvasRef.current!.getBoundingClientRect();
+    ctx.clearRect(0, 0, width, height);
+    ctx.font = `${fontSize}px monospace`;
+    ctx.textBaseline = 'top';
+
+    letters.current.forEach((letter, index) => {
+      const x = (index % grid.current.columns) * charWidth;
+      const y = Math.floor(index / grid.current.columns) * charHeight;
+      ctx.fillStyle = letter.color;
+      ctx.fillText(letter.char, x, y);
+    });
+  };
+
+  const updateLetters = () => {
+    if (!letters.current || letters.current.length === 0) return;
+
+    const updateCount = Math.max(1, Math.floor(letters.current.length * 0.05));
+
+    for (let i = 0; i < updateCount; i++) {
+      const index = Math.floor(Math.random() * letters.current.length);
+      if (!letters.current[index]) continue;
+
+      letters.current[index].char = getRandomChar();
+      letters.current[index].targetColor = getRandomColor();
+
+      if (!smooth) {
+        letters.current[index].color = letters.current[index].targetColor;
+        letters.current[index].colorProgress = 1;
+      } else {
+        letters.current[index].colorProgress = 0;
+      }
+    }
+  };
+
+  const handleSmoothTransitions = () => {
+    let needsRedraw = false;
+    letters.current.forEach(letter => {
+      if (letter.colorProgress < 1) {
+        letter.colorProgress += 0.05;
+        if (letter.colorProgress > 1) letter.colorProgress = 1;
+
+        const startRgb = hexToRgb(letter.color);
+        const endRgb = hexToRgb(letter.targetColor);
+        if (startRgb && endRgb) {
+          letter.color = interpolateColor(startRgb, endRgb, letter.colorProgress);
+          needsRedraw = true;
+        }
+      }
+    });
+
+    if (needsRedraw) {
+      drawLetters();
+    }
+  };
 
   const animate = () => {
-    const now = performance.now()
-    if (now - lastUpdateRef.current >= glitchSpeed) {
-      updateGlyphs()
-      drawGlyphs()
-      lastUpdateRef.current = now
+    const now = Date.now();
+    if (now - lastGlitchTime.current >= glitchSpeed) {
+      updateLetters();
+      drawLetters();
+      lastGlitchTime.current = now;
     }
-    if (smooth) stepColours()
-    frameRef.current = requestAnimationFrame(animate)
-  }
+
+    if (smooth) {
+      handleSmoothTransitions();
+    }
+
+    animationRef.current = requestAnimationFrame(animate);
+  };
 
   useEffect(() => {
-    letters.current = Array.from(characters)
-  }, [characters])
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-  useEffect(() => {
-    resizeCanvas()
-    animate()
+    context.current = canvas.getContext('2d');
+    resizeCanvas();
+    animate();
+
+    let resizeTimeout: NodeJS.Timeout;
 
     const handleResize = () => {
-      cancelAnimationFrame(frameRef.current ?? 0)
-      resizeCanvas()
-      animate()
-    }
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        cancelAnimationFrame(animationRef.current as number);
+        resizeCanvas();
+        animate();
+      }, 100);
+    };
 
-    globalThis.addEventListener('resize', handleResize)
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      cancelAnimationFrame(frameRef.current ?? 0)
-      globalThis.removeEventListener('resize', handleResize)
-    }
+      cancelAnimationFrame(animationRef.current!);
+      window.removeEventListener('resize', handleResize);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [glitchSpeed, smooth, colors])
+  }, [glitchSpeed, smooth]);
+
+  const overlayClasses = overlayClassName
+    ? `absolute inset-0 z-10 ${overlayClassName}`
+    : 'absolute inset-0 z-10 flex items-center justify-center';
 
   return (
-    <div className={`relative h-full w-full overflow-hidden bg-black ${className}`}>
-      <canvas ref={canvasRef} className="block h-full w-full" />
+    <div className={`relative w-full h-full bg-black overflow-hidden ${className}`}>
+      <canvas ref={canvasRef} className="block w-full h-full" />
       {outerVignette && (
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle,_rgba(0,0,0,0)_60%,_rgba(0,0,0,0.9)_100%)]" />
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none bg-[radial-gradient(circle,_rgba(0,0,0,0)_60%,_rgba(0,0,0,0.5)_100%)]"></div>
       )}
       {centerVignette && (
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle,_rgba(0,0,0,0.3)_0%,_rgba(0,0,0,0)_60%)]" />
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none bg-[radial-gradient(circle,_rgba(0,0,0,0.9)_0%,_rgba(0,0,0,0.2)_60%)]"></div>
       )}
+      {children ? <div className={overlayClasses}>{children}</div> : null}
     </div>
-  )
-}
+  );
+};
+
+export default LetterGlitch;

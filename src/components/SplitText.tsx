@@ -20,6 +20,7 @@ export interface SplitTextProps {
   tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span';
   textAlign?: React.CSSProperties['textAlign'];
   onLetterAnimationComplete?: () => void;
+  mutateSplit?: (split: GSAPSplitText) => void;
 }
 
 const SplitText: React.FC<SplitTextProps> = ({
@@ -35,7 +36,8 @@ const SplitText: React.FC<SplitTextProps> = ({
   rootMargin = '-100px',
   tag = 'p',
   textAlign = 'center',
-  onLetterAnimationComplete
+  onLetterAnimationComplete,
+  mutateSplit
 }) => {
   const ref = useRef<HTMLParagraphElement>(null);
   const animationCompletedRef = useRef(false);
@@ -94,6 +96,7 @@ const SplitText: React.FC<SplitTextProps> = ({
         reduceWhiteSpace: false,
         onSplit: (self: GSAPSplitText) => {
           assignTargets(self);
+          mutateSplit?.(self);
           return gsap.fromTo(
             targets,
             { ...from },
@@ -142,7 +145,8 @@ const SplitText: React.FC<SplitTextProps> = ({
         threshold,
         rootMargin,
         fontsLoaded,
-        onLetterAnimationComplete
+        onLetterAnimationComplete,
+        mutateSplit
       ],
       scope: ref
     }

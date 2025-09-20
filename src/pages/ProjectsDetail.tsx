@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import TiltCard from '../components/TiltCard'
 import { projects } from '../data/projects'
+import MagicBento, { type MagicBentoItem } from '../components/MagicBento'
 import { ArrowLeft, ArrowRight, ExternalLink, Github, Image as ImageIcon, Sparkles } from 'lucide-react'
 
 export default function ProjectsDetail() {
@@ -47,61 +47,74 @@ export default function ProjectsDetail() {
           </div>
         </motion.div>
 
-        <div className="mt-12 grid gap-8 md:grid-cols-2">
-          {projects.map((project, index) => (
-            <motion.article
-              key={project.title}
-              initial={{ opacity: 0, y: 28 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 + 0.2, duration: 0.55 }}
-            >
-              <TiltCard className="flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-black/80 via-[#151515] to-black/70">
-                <div className="relative group">
-                  {project.image ? (
-                    <img
-                      src={project.image}
-                      alt={`${project.title} screenshot`}
-                      className="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-[1.05]"
-                    />
-                  ) : (
-                    <div className="aspect-[16/9] w-full bg-[#1e1e22] grid place-items-center text-white/60">
-                      <ImageIcon className="h-10 w-10" />
-                    </div>
-                  )}
-                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/80 to-transparent" aria-hidden />
+        <div className="mt-12">
+          <MagicBento
+            items={projects.map((project, index) => ({
+              id: project.title,
+              badge: 'Case study',
+              meta: `Project ${String(index + 1).padStart(2, '0')}`,
+              title: project.title,
+              description: project.description,
+              media: project.image ? (
+                <img
+                  src={project.image}
+                  alt={`${project.title} screenshot`}
+                  className="aspect-[16/9] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                />
+              ) : (
+                <div className="aspect-[16/9] w-full bg-[#1f1f22] grid place-items-center text-white/60">
+                  <ImageIcon className="h-10 w-10" />
                 </div>
-
-                <div className="flex flex-1 flex-col gap-4 p-6">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <h2 className="text-xl font-semibold text-white">{project.title}</h2>
-                      <p className="mt-2 text-sm md:text-base text-white/70 leading-relaxed">
-                        {project.description}
-                      </p>
-                    </div>
-                    <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-white/70">
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
-                  </div>
-
+              ),
+              chips: project.tags,
+              accent:
+                index % 2 === 0
+                  ? 'from-[#FF6B35]/22 via-[#211c21]/55 to-transparent'
+                  : 'from-[#FF6B35]/20 via-[#1a2327]/55 to-transparent',
+              actions: (
+                <>
+                  {project.demo && (
+                    <a
+                      href={project.demo}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-white/85 transition hover:border-white/50 hover:bg-white/10"
+                    >
+                      <ExternalLink className="h-4 w-4" /> Live Demo
+                    </a>
+                  )}
+                  {project.repo && (
+                    <a
+                      href={project.repo}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-white/85 transition hover:border-white/50 hover:bg-white/10"
+                    >
+                      <Github className="h-4 w-4" /> Source
+                    </a>
+                  )}
+                </>
+              ),
+              modalContent: (
+                <div className="space-y-5">
+                  <p className="text-sm leading-relaxed text-white/75 md:text-base">{project.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {project.tags.map(tag => (
                       <span
                         key={tag}
-                        className="rounded-full border border-[#ff5a1c33] bg-[#1f1f22] px-3 py-1 text-xs font-medium uppercase tracking-wide text-white/75"
+                        className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-white/80"
                       >
                         {tag}
                       </span>
                     ))}
                   </div>
-
-                  <div className="mt-auto flex flex-wrap gap-3 text-sm font-medium text-white/80">
+                  <div className="flex flex-wrap gap-3 text-sm">
                     {project.demo && (
                       <a
                         href={project.demo}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 hover:border-white/50 hover:bg-white/10 transition"
+                        className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-white/85 transition hover:border-white/50 hover:bg-white/10"
                       >
                         <ExternalLink className="h-4 w-4" /> Live Demo
                       </a>
@@ -111,16 +124,18 @@ export default function ProjectsDetail() {
                         href={project.repo}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 hover:border-white/50 hover:bg-white/10 transition"
+                        className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-white/85 transition hover:border-white/50 hover:bg-white/10"
                       >
                         <Github className="h-4 w-4" /> Source
                       </a>
                     )}
                   </div>
                 </div>
-              </TiltCard>
-            </motion.article>
-          ))}
+              ),
+            }))}
+            columnsClassName="md:grid-cols-2"
+            motionFrom={{ opacity: 0, y: 32 }}
+          />
         </div>
 
         <div className="mt-16 rounded-3xl border border-white/10 bg-gradient-to-r from-black/70 via-[#19191c] to-black/70 p-8 md:p-10">
