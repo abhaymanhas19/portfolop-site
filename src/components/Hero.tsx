@@ -4,16 +4,24 @@ import { site } from '../data/site'
 import { Link } from 'react-router-dom'
 import Typing from './Typing'
 import { ArrowRight, Download, Sparkles } from 'lucide-react'
+import SplitText from './SplitText'
 
 export default function HeroSection() {
   const [ready, setReady] = useState(false)
-  useEffect(() => { const t = setTimeout(() => setReady(true), 150); return () => clearTimeout(t) }, [])
+  useEffect(() => {
+    const t = setTimeout(() => setReady(true), 150)
+    return () => clearTimeout(t)
+  }, [])
 
   return (
     // Exact-fit height: viewport minus ~64px sticky navbar (adjust if your navbar is taller/shorter)
     <section className="relative bg-black overflow-hidden min-h-[calc(100vh-64px)]">
       {/* RIGHT background photo */}
-      <div className="pointer-events-none hidden md:block absolute inset-y-0 right-0 w-[52%] md:w-1/2 lg:w-[56%]">
+      <div
+        className={`pointer-events-none hidden md:block absolute inset-y-0 right-0 w-[52%] md:w-1/2 lg:w-[56%] transition-all duration-700 ${
+          ready ? 'blur-0 scale-100 opacity-100' : 'blur-xl scale-105 opacity-80'
+        }`}
+      >
         <div className="h-full w-full rounded-l-3xl lg:rounded-l-[36px] overflow-hidden ring-1 ring-white/10 shadow-[0_0_45px_#ff5a1c99,_0_40px_120px_rgba(0,0,0,0.45)]">
           <img
             src="/display.png"
@@ -33,13 +41,25 @@ export default function HeroSection() {
           <div className="grid md:grid-cols-12 items-center gap-10 w-full">
             {/* LEFT column: text */}
             <div className="relative z-10 md:col-span-6 md:pr-10 lg:pr-16">
+
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={ready ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6 }}
                 className="text-5xl md:text-6xl font-extrabold leading-tight tracking-tight text-white drop-shadow-xl"
               >
-                Hi, I’m {site.NAME}
+                <SplitText
+                  text={`Hi, I’m ${site.NAME}`}
+                  className="block"
+                  delay={100}
+                  duration={0.6}
+                  ease="easeOut"
+                  splitType="chars"
+                  from={{ opacity: 0, y: 24 }}
+                  to={{ opacity: 1, y: 0 }}
+                  threshold={0.1}
+                  rootMargin="-100px"
+                />
               </motion.h1>
 
               <motion.h2
@@ -48,7 +68,23 @@ export default function HeroSection() {
                 transition={{ duration: 0.6, delay: 0.05 }}
                 className="mt-2 text-2xl md:text-3xl text-white/85 font-semibold"
               >
-                <span className="text-[#ff5a1c]">Python</span> & <span className="text-[#ff5a1c]">AI/ML</span> Engineer
+                <SplitText
+                  text={
+                    <>
+                      <span className="text-[#ff5a1c]">Python</span> & <span className="text-[#ff5a1c]">AI/ML</span> Engineer
+                    </>
+                  }
+                  className="block"
+                  delay={100}
+                  duration={0.6}
+                  ease="easeOut"
+                  splitType="chars"
+                  from={{ opacity: 0, y: 24 }}
+                  to={{ opacity: 1, y: 0 }}
+                  threshold={0.1}
+                  rootMargin="-100px"
+                  tag="span"
+                />
               </motion.h2>
 
               <motion.p
