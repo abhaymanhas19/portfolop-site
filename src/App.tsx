@@ -7,6 +7,7 @@ import Resume from './pages/Resume'
 import Certifications from './pages/Certifications'
 import SkillsDetail from './pages/SkillsDetail'
 import ProjectsDetail from './pages/ProjectsDetail'
+import ImageGallery from './pages/ImageGallery'
 import NotFound from './pages/NotFound'
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -40,18 +41,9 @@ export default function App() {
             transition={{ duration: 0.35 }}
           >
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>
-              <SplitText
-                text="Loading portfolio..."
-                className="text-2xl md:text-3xl font-semibold text-[#FF6B35] text-center"
-                delay={80}
-                duration={0.6}
-                ease="easeOut"
-                splitType="chars"
-                from={{ opacity: 0, y: 24 }}
-                to={{ opacity: 1, y: 0 }}
-                threshold={0.01}
-                rootMargin="0px"
-              />
+              <span className="text-2xl md:text-3xl font-semibold text-[#FF6B35] text-center block">
+                Loading portfolio...
+              </span>
             </motion.div>
           </motion.div>
         )}
@@ -62,6 +54,7 @@ export default function App() {
           <Route path="/skills" element={<SkillsDetail />} />
           <Route path="/projects" element={<ProjectsDetail />} />
           <Route path="/about" element={<About />} />
+          <Route path="/image-gallery" element={<ImageGallery />} />
           <Route path="/resume" element={<Resume />} />
           <Route path="/certifications" element={<Certifications />} />
           <Route path="*" element={<NotFound />} />

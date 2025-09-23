@@ -36,7 +36,7 @@ export default function HeroSection() {
               text={`Hi, I’m ${site.NAME}`}
               className="mx-auto max-w-3xl text-4xl font-extrabold leading-tight tracking-tight text-white drop-shadow-[0_0_35px_rgba(0,0,0,0.9)] md:text-6xl"
               delay={90}
-              duration={0.6}
+              duration={0.8}
               ease="power3.out"
               splitType="chars"
               from={{ opacity: 0, y: 28 }}
@@ -53,7 +53,7 @@ export default function HeroSection() {
               text="Python & AI/ML Engineer"
               className="mx-auto text-2xl font-semibold text-white md:text-3xl"
               delay={120}
-              duration={0.6}
+              duration={0.12}
               ease="power3.out"
               splitType="words, chars"
               from={{ opacity: 0, y: 22 }}
