@@ -12,7 +12,7 @@ export default function Footer(){
   }
 
   return (
-    <footer className="mt-16 border-t border-white/10 bg-gradient-to-r from-black via-neutral-950 to-black relative overflow-hidden">
+    <footer className="mt-16 border-t border-white/10 bg-gradient-to-r from-background via-background to-background relative overflow-hidden">
       <div className="mx-auto max-w-6xl px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
         {/* Brand */}
         <div className="flex items-center gap-3">
@@ -53,7 +53,7 @@ export default function Footer(){
                        shadow-[0_8px_24px_rgba(255,90,28,0.35)]
                        hover:shadow-[0_12px_36px_rgba(255,90,28,0.5)]
                        hover:-translate-y-0.5 transition
-                       focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                       focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             <Mail className="h-4 w-4" /> Contact
           </button>

@@ -30,12 +30,12 @@ export default function App() {
   const [loading, setLoading] = useState(true)
   useEffect(() => { const t = setTimeout(() => setLoading(false), 700); return () => clearTimeout(t) }, [])
   return (
-    <div className="min-h-screen flex flex-col relative bg-bg text-fg">
+    <div className="min-h-screen flex flex-col relative bg-background text-foreground">
       <Navbar /><ScrollToHash />
       <AnimatePresence>
         {loading && (
           <motion.div
-            className="fixed inset-0 z-[60] grid place-items-center bg-black/80 backdrop-blur-xl"
+            className="fixed inset-0 z-[60] grid place-items-center bg-surface/80 backdrop-blur-xl"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.35 }}

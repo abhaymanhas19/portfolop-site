@@ -43,7 +43,7 @@ export default function ProjectsDetail() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
 
   return (
-    <div className="relative isolate overflow-hidden bg-black text-white">
+    <div className="relative isolate overflow-hidden bg-background text-white">
       <div className="pointer-events-none absolute inset-0 opacity-70">
         <div className="absolute -top-10 left-[-10%] h-72 w-72 rounded-full bg-[#ff5a1c2b] blur-[110px]" aria-hidden />
         <div className="absolute bottom-[-20%] right-[-5%] h-96 w-96 rounded-full bg-[#ff5a1c1f] blur-[160px]" aria-hidden />
@@ -113,7 +113,7 @@ export default function ProjectsDetail() {
                     setSelectedProject(project)
                   }
                 }}
-                className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 <div className="relative overflow-hidden">
                   {project.image ? (
@@ -127,14 +127,14 @@ export default function ProjectsDetail() {
                       transition={{ duration: 0.8, ease: 'easeOut' }}
                     />
                   ) : (
-                    <div className="grid h-56 w-full place-items-center bg-gradient-to-br from-[#FF6B35]/30 via-black to-black text-white/50 sm:h-64">
+                    <div className="grid h-56 w-full place-items-center bg-gradient-to-br from-[#FF6B35]/30 via-background to-background text-white/50 sm:h-64">
                       <ImageIcon className="h-10 w-10" />
                     </div>
                   )}
 
                   <motion.div
                     aria-hidden
-                    className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent"
+                    className="absolute inset-0 bg-gradient-to-t from-background/70 via-background/25 to-transparent"
                     animate={{ opacity: [0.5, 0.75, 0.5] }}
                     transition={{ duration: 7 + index, repeat: Infinity, ease: 'easeInOut' }}
                   />

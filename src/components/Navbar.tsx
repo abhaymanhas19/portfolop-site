@@ -78,7 +78,7 @@ export default function Navbar() {
 
 
   return (
-    <header className="sticky top-0 z-50 bg-black/50 supports-[backdrop-filter]:bg-black/35 backdrop-blur border-b border-white/10 text-white">
+    <header className="sticky top-0 z-50 bg-background/50 supports-[backdrop-filter]:bg-background/35 backdrop-blur border-b border-white/10 text-white">
       <div className="mx-auto max-w-6xl px-4 md:px-6 lg:px-8 py-3 flex items-center justify-between">
         <Link to="/" className="inline-flex items-center gap-2">
           <img src="/favicon.svg" alt="Brand" className="h-6 w-6" />
@@ -125,7 +125,7 @@ export default function Navbar() {
 
                 {aboutOpen && (
                   <div
-                    className="absolute right-0 mt-3 min-w-[180px] overflow-hidden rounded-2xl border border-white/10 bg-black/90 p-2 shadow-[0_20px_45px_rgba(0,0,0,0.55)]"
+                    className="absolute right-0 mt-3 min-w-[180px] overflow-hidden rounded-2xl border border-white/10 bg-surface/90 p-2 shadow-[0_20px_45px_rgba(0,0,0,0.55)]"
                     onMouseEnter={openAboutMenu}
                     onMouseLeave={scheduleCloseAbout}
                   >
@@ -153,7 +153,7 @@ export default function Navbar() {
         </button>
       </div>
       {open && (
-        <div className="md:hidden bg-black/80 backdrop-blur border-b border-white/10">
+        <div className="md:hidden bg-background/80 backdrop-blur border-b border-white/10">
           <ul className="mx-auto max-w-6xl px-4 md:px-6 lg:px-8 py-3 flex flex-col gap-2">
             {navItems.map(item => {
               if (item.type === 'link') {

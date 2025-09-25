@@ -30,7 +30,7 @@ export default function ImageGallery() {
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null)
 
   return (
-    <div className="relative isolate overflow-hidden bg-black text-white">
+    <div className="relative isolate overflow-hidden bg-background text-white">
       <div className="pointer-events-none absolute inset-0 opacity-70">
         <div className="absolute -top-10 left-[-15%] h-72 w-72 rounded-full bg-[#ff5a1c2b] blur-[110px]" aria-hidden />
         <div className="absolute bottom-[-25%] right-[-5%] h-96 w-96 rounded-full bg-[#ff5a1c1f] blur-[160px]" aria-hidden />
@@ -96,7 +96,7 @@ export default function ImageGallery() {
                   style={{ aspectRatio: `${image.width} / ${image.height}` }}
                   loading="lazy"
                 />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-80" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-80" />
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col gap-1 px-4 pb-4 text-left text-white/90 opacity-0 transition duration-500 group-hover:opacity-100">
                   <span className="text-xs uppercase tracking-[0.3em] text-white/60">{image.location ?? 'Captured moment'}</span>
                   <span className="text-sm font-semibold text-white">

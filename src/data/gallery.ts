@@ -19,9 +19,9 @@ export type GalleryProfile = {
 }
 
 export const galleryProfile: GalleryProfile = {
-  name: 'Harmeet Singh',
+  name: 'Abhay Manhas',
   tagline: 'Small snapshots from the life behind the commits.',
-  image: 'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=900&q=80',
+  image: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1758565569/display_aivyvw.png',
   highlight:
     'Weekend hikes, sunrise coffee rituals, and candid moments with the people who keep me grounded.',
   cta: 'View Image Gallery',

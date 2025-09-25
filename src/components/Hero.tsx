@@ -16,7 +16,7 @@ export default function HeroSection() {
   }, [])
 
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-black">
+    <section className="relative min-h-screen w-full overflow-hidden bg-background">
       <LetterGlitch
         glitchSpeed={42}
         centerVignette
@@ -102,14 +102,14 @@ export default function HeroSection() {
           >
             <Link
               to="/projects"
-              className="inline-flex items-center justify-center rounded-full bg-[#FF6B35] px-6 py-3 text-base font-semibold text-white shadow-lg shadow-black/40 transition-all hover:shadow-2xl hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:text-lg"
+              className="inline-flex items-center justify-center rounded-full bg-[#FF6B35] px-6 py-3 text-base font-semibold text-white shadow-lg shadow-black/40 transition-all hover:shadow-2xl hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:text-lg"
             >
               View Projects <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
 
             <Link
               to="/resume"
-              className="inline-flex items-center justify-center rounded-full border-2 border-white/80 px-6 py-3 text-base font-semibold text-white shadow-md shadow-black/30 transition-all hover:bg-white hover:text-black hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:text-lg"
+              className="inline-flex items-center justify-center rounded-full border-2 border-white/80 px-6 py-3 text-base font-semibold text-white shadow-md shadow-black/30 transition-all hover:bg-white hover:text-black hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:text-lg"
             >
               <Download className="mr-2 h-4 w-4" /> Download Resume
             </Link>
@@ -119,7 +119,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: -8 }}
             animate={ready ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.35 }}
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-black/60 px-3 py-1 text-xs text-white/80 shadow-sm"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-surface/60 px-3 py-1 text-xs text-white/80 shadow-sm"
           >
             <Sparkles className="h-3.5 w-3.5" /> Open to opportunities
           </motion.span>

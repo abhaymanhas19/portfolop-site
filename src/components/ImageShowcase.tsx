@@ -20,8 +20,8 @@ export default function ImageShowcase() {
   }
 
   return (
-    <section className="relative overflow-hidden bg-black py-20">
-      <div className="pointer-events-none absolute inset-0 opacity-70">
+    <section className="relative overflow-hidden bg-background py-20">
+      <div className="pointer-events-none absolute inset-0 opacity-70 [mask-image:linear-gradient(to_bottom,transparent,black_12%,black_88%,transparent)]">
         <div className="absolute -left-20 top-10 h-60 w-60 rounded-full bg-[#FF6B35]/30 blur-[140px]" aria-hidden />
         <div className="absolute bottom-10 right-0 h-72 w-72 translate-x-1/3 rounded-full bg-purple-500/20 blur-[150px]" aria-hidden />
       </div>
@@ -52,9 +52,9 @@ export default function ImageShowcase() {
           transition={{ duration: 0.65, ease: 'easeOut' }}
           onMouseMove={handlePointerMove}
           onMouseLeave={handlePointerLeave}
-          className="group relative w-full max-w-3xl overflow-hidden rounded-[36px] border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent p-[1px]"
+          className="group relative w-full max-w-3xl overflow-hidden rounded-[36px] border border-white/10 bg-background p-[1px]"
         >
-          <div className="relative h-full w-full overflow-hidden rounded-[35px] bg-black">
+          <div className="relative h-full w-full overflow-hidden rounded-[35px] bg-surface">
             <motion.div
               className="absolute inset-0" aria-hidden
               animate={{ opacity: spotlight.active ? 1 : 0 }}
@@ -78,7 +78,7 @@ export default function ImageShowcase() {
                   whileHover={{ scale: 1.12 }}
                   transition={{ duration: 0.8, ease: 'easeOut' }}
                 />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/55 via-transparent to-transparent" />
               </motion.div>
 
               <div className="flex flex-col gap-4 text-left">
@@ -99,7 +99,7 @@ export default function ImageShowcase() {
                   <button
                     type="button"
                     onClick={() => navigate('/image-gallery')}
-                    className="inline-flex items-center gap-2 rounded-full bg-[#FF6B35] px-5 py-2 text-sm font-semibold text-black shadow-[0_10px_28px_rgba(255,90,28,0.45)] transition hover:shadow-[0_14px_34px_rgba(255,90,28,0.55)] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                    className="inline-flex items-center gap-2 rounded-full bg-[#FF6B35] px-5 py-2 text-sm font-semibold text-black shadow-[0_10px_28px_rgba(255,90,28,0.45)] transition hover:shadow-[0_14px_34px_rgba(255,90,28,0.55)] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                   >
                     {galleryProfile.cta}
                   </button>

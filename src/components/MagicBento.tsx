@@ -101,7 +101,7 @@ export default function MagicBento({
                 {(item.icon || item.eyebrow) && (
                   <div className="flex items-center gap-3 text-sm text-white/70">
                     {item.icon && (
-                      <span className="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-black/40 text-white/90">
+                      <span className="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-surface/40 text-white/90">
                         {item.icon}
                       </span>
                     )}
@@ -117,7 +117,7 @@ export default function MagicBento({
                 </div>
 
                 {item.media && (
-                  <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black/30">
+                  <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-surface/30">
                     {item.media}
                   </div>
                 )}
