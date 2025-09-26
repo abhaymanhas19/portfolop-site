@@ -51,9 +51,12 @@ export default function Projects() {
           transition={{ duration: 0.6, ease: 'easeOut' }}
           viewport={{ once: true, amount: 0.35 }}
         >
-          <span className="inline-flex w-fit items-center rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
+          <Link
+            to="/projects"
+            className="inline-flex w-fit items-center rounded-full border border-white/12 bg-white/5 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-white/70 transition hover:border-white/30 hover:bg-white/12"
+          >
             Project Gallery
-          </span>
+          </Link>
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div className="space-y-2">
               <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">

@@ -11,12 +11,13 @@ const navItems: NavItem[] = [
   { type: 'link', label: 'Home', to: '/' },
   { type: 'link', label: 'Skills', to: '/skills' },
   { type: 'link', label: 'Projects', to: '/projects' },
-  { type: 'link', label: 'Certifications', to: '/certifications' },
+  { type: 'link', label: 'Achievements', to: '/certifications' },
   {
     type: 'dropdown',
     label: 'About',
     items: [
       { label: 'About Me', to: '/about' },
+      { label: 'What I Can Build', to: '/what-i-can-build' },
       { label: 'Image Gallery', to: '/image-gallery' },
     ],
   },

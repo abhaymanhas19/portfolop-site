@@ -3,8 +3,9 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Home from './pages/Home'
 import About from './pages/About'
+import WhatICanBuild from './pages/WhatICanBuild'
 import Resume from './pages/Resume'
-import Certifications from './pages/Certifications'
+import Achievements from './pages/Certifications'
 import SkillsDetail from './pages/SkillsDetail'
 import ProjectsDetail from './pages/ProjectsDetail'
 import ImageGallery from './pages/ImageGallery'
@@ -54,9 +55,10 @@ export default function App() {
           <Route path="/skills" element={<SkillsDetail />} />
           <Route path="/projects" element={<ProjectsDetail />} />
           <Route path="/about" element={<About />} />
+          <Route path="/what-i-can-build" element={<WhatICanBuild />} />
           <Route path="/image-gallery" element={<ImageGallery />} />
           <Route path="/resume" element={<Resume />} />
-          <Route path="/certifications" element={<Certifications />} />
+          <Route path="/certifications" element={<Achievements />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

@@ -14,9 +14,8 @@ export default function About() {
       meta: item.period,
       title: item.role,
       description: item.summary,
-      chips: item.achievements.slice(0, 2),
-      overflowLabel:
-        item.achievements.length > 2 ? `+${item.achievements.length - 2} more wins` : undefined,
+      chips: undefined,
+      overflowLabel: item.achievements.length > 0 ? 'View details »' : undefined,
       accent:
         index % 3 === 0
           ? 'from-[#FF6B35]/24 via-[#1f1814]/55 to-transparent'
@@ -26,14 +25,16 @@ export default function About() {
       modalContent: (
         <div className="space-y-5">
           <p className="text-sm leading-relaxed text-white/75 md:text-base">{item.summary}</p>
-          <div className="space-y-2 text-sm text-white/80">
-            {item.achievements.map(point => (
-              <div key={point} className="flex gap-2">
-                <span className="mt-1 h-1 w-1 flex-none rounded-full bg-[#FF6B35]" aria-hidden />
-                <span>{point}</span>
-              </div>
-            ))}
-          </div>
+          {item.achievements.length > 0 && (
+            <div className="space-y-3 text-sm text-white/80">
+              {item.achievements.map(point => (
+                <div key={point} className="flex gap-3">
+                  <span className="mt-1 h-1.5 w-1.5 flex-none rounded-full bg-[#FF6B35]" aria-hidden />
+                  <span className="leading-relaxed">{point}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       ),
     }
@@ -63,7 +64,7 @@ export default function About() {
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3 md:justify-end">
               <Link
                 to="/resume"
                 className="inline-flex items-center gap-2 rounded-full bg-[#FF6B35] px-5 py-2.5 text-sm font-semibold text-black shadow-[0_12px_32px_rgba(255,90,28,0.45)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_36px_rgba(255,90,28,0.55)]"
@@ -91,6 +92,7 @@ export default function About() {
                   : 'from-[#FF6B35]/18 via-[#181f24]/55 to-transparent',
             }))}
             columnsClassName="sm:grid-cols-2 lg:grid-cols-3"
+            className="mt-8 gap-4 sm:gap-5"
           />
         </motion.div>
 

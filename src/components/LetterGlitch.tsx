@@ -9,6 +9,8 @@ type LetterGlitchProps = {
   characters?: string;
   className?: string;
   overlayClassName?: string;
+  centerVignetteClassName?: string;
+  outerVignetteClassName?: string;
   children?: ReactNode;
 };
 
@@ -21,6 +23,8 @@ const LetterGlitch = ({
   characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$&*()-_+=/[]{};:<>.,0123456789',
   className = '',
   overlayClassName,
+  centerVignetteClassName,
+  outerVignetteClassName,
   children
 }: LetterGlitchProps) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -227,13 +231,23 @@ const LetterGlitch = ({
     : 'absolute inset-0 z-10 flex items-center justify-center';
 
   return (
-    <div className={`relative w-full h-full bg-background overflow-hidden ${className}`}>
+    <div className={`relative w-full h-full bg-transparent overflow-hidden ${className}`}>
       <canvas ref={canvasRef} className="block w-full h-full" />
       {outerVignette && (
-        <div className="absolute top-0 left-0 w-full h-full pointer-events-none bg-[radial-gradient(circle,_rgba(0,0,0,0)_60%,_rgba(0,0,0,0.5)_100%)]"></div>
+        <div
+          className={
+            outerVignetteClassName ??
+            'absolute top-0 left-0 h-full w-full pointer-events-none bg-[radial-gradient(circle,_rgba(0,0,0,0)_60%,_rgba(0,0,0,0.5)_100%)]'
+          }
+        ></div>
       )}
       {centerVignette && (
-        <div className="absolute top-0 left-0 w-full h-full pointer-events-none bg-[radial-gradient(circle,_rgba(0,0,0,0.9)_0%,_rgba(0,0,0,0.2)_60%)]"></div>
+        <div
+          className={
+            centerVignetteClassName ??
+            'absolute top-0 left-0 h-full w-full pointer-events-none bg-[radial-gradient(circle,_rgba(0,0,0,0.9)_0%,_rgba(0,0,0,0.2)_60%)]'
+          }
+        ></div>
       )}
       {children ? <div className={overlayClasses}>{children}</div> : null}
     </div>
