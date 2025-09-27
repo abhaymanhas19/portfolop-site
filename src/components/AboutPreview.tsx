@@ -30,9 +30,12 @@ export default function AboutPreview() {
           transition={{ duration: 0.5 }}
           className="space-y-2"
         >
-          <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-white/60">
+          <Link
+            to="/about"
+            className="inline-flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1 text-xs uppercase tracking-[0.25em] text-white/70 transition hover:border-white/30 hover:bg-white/12"
+          >
             <Sparkles className="h-3.5 w-3.5 text-[#FF6B35]" /> Meet {site.NAME}
-          </span>
+          </Link>
           <h2 className="text-2xl font-semibold text-white md:text-3xl">
             {about.headline}
           </h2>

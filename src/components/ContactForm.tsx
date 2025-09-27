@@ -73,7 +73,7 @@ export default function ContactForm() {
 
   return (
     <section id="contact" className="mx-auto max-w-6xl px-4 py-20">
-      <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-black/80 via-[#151516] to-black/90 px-6 py-12 md:px-10 lg:px-14">
+      <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-background px-6 py-12 md:px-10 lg:px-14">
         <div className="pointer-events-none absolute -top-16 right-0 h-64 w-64 rounded-full bg-[#ff5a1c2f] blur-[120px]" aria-hidden />
         <div className="pointer-events-none absolute bottom-[-80px] left-[-40px] h-72 w-72 rounded-full bg-[#ff5a1c1f] blur-[140px]" aria-hidden />
 
@@ -129,7 +129,7 @@ export default function ContactForm() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="relative z-10 grid gap-5 rounded-2xl border border-white/10 bg-black/70 p-6 shadow-[0_18px_40px_rgba(0,0,0,0.45)]"
+            className="relative z-10 grid gap-5 rounded-2xl border border-white/10 bg-surface/70 p-6 shadow-[0_18px_40px_rgba(6,7,21,0.55)]"
           >
             <div className="grid gap-4 sm:grid-cols-2">
               <label className="flex flex-col gap-1 text-sm font-medium text-white/80" htmlFor="name">
@@ -167,7 +167,7 @@ export default function ContactForm() {
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <button
                 type="submit"
-                className="inline-flex items-center justify-center rounded-full bg-[#FF6B35] px-6 py-3 text-sm font-semibold text-black shadow-[0_12px_32px_rgba(255,90,28,0.45)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_40px_rgba(255,90,28,0.55)] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                className="inline-flex items-center justify-center rounded-full bg-[#FF6B35] px-6 py-3 text-sm font-semibold text-black shadow-[0_12px_32px_rgba(255,90,28,0.45)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_40px_rgba(255,90,28,0.55)] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 {status === 'sending' ? 'Sending…' : 'Send message'}
               </button>

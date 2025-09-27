@@ -47,9 +47,9 @@ export default function Modal({ open, onClose, title, subtitle, children, footer
   const root = ensureModalRoot()
 
   return createPortal(
-    <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/75 px-4 py-8 backdrop-blur" onMouseDown={onClose}>
+    <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-surface/75 px-4 py-8 backdrop-blur" onMouseDown={onClose}>
       <div
-        className="relative w-full max-w-3xl rounded-3xl border border-white/10 bg-[#08090c]/95 p-6 shadow-[0_20px_80px_rgba(0,0,0,0.65)]"
+        className="relative w-full max-w-3xl rounded-3xl border border-white/10 bg-surface/95 p-6 shadow-[0_20px_80px_rgba(0,0,0,0.65)]"
         onMouseDown={(event) => event.stopPropagation()}
       >
         <button

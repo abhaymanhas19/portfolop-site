@@ -29,7 +29,7 @@ export default function Resume() {
       <div className="pointer-events-none absolute inset-x-0 top-10 mx-auto h-72 max-w-3xl rounded-full bg-[#ff5a1c26] blur-[140px]" aria-hidden />
 
       <div className="relative space-y-12">
-        <header className="flex flex-col gap-6 rounded-3xl border border-white/10 bg-gradient-to-br from-black/85 via-[#151516] to-black/90 p-8 md:flex-row md:items-center md:justify-between md:p-10">
+        <header className="flex flex-col gap-6 rounded-3xl border border-white/10 bg-gradient-to-br from-background/85 via-[#151516] to-background/90 p-8 md:flex-row md:items-center md:justify-between md:p-10">
           <div className="space-y-4">
             <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-white/60">
               Resume Snapshot
@@ -75,7 +75,7 @@ export default function Resume() {
           </div>
         </header>
 
-        <div className="rounded-3xl border border-white/10 bg-black/80 p-4 md:p-6">
+        <div className="rounded-3xl border border-white/10 bg-surface/80 p-4 md:p-6">
           {!ready && !error && (
             <div className="grid place-items-center rounded-2xl border border-white/10 bg-[#111]/70 p-10 text-sm text-white/70">
               Loading resume…

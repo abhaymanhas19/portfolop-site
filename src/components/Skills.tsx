@@ -7,7 +7,7 @@ import { ServerCog, BrainCircuit, Cloud, MessageSquare, Gauge, FlaskConical } fr
 const icons = { ServerCog, BrainCircuit, Cloud, MessageSquare, Gauge, FlaskConical } as const
 
 export default function Skills() {
-  const previewGroups = skills.slice(0, 4)
+  const previewGroups = skills.slice(0, 2)
 
   const items: MagicBentoItem[] = previewGroups.map((group, index) => {
     const Icon = (icons as any)[group.icon] || ServerCog
@@ -64,9 +64,12 @@ export default function Skills() {
           transition={{ duration: 0.5 }}
           className="space-y-2"
         >
-          <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-white/60">
+          <Link
+            to="/skills"
+            className="inline-flex w-fit items-center gap-2 rounded-full border border-white/12 bg-white/5 px-4 py-1 text-xs uppercase tracking-[0.25em] text-white/70 transition hover:border-white/30 hover:bg-white/12"
+          >
             <span className="h-1 w-3 rounded-full bg-[#FF6B35]" aria-hidden /> Skills Snapshot
-          </span>
+          </Link>
           <h2 className="text-2xl font-semibold text-white md:text-3xl">
             A quick tour of my core stacks
           </h2>
@@ -83,7 +86,7 @@ export default function Skills() {
         >
           <Link
             to="/skills"
-            className="inline-flex items-center justify-center rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-white/50 hover:bg-white/10"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-white/30 hover:bg-white/20 whitespace-nowrap"
           >
             Explore the full skillset
           </Link>
@@ -99,17 +102,17 @@ export default function Skills() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.15 }}
-        className="mt-10 flex flex-col items-start gap-3 rounded-2xl border border-white/10 bg-[#111]/70 p-6 md:flex-row md:items-center md:justify-between"
+        className="mt-12 flex flex-col gap-5 rounded-[32px] border border-white/10 bg-gradient-to-r from-[#15121e]/85 via-[#14101e]/78 to-[#110c1a]/85 p-6 shadow-[0_28px_80px_rgba(7,5,12,0.45)] backdrop-blur-lg md:flex-row md:items-center md:justify-between md:px-10 md:py-8"
       >
-        <div>
-          <h3 className="text-lg font-semibold text-white">Want the deeper dive?</h3>
-          <p className="text-sm text-white/65">
-            The dedicated skills page breaks down architecture patterns, AI workflows, and supporting tools in more detail.
+        <div className="space-y-2 text-center md:text-left">
+          <h3 className="text-lg font-semibold text-white md:text-xl">Need the deeper dive?</h3>
+          <p className="max-w-xl text-sm text-white/70 md:text-base">
+            Explore architecture diagrams, ops notes, and measurable outcomes across every capability in the stack.
           </p>
         </div>
         <Link
           to="/skills"
-          className="inline-flex items-center justify-center rounded-full bg-[#FF6B35] px-6 py-3 text-sm font-semibold text-black shadow-[0_8px_24px_rgba(255,90,28,0.4)] transition hover:shadow-[0_12px_32px_rgba(255,90,28,0.5)]"
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#FF6B35] via-[#FF7A35] to-[#FF4D35] px-7 py-3 text-sm font-semibold text-[#1a0b05] shadow-[0_18px_45px_rgba(255,107,53,0.45)] transition hover:shadow-[0_22px_55px_rgba(255,107,53,0.55)] whitespace-nowrap"
         >
           View the complete list
         </Link>

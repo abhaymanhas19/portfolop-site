@@ -4,7 +4,7 @@ import { Award, ArrowRight, ExternalLink, Sparkles } from 'lucide-react'
 import { profile } from '../data/profile'
 import MagicBento, { type MagicBentoItem } from '../components/MagicBento'
 
-export default function Certifications() {
+export default function Achievements() {
   const { certifications } = profile
 
   const items: MagicBentoItem[] = certifications.map(cert => ({
@@ -73,7 +73,7 @@ export default function Certifications() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="rounded-3xl border border-white/10 bg-gradient-to-br from-black/85 via-[#141415] to-black/90 p-8 md:p-12"
+          className="rounded-3xl border border-white/10 bg-gradient-to-br from-background/85 via-[#141415] to-background/90 p-8 md:p-12"
         >
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div className="max-w-3xl space-y-4">
@@ -81,10 +81,10 @@ export default function Certifications() {
                 <Sparkles className="h-3.5 w-3.5 text-[#FF6B35]" /> Staying current
               </span>
               <h1 className="text-3xl font-extrabold tracking-tight text-white md:text-5xl">
-                Certifications that back the delivery.
+                Achievements that back the delivery.
               </h1>
               <p className="text-base text-white/70 md:text-lg">
-                Each certification reflects the tooling and practices I rely on for client engagements—from Azure AI workloads to Kubernetes rollouts and practical deep learning.
+                Each milestone reflects the tooling and practices I rely on for client engagements—from Azure AI workloads to Kubernetes rollouts and practical deep learning.
               </p>
             </div>
             <Link
