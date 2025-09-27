@@ -44,7 +44,7 @@ export default function HeroSection() {
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(12,10,25,0.65),_transparent_65%)]" />
       </div>
 
-      <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center justify-center gap-12 px-6 py-24 lg:flex-row lg:items-center lg:justify-between">
+      <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-6xl flex-col items-center justify-center gap-12 px-6 py-24 lg:flex-row lg:items-center lg:justify-between lg:gap-16">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={ready ? { opacity: 1, y: 0 } : {}}
@@ -149,26 +149,20 @@ export default function HeroSection() {
           initial={{ opacity: 0, scale: 0.92, y: 24 }}
           animate={ready ? { opacity: 1, scale: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.32, ease: 'easeOut' }}
-          className="flex w-full justify-center lg:w-auto"
+          className="flex w-full justify-center lg:w-auto lg:flex-none lg:justify-end lg:self-center"
         >
-          <div className="relative h-48 w-48 md:h-64 md:w-64 lg:h-72 lg:w-72">
-            <div className="pointer-events-none absolute inset-[-18%] rounded-[999px] bg-[radial-gradient(circle,_rgba(255,107,53,0.25)_0%,_rgba(44,24,73,0.12)_45%,_transparent_85%)] blur-3xl" />
-            <div className="pointer-events-none absolute inset-[-8%] rounded-[999px] bg-[radial-gradient(circle,_rgba(92,142,255,0.18)_0%,_transparent_70%)] blur-2xl" />
-            <div className="relative h-full w-full overflow-hidden rounded-[36px] bg-gradient-to-br from-[#120a1a]/82 via-[#090512]/78 to-[#05050d]/82">
-              <div className="pointer-events-none absolute -inset-[1px] rounded-[38px] bg-gradient-to-br from-[#ffb995]/50 via-transparent to-transparent opacity-80" />
-              <LetterGlitch
-                className="h-full w-full overflow-hidden rounded-[36px] bg-[#05040a]/40"
-                glitchColors={['#FF6B35', '#FF9150', '#FFE3C7', '#E3F3FF']}
-                glitchSpeed={32}
-                centerVignette
-                centerVignetteClassName="absolute inset-0 rounded-[36px] pointer-events-none mix-blend-screen bg-[radial-gradient(circle,_rgba(255,194,144,0.24)_0%,_rgba(74,54,127,0.1)_48%,_transparent_78%)]"
-                outerVignette
-                outerVignetteClassName="absolute inset-0 rounded-[36px] pointer-events-none mix-blend-soft-light bg-[radial-gradient(circle,_rgba(8,6,18,0)_46%,_rgba(6,5,12,0.75)_85%,_rgba(3,3,6,0.9)_100%)]"
-                smooth
-              />
-              <div className="pointer-events-none absolute inset-0 rounded-[36px] border border-white/5" />
-              <div className="pointer-events-none absolute inset-0 rounded-[36px] bg-[conic-gradient(from_140deg,_rgba(255,107,53,0.22),transparent_55%,rgba(88,120,255,0.18)_75%,transparent_95%)] opacity-70" />
-            </div>
+          <div className="relative h-72 w-60 md:h-[22rem] md:w-[22rem] lg:h-[24rem] lg:w-[26rem] xl:h-[26rem] xl:w-[26rem]">
+            <LetterGlitch
+              className="h-full w-full"
+              glitchColors={['#FF6B35', '#FF9150', '#FFE3C7', '#9BC2FF', '#FFFFFF']}
+              glitchSpeed={26}
+              centerVignette={false}
+              outerVignette={false}
+              smooth
+              ambientGlow={false}
+              backgroundFill={false}
+              roundEdges={false}
+            />
           </div>
         </motion.div>
       </div>
