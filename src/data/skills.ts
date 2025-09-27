@@ -27,16 +27,16 @@ export const skills: SkillDomain[] = [
     domain: 'AI & ML',
     icon: 'BrainCircuit',
     skills: [
-      'RAG',
-      'NLP',
-      'Semantic Search',
-      'PyTorch',
+      "PyTorch",
       'Neural Networks',
       'CNNs',
       'RNNs',
+      "Semantic Search",
       'Transformers',
       'Scikit-learn',
       'Evaluation',
+      'RAG',
+      'NLP',
       'OpenAI/Gemini/Azure'
     ],
     description: 'Shipping applied AI systems—from neural-network experimentation in PyTorch to optimized RAG pipelines and rigorous evaluation harnesses.'

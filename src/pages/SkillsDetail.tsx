@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { skills } from '../data/skills'
 import MagicBento, { type MagicBentoItem } from '../components/MagicBento'
+import LogoLoop from '../components/LogoLoop'
 import { ArrowLeft, ArrowRight, Sparkles, ServerCog, BrainCircuit, Cloud, MessageSquare, Gauge, FlaskConical } from 'lucide-react'
 
 const icons = { ServerCog, BrainCircuit, Cloud, MessageSquare, Gauge, FlaskConical } as const
@@ -74,6 +75,8 @@ export default function SkillsDetail() {
             motionFrom={{ opacity: 0, y: 28 }}
           />
         </div>
+
+        <LogoLoop />
 
         <div className="mt-16 rounded-3xl border border-white/10 bg-gradient-to-r from-background/70 via-[#1c1c1f] to-background/70 p-8 md:p-10">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">

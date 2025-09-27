@@ -114,3 +114,19 @@ body { background: rgb(var(--color-background)); color: var(--fg); }
 /* Caret blink for typing */
 @keyframes caretBlink { 0%, 40% { opacity: 1 } 50%, 90% { opacity: 0 } 100% { opacity: 1 } }
 .typing-caret::after { content: "▍"; margin-left: 2px; animation: caretBlink 1.2s infinite; color: var(--accent); }
+
+@keyframes logo-loop-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.logo-loop-track {
+  animation-name: logo-loop-marquee;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+}

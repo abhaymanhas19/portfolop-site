@@ -5,6 +5,7 @@ import AboutPreview from '../components/AboutPreview'
 import CertificationsPreview from '../components/CertificationsPreview'
 import ContactForm from '../components/ContactForm'
 import ImageShowcase from '../components/ImageShowcase'
+import LogoLoop from '../components/LogoLoop'
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <CertificationsPreview />
       <AboutPreview />
       <ContactForm />
+      <LogoLoop />
       <ImageShowcase />
     </>
   )
