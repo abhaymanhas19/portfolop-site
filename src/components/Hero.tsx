@@ -8,25 +8,7 @@ import SplitText from './SplitText'
 import LetterGlitch from './LetterGlitch'
 import HyperspeedBackground, { type HyperspeedOptions } from './HyperspeedBackground'
 
-const heroHyperspeedOptions: Partial<HyperspeedOptions> = {
-  lanesPerRoad: 4,
-  totalSideLightSticks: 28,
-  lightPairsPerRoadWay: 36,
-  fovSpeedUp: 140,
-  speedUp: 2.5,
-  carLightsFade: 0.35,
-  distortion: 'turbulentDistortion',
-  colors: {
-    roadColor: 0x06040f,
-    islandColor: 0x0a081a,
-    background: 0x000000,
-    shoulderLines: 0xff6b35,
-    brokenLines: 0xffe6d5,
-    leftCars: [0xff6b35, 0xff935c, 0xffb48a],
-    rightCars: [0x53c9ff, 0x7295ff, 0x9bc2ff],
-    sticks: 0xff6b35
-  }
-}
+
 
 export default function HeroSection() {
   const [ready, setReady] = useState(false)
@@ -38,11 +20,6 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-screen w-full overflow-hidden bg-background">
-      <div className="absolute inset-0">
-        <HyperspeedBackground effectOptions={heroHyperspeedOptions} />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background/95" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(12,10,25,0.65),_transparent_65%)]" />
-      </div>
 
       <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-6xl flex-col items-center justify-center gap-12 px-6 py-24 lg:flex-row lg:items-center lg:justify-between lg:gap-16">
         <motion.div
@@ -145,26 +122,6 @@ export default function HeroSection() {
           </motion.span>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.92, y: 24 }}
-          animate={ready ? { opacity: 1, scale: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.32, ease: 'easeOut' }}
-          className="flex w-full justify-center lg:w-auto lg:flex-none lg:justify-end lg:self-center"
-        >
-          <div className="relative h-72 w-60 md:h-[22rem] md:w-[22rem] lg:h-[24rem] lg:w-[26rem] xl:h-[26rem] xl:w-[26rem]">
-            <LetterGlitch
-              className="h-full w-full"
-              glitchColors={['#FF6B35', '#FF9150', '#FFE3C7', '#9BC2FF', '#FFFFFF']}
-              glitchSpeed={26}
-              centerVignette={false}
-              outerVignette={false}
-              smooth
-              ambientGlow={false}
-              backgroundFill={false}
-              roundEdges={false}
-            />
-          </div>
-        </motion.div>
       </div>
     </section>
   )

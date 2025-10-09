@@ -37,12 +37,6 @@ export default function Projects() {
 
   return (
     <section id="projects" className="relative overflow-hidden bg-background py-16 sm:py-20">
-      <div className="pointer-events-none absolute inset-0 opacity-60">
-        <div className="absolute -top-1/4 left-1/3 h-72 w-72 -translate-x-1/2 rounded-full bg-[#FF6B35]/30 blur-[140px]" />
-        <div className="absolute bottom-1/4 left-0 h-48 w-48 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-[130px]" />
-        <div className="absolute right-0 top-0 h-64 w-64 translate-x-1/3 rounded-full bg-purple-500/25 blur-[140px]" />
-      </div>
-
       <div className="relative mx-auto flex max-w-6xl flex-col gap-12 px-6">
         <motion.div
           className="flex flex-col gap-4 text-white"
