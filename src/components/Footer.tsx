@@ -1,66 +1,78 @@
+import { useNavigate } from 'react-router-dom'
+import { Github, Linkedin, Instagram, Twitter, Mail, type LucideIcon } from 'lucide-react'
 import { site } from '../data/site'
-import { Github, Linkedin, Instagram, Mail } from 'lucide-react'
-import { Link, useNavigate } from 'react-router-dom'
+import { socials } from '../data/content'
 
-const socials = { GitHub: Github, LinkedIn: Linkedin, Instagram: Instagram } as const
+const socialIcons: Record<string, LucideIcon> = {
+  Github,
+  Linkedin,
+  Instagram,
+  Twitter,
+}
 
-export default function Footer(){
+const footerLinks = [
+  { label: 'Skills', to: '/skills' },
+  { label: 'Projects', to: '/projects' },
+  { label: 'Achievements', to: '/certifications' },
+  { label: 'About', to: '/about' },
+  { label: 'Resume', to: '/resume' },
+]
+
+export default function Footer() {
   const navigate = useNavigate()
+
   const gotoContact = () => {
     navigate('/#contact')
-    setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior:'smooth' }), 50)
+    setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 50)
   }
 
   return (
-    <footer className="mt-16 border-t border-white/10 bg-gradient-to-r from-background via-background to-background relative overflow-hidden">
-      <div className="mx-auto max-w-6xl px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
-        {/* Brand */}
-        <div className="flex items-center gap-3">
-          <img src="/favicon.svg" alt="Brand" className="h-7 w-7"/>
-          <span className="font-semibold text-white">{site.NAME}</span>
+    <footer className="relative mt-16 overflow-hidden border-t border-slate-200/80 bg-white/90">
+      <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-white via-white/80 to-transparent" />
+      <div className="relative mx-auto flex max-w-6xl flex-col items-center gap-6 px-4 py-10 text-slate-600 md:flex-row md:justify-between md:px-6 lg:px-8">
+        <div className="flex items-center gap-3 text-slate-700">
+          <img src="/favicon.svg" alt="Brand" className="h-7 w-7" />
+          <span className="text-lg font-semibold">{site.NAME}</span>
         </div>
 
-        {/* Nav */}
-        <nav className="flex flex-wrap justify-center gap-4 text-sm text-white/80">
-          <Link to="/skills" className="hover:opacity-100 hover:text-[#ff5a1c] transition">Skills</Link>
-          <Link to="/projects" className="hover:opacity-100 hover:text-[#ff5a1c] transition">Projects</Link>
-          <Link to="/certifications" className="hover:opacity-100 hover:text-[#ff5a1c] transition">Achievements</Link>
-          <Link to="/about" className="hover:opacity-100 hover:text-[#ff5a1c] transition">About</Link>
-          <Link to="/resume" className="hover:opacity-100 hover:text-[#ff5a1c] transition">Resume</Link>
+        <nav className="flex flex-wrap justify-center gap-4 text-sm">
+          {footerLinks.map(link => (
+            <button
+              key={link.label}
+              onClick={() => navigate(link.to)}
+              className="rounded-full px-3 py-1 text-slate-500 transition hover:bg-cyan-50 hover:text-cyan-600"
+            >
+              {link.label}
+            </button>
+          ))}
         </nav>
 
-        {/* Socials + Contact */}
         <div className="flex items-center gap-3">
-          {site.SOCIAL.map((s) => {
-            const Icon = (socials as any)[s.label]
+          {socials.map(handle => {
+            const Icon = socialIcons[handle.icon] ?? Mail
             return (
               <a
-                key={s.label}
-                href={s.url}
+                key={handle.id}
+                href={handle.url}
                 target="_blank"
                 rel="noreferrer"
-                aria-label={s.label}
-                className="p-2 rounded-lg text-white/80 hover:text-[#ff5a1c] hover:bg-white/10 transition"
+                aria-label={handle.label}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200 bg-white/85 text-slate-500 transition hover:-translate-y-0.5 hover:border-cyan-200 hover:bg-cyan-50 hover:text-cyan-600"
               >
-                {Icon ? <Icon className="h-5 w-5" /> : <span className="text-sm">{s.label}</span>}
+                <Icon className="h-4 w-4" />
               </a>
             )
           })}
           <button
             onClick={gotoContact}
-            className="inline-flex items-center gap-2 rounded-lg px-4 py-2
-                       bg-[#ff5a1c] text-black font-medium
-                       shadow-[0_8px_24px_rgba(255,90,28,0.35)]
-                       hover:shadow-[0_12px_36px_rgba(255,90,28,0.5)]
-                       hover:-translate-y-0.5 transition
-                       focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-400 via-teal-400 to-emerald-400 px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-[0_18px_40px_rgba(79,209,197,0.32)] transition hover:-translate-y-0.5"
           >
             <Mail className="h-4 w-4" /> Contact
           </button>
         </div>
       </div>
 
-      <div className="text-center text-xs text-white/60 py-4">
+      <div className="relative border-t border-slate-200/70 bg-white/70 text-center text-xs text-slate-400 py-4">
         © {new Date().getFullYear()} {site.NAME}. All rights reserved.
       </div>
     </footer>

@@ -64,7 +64,7 @@ export default function MagicBento({
     <>
       <div className={cn('grid gap-6', columnsClassName, className)}>
         {items.map((item, index) => {
-          const accent = item.accent ?? 'from-[#FF6B35]/25 via-transparent to-transparent'
+          const accent = item.accent ?? 'from-cyan-100/70 via-transparent to-transparent'
           return (
             <motion.article
               key={item.id}
@@ -73,9 +73,9 @@ export default function MagicBento({
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.5, delay: index * 0.04 }}
               className={cn(
-                'group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl md:p-8',
-                'shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] hover:border-white/25 transition-colors',
-                'focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6B35]/60',
+                'group relative overflow-hidden rounded-[28px] border border-cyan-100 bg-white/90 p-6 shadow-[0_24px_60px_rgba(15,41,67,0.12)] backdrop-blur md:p-8',
+                'hover:-translate-y-1 transition',
+                'focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200 focus-visible:ring-offset-2 focus-visible:ring-offset-white',
                 item.className,
               )}
               role="button"
@@ -85,39 +85,41 @@ export default function MagicBento({
             >
               <div
                 className={cn(
-                  'pointer-events-none absolute inset-0 opacity-70 blur-3xl transition duration-700 group-hover:opacity-100',
+                  'pointer-events-none absolute inset-0 opacity-60 blur-3xl transition duration-700 group-hover:opacity-100',
                   `bg-gradient-to-br ${accent}`,
                 )}
                 aria-hidden
               />
-              <div className={cn('relative flex h-full flex-col gap-4 text-left text-white', item.contentClassName)}>
+              <div className={cn('relative flex h-full flex-col gap-4 text-left text-slate-700', item.contentClassName)}>
                 {(item.badge || item.meta) && (
-                  <div className="flex items-center justify-between gap-3 text-xs uppercase tracking-[0.3em] text-white/50">
+                  <div className="flex items-center justify-between gap-3 text-xs uppercase tracking-[0.3em] text-slate-400">
                     <span>{item.badge}</span>
-                    <span className="text-white/40">{item.meta}</span>
+                    <span className="text-slate-300">{item.meta}</span>
                   </div>
                 )}
 
                 {(item.icon || item.eyebrow) && (
-                  <div className="flex items-center gap-3 text-sm text-white/70">
+                  <div className="flex items-center gap-3 text-sm text-slate-500">
                     {item.icon && (
-                      <span className="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-surface/40 text-white/90">
+                      <span className="grid h-11 w-11 place-items-center rounded-2xl border border-cyan-100 bg-cyan-50 text-cyan-600">
                         {item.icon}
                       </span>
                     )}
-                    {item.eyebrow && <div className="text-xs uppercase tracking-[0.28em] text-white/55">{item.eyebrow}</div>}
+                    {item.eyebrow && (
+                      <div className="text-xs uppercase tracking-[0.28em] text-slate-400">{item.eyebrow}</div>
+                    )}
                   </div>
                 )}
 
                 <div className="space-y-3">
-                  <h3 className="text-xl font-semibold leading-tight text-white md:text-2xl">{item.title}</h3>
+                  <h3 className="text-xl font-semibold leading-tight text-slate-900 md:text-2xl">{item.title}</h3>
                   {item.description && (
-                    <p className="text-sm leading-relaxed text-white/70 md:text-base">{item.description}</p>
+                    <p className="text-sm leading-relaxed text-slate-600 md:text-base">{item.description}</p>
                   )}
                 </div>
 
                 {item.media && (
-                  <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-surface/30">
+                  <div className="relative overflow-hidden rounded-2xl border border-cyan-100 bg-white">
                     {item.media}
                   </div>
                 )}
@@ -127,7 +129,7 @@ export default function MagicBento({
                     {item.chips.map(chip => (
                       <span
                         key={chip}
-                        className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium uppercase tracking-wide text-white/75"
+                        className="rounded-full border border-cyan-100 bg-cyan-50 px-3 py-1 text-xs font-medium uppercase tracking-wide text-cyan-600"
                       >
                         {chip}
                       </span>
@@ -142,7 +144,7 @@ export default function MagicBento({
                       event.stopPropagation()
                       setActiveIndex(index)
                     }}
-                    className="inline-flex w-fit items-center justify-center rounded-full border border-[#FF6B35]/40 bg-[#FF6B35]/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[#FF6B35] transition hover:bg-[#FF6B35]/20 hover:text-[#FF6B35]"
+                    className="inline-flex w-fit items-center justify-center rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-600 transition hover:bg-cyan-100"
                   >
                     {item.overflowLabel}
                   </button>
@@ -150,7 +152,7 @@ export default function MagicBento({
 
                 {item.actions && <div className="mt-2 flex flex-wrap gap-3 text-sm">{item.actions}</div>}
 
-                {item.footer && <div className="mt-auto pt-4 text-sm text-white/65">{item.footer}</div>}
+                {item.footer && <div className="mt-auto pt-4 text-sm text-slate-500">{item.footer}</div>}
               </div>
             </motion.article>
           )
@@ -168,12 +170,12 @@ export default function MagicBento({
           activeItem.modalContent ?? (
             <div className="space-y-5">
               {activeItem.media && (
-                <div className="overflow-hidden rounded-2xl border border-white/10">
+                <div className="overflow-hidden rounded-2xl border border-cyan-100">
                   {activeItem.media}
                 </div>
               )}
               {activeItem.description && (
-                <p className="text-sm leading-relaxed text-white/75 md:text-base">
+                <p className="text-sm leading-relaxed text-slate-600 md:text-base">
                   {activeItem.description}
                 </p>
               )}
@@ -182,7 +184,7 @@ export default function MagicBento({
                   {activeItem.chips.map(chip => (
                     <span
                       key={chip}
-                      className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-white/80"
+                      className="rounded-full border border-cyan-100 bg-cyan-50 px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-cyan-600"
                     >
                       {chip}
                     </span>
@@ -190,7 +192,7 @@ export default function MagicBento({
                 </div>
               )}
               {activeItem.actions && <div className="flex flex-wrap gap-3 text-sm">{activeItem.actions}</div>}
-              {activeItem.footer && <div className="text-sm text-white/65">{activeItem.footer}</div>}
+              {activeItem.footer && <div className="text-sm text-slate-500">{activeItem.footer}</div>}
             </div>
           )
         ) : null}

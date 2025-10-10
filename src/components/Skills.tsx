@@ -1,122 +1,170 @@
+import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { skills } from '../data/skills'
-import MagicBento, { type MagicBentoItem } from './MagicBento'
-import { ServerCog, BrainCircuit, Cloud, MessageSquare, Gauge, FlaskConical } from 'lucide-react'
+import {
+  ArrowRight,
+  ServerCog,
+  BrainCircuit,
+  Cloud,
+  Workflow,
+  Cpu,
+  Layers,
+  type LucideIcon,
+} from 'lucide-react'
+import { skillClusters, homeContent } from '../data/content'
 
-const icons = { ServerCog, BrainCircuit, Cloud, MessageSquare, Gauge, FlaskConical } as const
+const iconMap: Record<string, LucideIcon> = {
+  ServerCog,
+  BrainCircuit,
+  Cloud,
+  Workflow,
+  Cpu,
+  Layers,
+}
+
+const categories = skillClusters
 
 export default function Skills() {
-  const previewGroups = skills.slice(0, 2)
+  const [active, setActive] = useState(categories[0]?.id ?? 'backend')
+  const activeCategory = useMemo(
+    () => categories.find(category => category.id === active) ?? categories[0],
+    [active],
+  )
 
-  const items: MagicBentoItem[] = previewGroups.map((group, index) => {
-    const Icon = (icons as any)[group.icon] || ServerCog
-    const accentVariants = [
-      'from-[#FF6B35]/25 via-[#311b10]/60 to-transparent',
-      'from-[#FF6B35]/20 via-[#18212b]/60 to-transparent',
-      'from-[#FF6B35]/20 via-[#1a2422]/60 to-transparent',
-      'from-[#FF6B35]/20 via-[#261a2b]/60 to-transparent',
-    ]
-    const chips = group.skills.slice(0, 6)
-    const remaining = group.skills.length - chips.length
+  if (!activeCategory) return null
 
-    const modalContent = (
-      <div className="space-y-5">
-        {group.description && (
-          <p className="text-sm leading-relaxed text-white/75 md:text-base">{group.description}</p>
-        )}
-        <div className="flex flex-wrap gap-2">
-          {group.skills.map(skill => (
-            <span
-              key={skill}
-              className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-white/80"
-            >
-              {skill}
-            </span>
-          ))}
-        </div>
-      </div>
-    )
-
-    const overflowLabel = remaining > 0 ? `+${remaining} more skills` : undefined
-
-    return {
-      id: group.domain,
-      icon: <Icon className="h-5 w-5 text-[#FF6B35]" />,
-      badge: 'Skills Snapshot',
-      title: group.domain,
-      description: group.description,
-      chips,
-      meta: `${String(group.skills.length).padStart(2, '0')} skills`,
-      accent: accentVariants[index % accentVariants.length],
-      overflowLabel,
-      modalContent,
-    }
-  })
+  const displayedSkills = activeCategory.skills.slice(0, 4)
+  const Icon = iconMap[activeCategory.icon] ?? ServerCog
 
   return (
-    <section id="skills" className="mx-auto max-w-6xl px-4 py-16">
-      <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="space-y-2"
-        >
-          <Link
-            to="/skills"
-            className="inline-flex w-fit items-center gap-2 rounded-full border border-white/12 bg-white/5 px-4 py-1 text-xs uppercase tracking-[0.25em] text-white/70 transition hover:border-white/30 hover:bg-white/12"
-          >
-            <span className="h-1 w-3 rounded-full bg-[#FF6B35]" aria-hidden /> Skills Snapshot
-          </Link>
-          <h2 className="text-2xl font-semibold text-white md:text-3xl">
-            A quick tour of my core stacks
-          </h2>
-          <p className="max-w-2xl text-sm text-white/70 md:text-base">
-            These are the disciplines I lean on most often. Dive into the full skills page for detailed coverage and tooling notes.
-          </p>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          <Link
-            to="/skills"
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-white/30 hover:bg-white/20 whitespace-nowrap"
-          >
-            Explore the full skillset
-          </Link>
-        </motion.div>
-      </div>
-
-      <div className="mt-10">
-        <MagicBento items={items} />
-      </div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
+    <section id="skills" className="relative overflow-hidden py-20">
+      <motion.img
+        src={homeContent.skillBackground}
+        alt=""
+        aria-hidden
+        initial={{ opacity: 0, scale: 1.05 }}
+        whileInView={{ opacity: 0.28, scale: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.15 }}
-        className="mt-12 flex flex-col gap-5 rounded-[32px] border border-white/10 bg-gradient-to-r from-[#15121e]/85 via-[#14101e]/78 to-[#110c1a]/85 p-6 shadow-[0_28px_80px_rgba(7,5,12,0.45)] backdrop-blur-lg md:flex-row md:items-center md:justify-between md:px-10 md:py-8"
-      >
-        <div className="space-y-2 text-center md:text-left">
-          <h3 className="text-lg font-semibold text-white md:text-xl">Need the deeper dive?</h3>
-          <p className="max-w-xl text-sm text-white/70 md:text-base">
-            Explore architecture diagrams, ops notes, and measurable outcomes across every capability in the stack.
-          </p>
-        </div>
-        <Link
-          to="/skills"
-          className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#FF6B35] via-[#FF7A35] to-[#FF4D35] px-7 py-3 text-sm font-semibold text-[#1a0b05] shadow-[0_18px_45px_rgba(255,107,53,0.45)] transition hover:shadow-[0_22px_55px_rgba(255,107,53,0.55)] whitespace-nowrap"
+        transition={{ duration: 1, ease: 'easeOut' }}
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+      <div aria-hidden className="absolute inset-0 bg-gradient-to-br from-white/95 via-white/90 to-[#E8F9F7]/85" />
+
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-12 px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          className="flex flex-col gap-6 text-slate-800 md:flex-row md:items-end md:justify-between"
         >
-          View the complete list
-        </Link>
-      </motion.div>
+          <div className="space-y-3">
+            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-cyan-200/80 bg-white/80 px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-cyan-600">
+              Skill Stack
+            </span>
+            <h2 className="text-3xl font-semibold text-slate-900 md:text-4xl">
+              Focus areas across the engineering toolkit
+            </h2>
+            <p className="max-w-2xl text-sm text-slate-600 md:text-base">
+              Tap a category tile to preview core skills. Progress bars show confidence delivering those
+              capabilities in production.
+            </p>
+          </div>
+          <Link
+            to="/skills"
+            className="inline-flex h-fit items-center justify-center gap-2 rounded-full border border-slate-200 bg-white/85 px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-cyan-200 hover:bg-cyan-50/70 hover:text-cyan-600"
+          >
+            Explore the full skillset <ArrowRight className="h-4 w-4" />
+          </Link>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: 'easeOut', delay: 0.05 }}
+          className="grid gap-4 sm:grid-cols-3 lg:grid-cols-6"
+        >
+          {categories.map(category => {
+            const CategoryIcon = iconMap[category.icon] ?? ServerCog
+            const selected = active === category.id
+            return (
+              <button
+                key={category.id}
+                onClick={() => setActive(category.id)}
+                className={`group relative flex h-28 flex-col items-center justify-center rounded-[24px] border transition hover:-translate-y-1 ${
+                  selected
+                    ? 'border-cyan-300 bg-cyan-50/80 shadow-[0_18px_36px_rgba(15,41,67,0.18)]'
+                    : 'border-slate-200 bg-white/85 shadow-sm hover:border-cyan-200'
+                }`}
+              >
+                <span className="grid h-12 w-12 place-items-center rounded-2xl border border-slate-200 bg-white text-cyan-500 shadow-sm">
+                  <CategoryIcon className="h-6 w-6" />
+                </span>
+                <span className={`mt-3 text-sm font-semibold ${selected ? 'text-cyan-600' : 'text-slate-600'}`}>
+                  {category.label}
+                </span>
+              </button>
+            )
+          })}
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: 'easeOut', delay: 0.08 }}
+          className="grid gap-8 rounded-[32px] border border-cyan-100 bg-white/90 p-6 shadow-[0_30px_80px_rgba(15,41,67,0.16)] backdrop-blur lg:grid-cols-[1fr_1.1fr] lg:p-8"
+        >
+          <div className="flex flex-col gap-5">
+            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-100 bg-cyan-50 px-4 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-cyan-600">
+              <Icon className="h-4 w-4" /> {activeCategory.label}
+            </div>
+            <p className="text-sm leading-relaxed text-slate-600 md:text-base">{activeCategory.summary}</p>
+            <motion.div
+              className="relative h-48 overflow-hidden rounded-[24px] border border-cyan-100"
+              initial={{ opacity: 0.85 }}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+            >
+              <img
+                src={activeCategory.image}
+                alt={`${activeCategory.label} illustration`}
+                className="h-full w-full object-cover"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-cyan-900/20 via-transparent to-transparent" />
+            </motion.div>
+          </div>
+
+          <div className="flex flex-col gap-5">
+            {displayedSkills.map(skill => (
+              <div key={skill.name} className="space-y-2">
+                <div className="flex items-center justify-between text-sm font-medium text-slate-700">
+                  <span>{skill.name}</span>
+                  <span className="text-xs text-slate-400">{skill.level}%</span>
+                </div>
+                <div className="relative h-3 rounded-full bg-slate-100">
+                  <motion.div
+                    className="absolute inset-y-0 rounded-full bg-gradient-to-r from-cyan-400 via-teal-400 to-emerald-400"
+                    initial={{ width: 0 }}
+                    whileInView={{ width: `${skill.level}%` }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, ease: 'easeOut' }}
+                  />
+                </div>
+                {skill.highlight && <p className="text-xs text-slate-500">{skill.highlight}</p>}
+              </div>
+            ))}
+            <Link
+              to="/skills"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-cyan-600 hover:text-cyan-700"
+            >
+              See all {activeCategory.skills.length} tools & practices <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </motion.div>
+      </div>
     </section>
   )
 }

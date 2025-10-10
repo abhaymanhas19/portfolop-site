@@ -29,20 +29,24 @@ function ScrollToHash() {
 
 export default function App() {
   const [loading, setLoading] = useState(true)
-  useEffect(() => { const t = setTimeout(() => setLoading(false), 700); return () => clearTimeout(t) }, [])
+  useEffect(() => {
+    const t = setTimeout(() => setLoading(false), 700)
+    return () => clearTimeout(t)
+  }, [])
   return (
-    <div className="min-h-screen flex flex-col relative bg-background text-foreground">
-      <Navbar /><ScrollToHash />
+    <div className="relative flex min-h-screen flex-col bg-white text-slate-700">
+      <Navbar />
+      <ScrollToHash />
       <AnimatePresence>
         {loading && (
           <motion.div
-            className="fixed inset-0 z-[60] grid place-items-center bg-surface/80 backdrop-blur-xl"
+            className="fixed inset-0 z-[60] grid place-items-center bg-white/80 backdrop-blur"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.35 }}
           >
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>
-              <span className="text-2xl md:text-3xl font-semibold text-[#FF6B35] text-center block">
+              <span className="block text-center text-2xl font-semibold text-cyan-500 md:text-3xl">
                 Loading portfolio...
               </span>
             </motion.div>

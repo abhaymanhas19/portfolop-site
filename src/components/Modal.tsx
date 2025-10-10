@@ -47,27 +47,30 @@ export default function Modal({ open, onClose, title, subtitle, children, footer
   const root = ensureModalRoot()
 
   return createPortal(
-    <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-surface/75 px-4 py-8 backdrop-blur" onMouseDown={onClose}>
+    <div
+      className="fixed inset-0 z-[1000] flex items-center justify-center bg-slate-900/20 px-4 py-8 backdrop-blur-sm"
+      onMouseDown={onClose}
+    >
       <div
-        className="relative w-full max-w-3xl rounded-3xl border border-white/10 bg-surface/95 p-6 shadow-[0_20px_80px_rgba(0,0,0,0.65)]"
-        onMouseDown={(event) => event.stopPropagation()}
+        className="relative w-full max-w-3xl rounded-[28px] border border-slate-200 bg-white/95 p-6 shadow-[0_24px_80px_rgba(15,41,67,0.2)]"
+        onMouseDown={event => event.stopPropagation()}
       >
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/5 text-sm font-semibold text-white/70 transition hover:text-white"
+          className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white/80 text-sm font-semibold text-slate-500 transition hover:border-cyan-200 hover:bg-cyan-50 hover:text-cyan-600"
           aria-label="Close dialog"
         >
           ×
         </button>
         {(title || subtitle) && (
           <div className="pr-10">
-            {title && <h2 className="text-2xl font-semibold text-white">{title}</h2>}
-            {subtitle && <p className="mt-1 text-sm text-white/60">{subtitle}</p>}
+            {title && <h2 className="text-2xl font-semibold text-slate-900">{title}</h2>}
+            {subtitle && <p className="mt-1 text-sm text-slate-500">{subtitle}</p>}
           </div>
         )}
-        <div className="mt-4 space-y-4 text-white/70">{children}</div>
-        {footer && <div className="mt-6 border-t border-white/10 pt-4 text-sm text-white/80">{footer}</div>}
+        <div className="mt-4 space-y-4 text-slate-600">{children}</div>
+        {footer && <div className="mt-6 border-t border-slate-200 pt-4 text-sm text-slate-600">{footer}</div>}
       </div>
     </div>,
     root,

@@ -1,128 +1,225 @@
-import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { site } from '../data/site'
 import { Link } from 'react-router-dom'
-import Typing from './Typing'
-import { ArrowRight, Download, Sparkles } from 'lucide-react'
-import SplitText from './SplitText'
-import LetterGlitch from './LetterGlitch'
-import HyperspeedBackground, { type HyperspeedOptions } from './HyperspeedBackground'
+import {
+  ArrowRight,
+  Download,
+  Github,
+  Instagram,
+  Linkedin,
+  Sparkles,
+  Twitter,
+  type LucideIcon,
+} from 'lucide-react'
+import { heroContent, socials } from '../data/content'
 
+const ease = [0.18, 0.78, 0.24, 1] as const
 
+const socialIcons: Record<string, LucideIcon> = {
+  Github,
+  Linkedin,
+  Instagram,
+  Twitter,
+}
+
+const tilePositions = [
+  'top-20 left-[4%]',
+  'top-12 right-[6%]',
+  'bottom-28 left-[12%]',
+  'bottom-12 right-[6%]',
+]
 
 export default function HeroSection() {
-  const [ready, setReady] = useState(false)
-
-  useEffect(() => {
-    const t = setTimeout(() => setReady(true), 150)
-    return () => clearTimeout(t)
-  }, [])
+  const subheadingLines = [heroContent.description, heroContent.detail]
 
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-background">
+    <section className="relative isolate overflow-hidden">
+      <motion.img
+        src={heroContent.backgroundImage}
+        alt=""
+        aria-hidden
+        initial={{ scale: 1.08, opacity: 0 }}
+        animate={{ scale: 1, opacity: 0.65 }}
+        transition={{ duration: 1.2, ease }}
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+      <div aria-hidden className="absolute inset-0 bg-gradient-to-br from-white/95 via-white/92 to-[#ECF4FF]/88" />
+      <div aria-hidden className="hero-aurora" />
+      <div aria-hidden className="grid-floor" />
 
-      <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-6xl flex-col items-center justify-center gap-12 px-6 py-24 lg:flex-row lg:items-center lg:justify-between lg:gap-16">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={ready ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="flex w-full flex-1 flex-col items-center justify-center gap-6 text-center text-white lg:items-start lg:text-left"
-        >
-          <div className="relative w-full max-w-3xl px-4 lg:max-w-none lg:px-0">
-            <SplitText
-              text={`Hi, I’m ${site.NAME}`}
-              className="max-w-3xl text-4xl font-extrabold leading-tight tracking-tight text-white drop-shadow-[0_0_35px_rgba(0,0,0,0.9)] md:text-6xl"
-              delay={90}
-              duration={0.8}
-              ease="power3.out"
-              splitType="chars"
-              from={{ opacity: 0, y: 28 }}
-              to={{ opacity: 1, y: 0 }}
-              threshold={0.05}
-              rootMargin="-120px"
-              tag="h1"
-              textAlign="center"
-            />
-          </div>
-
-          <div className="relative w-full max-w-2xl px-4 lg:max-w-none lg:px-0">
-            <SplitText
-              text="Python & AI/ML Engineer"
-              className="mx-auto text-2xl font-semibold text-white md:text-3xl lg:mx-0"
-              delay={120}
-              duration={0.12}
-              ease="power3.out"
-              splitType="words, chars"
-              from={{ opacity: 0, y: 22 }}
-              to={{ opacity: 1, y: 0 }}
-              threshold={0.05}
-              rootMargin="-120px"
-              tag="h2"
-              textAlign="center"
-              mutateSplit={(split) => {
-                split.words?.forEach((word) => {
-                  const content = word.textContent?.trim()
-                  if (content === 'Python' || content === 'AI/ML') {
-                    word.classList.add('text-[#FF6B35]')
-                  }
-                  if (content === 'Engineer') {
-                    word.classList.add('text-white')
-                  }
-                })
-                split.chars?.forEach((char) => {
-                  if (char.textContent === '&') {
-                    char.classList.add('text-white')
-                  }
-                })
-              }}
-            />
-          </div>
-
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={ready ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.18 }}
-            className="max-w-xl text-base text-white/80 md:text-lg lg:text-left"
+      <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-6xl flex-col items-center justify-center gap-16 px-6 py-24 lg:flex-row lg:items-center lg:gap-14 xl:gap-20">
+        <div className="flex w-full flex-1 flex-col items-center text-center lg:items-start lg:text-left">
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.18, duration: 0.6, ease }}
+            className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-200/70 bg-white/80 px-4 py-1.5 text-sm font-medium text-slate-600 shadow-sm backdrop-blur"
           >
-            <Typing
-              words={[site.TAGLINE, 'Python • Django • DRF • Realtime • RAG', 'Azure • OpenAI • Redis • Postgres']}
-              speed={40}
-              pause={1400}
-            />
-          </motion.p>
+            <Sparkles className="h-4 w-4 text-cyan-500" />
+            {heroContent.eyebrow}
+          </motion.span>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.26, duration: 0.8, ease }}
+            className="max-w-3xl text-4xl font-semibold leading-tight text-slate-900 md:text-6xl lg:self-start lg:pl-6"
+          >
+            <span className="block text-slate-600">{heroContent.title}</span>
+            <motion.span
+              className="mt-1 block bg-gradient-to-r from-cyan-500 via-teal-400 to-sky-500 bg-clip-text text-transparent"
+              initial={{ backgroundPositionX: '0%' }}
+              animate={{ backgroundPositionX: '100%' }}
+              transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+              style={{ backgroundSize: '200%' }}
+            >
+              {heroContent.highlight}
+            </motion.span>
+          </motion.h1>
+
+          <div className="mt-6 flex flex-col gap-3">
+            {subheadingLines.map((line, index) => (
+              <motion.p
+                key={line}
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.38 + index * 0.12, duration: 0.6, ease }}
+                className={index === 0 ? 'max-w-2xl text-lg font-medium text-slate-700 md:text-xl' : 'max-w-2xl text-base text-slate-600 md:text-lg'}
+              >
+                {line}
+              </motion.p>
+            ))}
+          </div>
 
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={ready ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.24 }}
-            className="flex flex-col items-center justify-center gap-3 sm:flex-row lg:justify-start"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.58, duration: 0.6, ease }}
+            className="mt-10 flex w-full flex-col items-center gap-5 sm:flex-row sm:justify-center lg:justify-start"
           >
             <Link
-              to="/projects"
-              className="inline-flex items-center justify-center rounded-full bg-[#FF6B35] px-6 py-3 text-base font-semibold text-white shadow-lg shadow-black/40 transition-all hover:shadow-2xl hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:text-lg"
+              to={heroContent.primaryAction.to}
+              className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-cyan-400 via-teal-400 to-emerald-400 px-7 py-3 text-base font-semibold text-slate-900 shadow-[0_18px_45px_rgba(79,209,197,0.45)] transition-all hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
             >
-              View Projects <ArrowRight className="ml-2 h-4 w-4" />
+              {heroContent.primaryAction.label}
+              <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
 
             <Link
-              to="/resume"
-              className="inline-flex items-center justify-center rounded-full border-2 border-white/80 px-6 py-3 text-base font-semibold text-white shadow-md shadow-black/30 transition-all hover:bg-white hover:text-black hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:text-lg"
+              to={heroContent.secondaryAction.to}
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white/85 px-6 py-3 text-base font-semibold text-slate-700 shadow-sm transition hover:border-cyan-200 hover:bg-cyan-50/70 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
             >
-              <Download className="mr-2 h-4 w-4" /> Download Resume
+              <Download className="h-5 w-5" />
+              {heroContent.secondaryAction.label}
             </Link>
           </motion.div>
 
-          <motion.span
-            initial={{ opacity: 0, y: -8 }}
-            animate={ready ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.35 }}
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-surface/60 px-3 py-1 text-xs text-white/80 shadow-sm lg:self-start"
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.78, duration: 0.6, ease }}
+            className="mt-10 flex items-center justify-center gap-3 lg:justify-start"
           >
-            <Sparkles className="h-3.5 w-3.5" /> Open to opportunities
-          </motion.span>
-        </motion.div>
+            {socials.map(handle => {
+              const Icon = socialIcons[handle.icon] ?? GlobeIconFallback
+              return (
+                <a
+                  key={handle.id}
+                  href={handle.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={handle.label}
+                  className="group inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-200 bg-white/85 text-slate-500 shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:border-cyan-200 hover:bg-cyan-50 hover:text-cyan-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                >
+                  <Icon className="h-5 w-5 transition-transform group-hover:scale-110" />
+                </a>
+              )
+            })}
+          </motion.div>
 
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.92, duration: 0.6, ease }}
+            className="mt-8 flex flex-wrap items-center justify-center gap-4 text-sm text-slate-500 lg:justify-start"
+          >
+            {heroContent.stats.map(stat => (
+              <div
+                key={stat.label}
+                className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 shadow-sm backdrop-blur"
+              >
+                <span className="text-xl font-semibold text-slate-900">{stat.value}</span>
+                <span className="max-w-[8rem] text-xs uppercase tracking-[0.18em] text-slate-500">
+                  {stat.label}
+                </span>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.94, y: 40 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ delay: 0.52, duration: 0.7, ease }}
+          className="relative w-full max-w-[420px]"
+        >
+          <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-cyan-200/60 via-transparent to-sky-200/50 blur-3xl" />
+          <div className="relative overflow-hidden rounded-[2.5rem] border border-slate-200 bg-white/85 p-8 shadow-[0_32px_80px_rgba(15,41,67,0.18)] backdrop-blur-lg">
+            <div className="relative mx-auto w-full">
+              <img
+                src={heroContent.portraitIllustration}
+                alt="Abhay building with a laptop"
+                className="w-full drop-shadow-[0_35px_70px_rgba(15,182,196,0.35)]"
+                loading="lazy"
+              />
+            </div>
+            <div className="mt-6 rounded-2xl border border-cyan-100 bg-cyan-50/70 px-5 py-4 text-sm text-slate-600 shadow-sm">
+              <p>
+                “Our systems need to feel seamless for operators. I obsess over latency budgets, healthy
+                pipelines, and guardrails that make AI trustworthy.”
+              </p>
+            </div>
+          </div>
+          <div className="absolute inset-x-12 -bottom-8 h-28 rounded-full bg-cyan-200/40 blur-3xl" aria-hidden />
+        </motion.div>
       </div>
+
+      {heroContent.codeTiles.map((tile, index) => (
+        <motion.div
+          key={tile.id}
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: tile.delay, duration: 0.7, ease: 'easeOut' }}
+          className={`pointer-events-none absolute hidden w-64 xl:block ${tilePositions[index % tilePositions.length]}`}
+        >
+          <motion.div
+            animate={{ y: [-6, 6, -6] }}
+            transition={{ duration: 6 + tile.delay, repeat: Infinity, ease: 'easeInOut' }}
+            className="rounded-2xl border border-white/90 bg-white/95 p-4 shadow-[0_25px_70px_rgba(79,209,197,0.25)]"
+          >
+            <div className="mb-3 flex items-center justify-between text-xs font-medium uppercase tracking-[0.18em] text-slate-500">
+              <div className="flex items-center gap-1.5 text-xs text-slate-400">
+                <span className="h-2 w-2 rounded-full bg-emerald-400/80" />
+                <span className="h-2 w-2 rounded-full bg-amber-300/80" />
+                <span className="h-2 w-2 rounded-full bg-rose-300/80" />
+              </div>
+              <span>{tile.title}</span>
+            </div>
+            <pre className="whitespace-pre-wrap text-[13px] leading-relaxed text-slate-700">
+              <code>{tile.code}</code>
+            </pre>
+          </motion.div>
+        </motion.div>
+      ))}
     </section>
+  )
+}
+
+function GlobeIconFallback(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} {...props}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18" />
+      <path d="M12 3a15.3 15.3 0 0 1 4 9 15.3 15.3 0 0 1-4 9 15.3 15.3 0 0 1-4-9 15.3 15.3 0 0 1 4-9Z" />
+    </svg>
   )
 }
