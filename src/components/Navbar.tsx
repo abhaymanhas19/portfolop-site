@@ -78,8 +78,8 @@ export default function Navbar() {
   const linkClass = (active: boolean) =>
     `relative text-sm font-medium transition-colors after:absolute after:-bottom-2 after:left-0 after:h-[2px] after:w-full after:rounded-full after:transition-opacity ${
       active
-        ? 'text-cyan-600 after:bg-cyan-500 after:opacity-100'
-        : 'text-slate-500 hover:text-cyan-600 after:bg-cyan-400 after:opacity-0 hover:after:opacity-100'
+        ? 'text-[#23354A] after:bg-soft-accent0 after:opacity-100'
+        : 'text-slate-500 hover:text-[#23354A] after:bg-cyan-400 after:opacity-0 hover:after:opacity-100'
     }`
 
   return (
@@ -122,7 +122,7 @@ export default function Navbar() {
                   }}
                   onFocus={openAboutMenu}
                   className={`inline-flex items-center gap-1 rounded-lg px-1 py-1 text-sm font-medium transition-colors ${
-                    dropdownActive ? 'text-cyan-600' : 'text-slate-500 hover:text-cyan-600'
+                    dropdownActive ? 'text-[#23354A]' : 'text-slate-500 hover:text-[#23354A]'
                   }`}
                   aria-haspopup="menu"
                   aria-expanded={aboutOpen}
@@ -145,8 +145,8 @@ export default function Navbar() {
                           onClick={() => handleNav(option.to)}
                           className={`w-full rounded-xl px-3 py-2 text-left text-sm transition ${
                             optionActive
-                              ? 'bg-cyan-50 text-cyan-600'
-                              : 'text-slate-500 hover:bg-cyan-50 hover:text-cyan-600'
+                              ? 'bg-soft-accent text-[#23354A]'
+                              : 'text-slate-500 hover:bg-soft-accent hover:text-[#23354A]'
                           }`}
                           aria-current={optionActive ? 'page' : undefined}
                         >
@@ -181,7 +181,7 @@ export default function Navbar() {
                   <li key={item.label}>
                     <button
                       className={`w-full rounded-lg px-3 py-2 text-left text-sm transition ${
-                        active ? 'bg-cyan-50 text-cyan-600' : 'text-slate-600 hover:bg-cyan-50'
+                        active ? 'bg-soft-accent text-[#23354A]' : 'text-slate-600 hover:bg-soft-accent'
                       }`}
                       onClick={() => handleNav(item.to)}
                       aria-current={active ? 'page' : undefined}
@@ -198,7 +198,7 @@ export default function Navbar() {
                 <li key={item.label} className="flex flex-col gap-2">
                   <button
                     className={`flex items-center justify-between rounded-lg px-3 py-2 text-left text-sm transition ${
-                      dropdownActive ? 'bg-cyan-50 text-cyan-600' : 'text-slate-600 hover:bg-cyan-50'
+                      dropdownActive ? 'bg-soft-accent text-[#23354A]' : 'text-slate-600 hover:bg-soft-accent'
                     }`}
                     onClick={() => setMobileAboutOpen(prev => !prev)}
                     aria-expanded={mobileAboutOpen}
@@ -215,7 +215,7 @@ export default function Navbar() {
                           <button
                             key={option.label}
                             className={`w-full rounded-md px-3 py-2 text-left text-sm transition ${
-                              optionActive ? 'bg-cyan-50 text-cyan-600' : 'text-slate-600 hover:bg-cyan-50'
+                              optionActive ? 'bg-soft-accent text-[#23354A]' : 'text-slate-600 hover:bg-soft-accent'
                             }`}
                             onClick={() => handleNav(option.to)}
                             aria-current={optionActive ? 'page' : undefined}

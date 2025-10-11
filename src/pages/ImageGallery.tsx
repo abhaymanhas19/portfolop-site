@@ -47,7 +47,7 @@ export default function ImageGallery() {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1.1, ease: 'easeOut' }}
           />
-          <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-slate-950/78 via-slate-900/38 to-transparent" />
+          
 
           <motion.div
             initial={{ opacity: 0, y: 26 }}

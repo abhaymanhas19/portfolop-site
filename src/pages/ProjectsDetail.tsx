@@ -47,7 +47,6 @@ export default function ProjectsDetail() {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1.1, ease: 'easeOut' }}
           />
-          <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-slate-900/85 via-slate-900/45 to-transparent" />
 
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -57,7 +56,7 @@ export default function ProjectsDetail() {
           >
             <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 pb-12 pt-24 text-white md:flex-row md:items-center md:justify-between md:px-6 lg:px-8">
               <div className="max-w-3xl space-y-4">
-                <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-cyan-200">
+                <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-[#8ED9FF]">
                   <Sparkles className="h-3.5 w-3.5" /> Case Studies
                 </span>
                 <h1 className="text-3xl font-semibold leading-tight text-white md:text-5xl">
@@ -70,16 +69,10 @@ export default function ProjectsDetail() {
               </div>
 
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                <Link
-                  to="/"
-                  className="inline-flex items-center justify-center rounded-full border border-white/60 bg-white/90 px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-white hover:bg-white"
-                >
+                <Link to="/" className="btn-secondary-invert px-5 py-2.5 text-sm">
                   <ArrowLeft className="mr-2 h-4 w-4" /> Back to home
                 </Link>
-                <Link
-                  to="/#contact"
-                  className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-cyan-300 via-teal-300 to-emerald-300 px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-[0_18px_48px_rgba(79,209,197,0.4)] transition hover:-translate-y-0.5"
-                >
+                <Link to="/#contact" className="btn-primary px-5 py-2.5 text-sm">
                   Discuss a project <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </div>
@@ -116,7 +109,7 @@ export default function ProjectsDetail() {
               <div className="flex flex-1 flex-col gap-5 px-6 pb-7 pt-6 text-left">
                 <div className="flex items-center justify-between text-xs uppercase tracking-[0.28em] text-slate-400">
                   <span className="inline-flex items-center gap-2">
-                    <span className="inline-flex h-2 w-2 rounded-full bg-cyan-500" />
+                    <span className="inline-flex h-2 w-2 rounded-full bg-soft-accent0" />
                     {index + 1 < 10 ? `0${index + 1}` : index + 1}
                   </span>
                   <span>{project.category}</span>
@@ -133,7 +126,7 @@ export default function ProjectsDetail() {
                       href={project.demo}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full border border-cyan-100 bg-cyan-50 px-4 py-2 text-cyan-700 transition hover:border-cyan-200 hover:bg-cyan-100"
+                      className="inline-flex items-center gap-2 rounded-full border border-[#8ED9FF]/45 bg-soft-accent px-4 py-2 text-[#1F2A37] transition hover:border-[#8ED9FF]/60 hover:bg-soft-accent"
                       whileHover={{ scale: 1.03 }}
                     >
                       <ExternalLink className="h-4 w-4" /> Demo
@@ -152,7 +145,7 @@ export default function ProjectsDetail() {
                   )}
                   <motion.button
                     type="button"
-                    className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-400 via-teal-400 to-emerald-400 px-4 py-2 text-sm font-semibold text-slate-900 shadow-[0_16px_38px_rgba(79,209,197,0.35)] transition hover:-translate-y-0.5"
+                    className="inline-flex items-center gap-2 rounded-full bg-gradient-accent px-4 py-2 text-sm font-semibold text-slate-900 shadow-[0_16px_38px_rgba(79,209,197,0.35)] transition hover:-translate-y-0.5"
                     whileHover={{ scale: 1.03 }}
                     onClick={() => setSelectedProject(project)}
                   >
@@ -195,7 +188,7 @@ export default function ProjectsDetail() {
                     href={selectedProject.demo}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-cyan-50 px-4 py-2 text-cyan-700 transition hover:border-cyan-300 hover:bg-cyan-100"
+                    className="inline-flex items-center gap-2 rounded-full border border-[#8ED9FF]/60 bg-soft-accent px-4 py-2 text-[#1F2A37] transition hover:border-[#8ED9FF]/70 hover:bg-soft-accent"
                   >
                     <ExternalLink className="h-4 w-4" /> Live Demo
                   </a>

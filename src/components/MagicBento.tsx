@@ -73,7 +73,7 @@ export default function MagicBento({
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.5, delay: index * 0.04 }}
               className={cn(
-                'group relative overflow-hidden rounded-[28px] border border-cyan-100 bg-white/90 p-6 shadow-[0_24px_60px_rgba(15,41,67,0.12)] backdrop-blur md:p-8',
+                'group relative overflow-hidden rounded-[28px] border border-[#8ED9FF]/45 bg-white/90 p-6 shadow-[0_24px_60px_rgba(15,41,67,0.12)] backdrop-blur md:p-8',
                 'hover:-translate-y-1 transition',
                 'focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200 focus-visible:ring-offset-2 focus-visible:ring-offset-white',
                 item.className,
@@ -101,7 +101,7 @@ export default function MagicBento({
                 {(item.icon || item.eyebrow) && (
                   <div className="flex items-center gap-3 text-sm text-slate-500">
                     {item.icon && (
-                      <span className="grid h-11 w-11 place-items-center rounded-2xl border border-cyan-100 bg-cyan-50 text-cyan-600">
+                      <span className="grid h-11 w-11 place-items-center rounded-2xl border border-[#8ED9FF]/45 bg-soft-accent text-[#23354A]">
                         {item.icon}
                       </span>
                     )}
@@ -119,7 +119,7 @@ export default function MagicBento({
                 </div>
 
                 {item.media && (
-                  <div className="relative overflow-hidden rounded-2xl border border-cyan-100 bg-white">
+                  <div className="relative overflow-hidden rounded-2xl border border-[#8ED9FF]/45 bg-white">
                     {item.media}
                   </div>
                 )}
@@ -129,7 +129,7 @@ export default function MagicBento({
                     {item.chips.map(chip => (
                       <span
                         key={chip}
-                        className="rounded-full border border-cyan-100 bg-cyan-50 px-3 py-1 text-xs font-medium uppercase tracking-wide text-cyan-600"
+                        className="rounded-full border border-[#8ED9FF]/45 bg-soft-accent px-3 py-1 text-xs font-medium uppercase tracking-wide text-[#23354A]"
                       >
                         {chip}
                       </span>
@@ -144,7 +144,7 @@ export default function MagicBento({
                       event.stopPropagation()
                       setActiveIndex(index)
                     }}
-                    className="inline-flex w-fit items-center justify-center rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-600 transition hover:bg-cyan-100"
+                    className="inline-flex w-fit items-center justify-center rounded-full border border-[#8ED9FF]/60 bg-soft-accent px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[#23354A] transition hover:bg-soft-accent"
                   >
                     {item.overflowLabel}
                   </button>
@@ -170,7 +170,7 @@ export default function MagicBento({
           activeItem.modalContent ?? (
             <div className="space-y-5">
               {activeItem.media && (
-                <div className="overflow-hidden rounded-2xl border border-cyan-100">
+                <div className="overflow-hidden rounded-2xl border border-[#8ED9FF]/45">
                   {activeItem.media}
                 </div>
               )}
@@ -184,7 +184,7 @@ export default function MagicBento({
                   {activeItem.chips.map(chip => (
                     <span
                       key={chip}
-                      className="rounded-full border border-cyan-100 bg-cyan-50 px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-cyan-600"
+                      className="rounded-full border border-[#8ED9FF]/45 bg-soft-accent px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-[#23354A]"
                     >
                       {chip}
                     </span>

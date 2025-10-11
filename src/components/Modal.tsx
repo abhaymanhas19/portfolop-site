@@ -58,7 +58,7 @@ export default function Modal({ open, onClose, title, subtitle, children, footer
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white/80 text-sm font-semibold text-slate-500 transition hover:border-cyan-200 hover:bg-cyan-50 hover:text-cyan-600"
+          className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white/80 text-sm font-semibold text-slate-500 transition hover:border-[#8ED9FF]/60 hover:bg-soft-accent hover:text-[#23354A]"
           aria-label="Close dialog"
         >
           ×

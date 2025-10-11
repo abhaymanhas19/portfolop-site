@@ -133,14 +133,21 @@ export const content = {
     aiSummary: 'From linear regression baselines to backpropagation-heavy PyTorch + scikit model training across large datasets, I keep experimentation production-aware.',
     primaryAction: { label: 'Explore My Projects', to: '/projects' },
     secondaryAction: { label: 'Download Resume', to: '/resume' },
-    backgroundImage: 'https://images.unsplash.com/photo-1523475472560-d2df97ec485c?auto=format&fit=crop&w=1600&q=80',
+    backgroundImage: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1760205991/Firefly_A_clean_glossy_3D_object_in_shape_of_a_speech_bubble_in_soft_white_material_minimal_162578_hm8yka.jpg',
     portraitIllustration: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1760182542/DALL_E_2025-10-11_02.11.56_-_A_digital_avatar_of_a_young_full-stack_developer_and_AI_engineer_with_short_wavy_dark_brown_hair_and_black-rimmed_glasses._He_is_sitting_at_a_desk_us_j8bzeu.webp',
     codeTiles: [
+      {
+        id: 'tasks',
+        title: 'worker.ts',
+        code: `queue.process("sync", async job => {\n  await orchestrate(job.data)\n  return ctx.emit("synced")\n})`,
+        accent: 'from-violet-100/80 via-blue-200/60 to-white/40',
+        delay: 0.85,
+      },
       {
         id: 'realtime-stream',
         title: 'stream.py',
         code: `@router.websocket("/events")\nasync def stream(ws):\n    await ws.accept()\n    async for payload in broker.subscribe("updates"):\n        await ws.send_json(payload)`,
-        accent: 'from-cyan-100/90 via-sky-200/70 to-white/40',
+        accent: 'from-[#8ED9FF]/50 via-[#C7B2FF]/35 to-white/35',
         delay: 0.4,
       },
       {
@@ -154,19 +161,12 @@ export const content = {
         id: 'metrics',
         title: 'observability.yaml',
         code: `latency_budget: 120ms\nrealtime_feed: 99.9\nerror_budget: 0.1\nreporting: grafana`,
-        accent: 'from-indigo-100/80 via-sky-200/60 to-white/40',
+        accent: 'from-[#8ED9FF]/55 via-[#C7B2FF]/35 to-[#FFD1B3]/45',
         delay: 0.7,
-      },
-      {
-        id: 'tasks',
-        title: 'worker.ts',
-        code: `queue.process("sync", async job => {\n  await orchestrate(job.data)\n  return ctx.emit("synced")\n})`,
-        accent: 'from-violet-100/80 via-blue-200/60 to-white/40',
-        delay: 0.85,
       },
     ],
     stats: [
-      { label: 'Realtime systems launched', value: '110+' },
+      { label: 'Realtime systems launched', value: '10+' },
       { label: 'LLM experiments shipped', value: '5+' },
       { label: 'Industries served', value: '3' },
       { label: 'Web apps delivered', value: '5+' },
@@ -191,7 +191,7 @@ export const content = {
         icon: 'ServerCog',
         summary: 'Event-driven Python services with robust APIs, websockets, and background workers that stay performant under load.',
         image: 'https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?auto=format&fit=crop&w=1200&q=80',
-        accent: 'from-cyan-100 via-sky-100 to-white',
+        accent: 'from-[#8ED9FF] via-[#C7B2FF] to-[#FFD1B3]/80',
         tint: 'bg-cyan-500/10',
         skills: [
           { name: 'Python', level: 95, highlight: 'AsyncIO, typing, profiling' },
@@ -238,7 +238,7 @@ export const content = {
         icon: 'Workflow',
         summary: 'Data ingestion and transformation pipelines feeding realtime analytics and training workflows.',
         image: 'https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80',
-        accent: 'from-indigo-100 via-purple-100 to-white',
+        accent: 'from-[#8ED9FF] via-[#C7B2FF] to-[#FFD1B3]',
         tint: 'bg-indigo-500/10',
         skills: [
           { name: 'ETL (Pandas, Dask)', level: 86, highlight: 'Large dataset wrangling' },

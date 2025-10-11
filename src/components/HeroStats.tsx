@@ -28,7 +28,7 @@ export default function HeroStats() {
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-cyan-50/80 via-white to-transparent"
       />
-      <div aria-hidden className="pointer-events-none absolute -top-24 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-cyan-200/35 blur-3xl" />
+      <div aria-hidden className="pointer-events-none absolute -top-24 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-soft-accent/35 blur-3xl" />
       <motion.div
         className="relative mx-auto max-w-6xl px-6"
         variants={container}
@@ -36,8 +36,8 @@ export default function HeroStats() {
         whileInView="show"
         viewport={{ once: true, margin: '0px 0px -140px 0px' }}
       >
-        <div className="relative overflow-hidden rounded-[36px] border border-cyan-100/70 bg-white/92 px-6 py-10 shadow-[0_26px_80px_rgba(15,41,67,0.12)] backdrop-blur-lg sm:px-8">
-          <div className="pointer-events-none absolute inset-y-8 -left-20 h-32 w-32 rounded-full bg-cyan-100/40 blur-2xl" />
+        <div className="relative overflow-hidden rounded-[36px] border border-[#8ED9FF]/45/70 bg-white/92 px-6 py-10 shadow-[0_26px_80px_rgba(15,41,67,0.12)] backdrop-blur-lg sm:px-8">
+          <div className="pointer-events-none absolute inset-y-8 -left-20 h-32 w-32 rounded-full bg-soft-accent/40 blur-2xl" />
           <div className="pointer-events-none absolute inset-y-12 -right-16 h-40 w-40 rounded-full bg-sky-100/35 blur-2xl" />
           <motion.div
             className="relative flex flex-wrap items-center justify-center gap-5 text-sm text-slate-500 md:justify-between"

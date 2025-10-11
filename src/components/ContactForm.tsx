@@ -84,12 +84,11 @@ export default function ContactForm() {
         transition={{ duration: 1.1, ease: 'easeOut' }}
         className="absolute inset-0 h-full w-full object-cover"
       />
-      <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/40 to-transparent" />
 
       <div className="relative z-10 mx-auto w-full max-w-6xl px-6 text-white">
-        <div className="overflow-hidden rounded-[36px] border border-cyan-100 bg-white/90 shadow-[0_32px_90px_rgba(15,41,67,0.18)] backdrop-blur">
+        <div className="overflow-hidden rounded-[36px] border border-[#8ED9FF]/45 bg-white/90 shadow-[0_32px_90px_rgba(15,41,67,0.18)] backdrop-blur">
           <div className="relative grid gap-12 px-6 py-12 md:px-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:items-start">
-            <div className="pointer-events-none absolute -top-24 right-0 h-40 w-40 rounded-full bg-cyan-100/70 blur-3xl" aria-hidden />
+            <div className="pointer-events-none absolute -top-24 right-0 h-40 w-40 rounded-full bg-soft-accent/70 blur-3xl" aria-hidden />
             <div className="pointer-events-none absolute bottom-[-60px] left-[-60px] h-48 w-48 rounded-full bg-emerald-100/70 blur-[120px]" aria-hidden />
 
             <motion.div
@@ -100,7 +99,7 @@ export default function ContactForm() {
               className="relative space-y-8"
             >
               <div className="space-y-4">
-                <span className="inline-flex items-center gap-2 rounded-full border border-cyan-100 bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-600">
+                <span className="inline-flex items-center gap-2 rounded-full border border-[#8ED9FF]/45 bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-[#23354A]">
                   <MessageCircle className="h-3.5 w-3.5" /> Let’s talk
                 </span>
                 <h2 className="text-3xl font-semibold text-slate-900 md:text-4xl">
@@ -115,23 +114,22 @@ export default function ContactForm() {
                 {detailCards.map(card => (
                   <div
                     key={card.title}
-                    className="group relative overflow-hidden rounded-[24px] border border-white/20 bg-slate-950/45 p-5 shadow-[0_18px_42px_rgba(3,7,18,0.28)] backdrop-blur transition hover:-translate-y-1 hover:shadow-[0_20px_46px_rgba(8,47,73,0.35)]"
+                    className="rounded-[24px] border border-[#8ED9FF]/45 bg-white/94 p-5 shadow-[0_18px_42px_rgba(15,41,67,0.12)] transition hover:-translate-y-1 hover:shadow-[0_20px_48px_rgba(15,41,67,0.18)]"
                   >
-                    <div aria-hidden className="pointer-events-none absolute inset-0 rounded-[inherit] bg-[radial-gradient(circle_at_top_left,_rgba(86,207,255,0.28),_transparent_60%),radial-gradient(circle_at_bottom_right,_rgba(45,212,191,0.22),_transparent_55%)] opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
-                    <card.icon className="relative z-10 h-5 w-5 text-cyan-300" />
-                    <div className="relative z-10 mt-3 space-y-1">
-                      <p className="text-xs uppercase tracking-[0.2em] text-cyan-200/80">{card.title}</p>
+                    <card.icon className="h-5 w-5 text-[#8ED9FF]" />
+                    <div className="mt-3 space-y-1">
+                      <p className="text-xs uppercase tracking-[0.2em] text-[#23354A]">{card.title}</p>
                       {card.href ? (
                         <a
                           href={card.href}
-                          className="text-sm font-semibold text-white transition hover:text-cyan-200 break-all"
+                          className="text-sm font-semibold text-[#1f2a37] transition hover:text-[#8ED9FF] break-all"
                         >
                           {card.value}
                         </a>
                       ) : (
-                        <p className="text-sm font-semibold text-white">{card.value}</p>
+                        <p className="text-sm font-semibold text-[#1f2a37]">{card.value}</p>
                       )}
-                      <p className="text-xs leading-relaxed text-white/70">{card.description}</p>
+                      <p className="text-xs leading-relaxed text-slate-500">{card.description}</p>
                     </div>
                   </div>
                 ))}
@@ -144,7 +142,7 @@ export default function ContactForm() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, ease: 'easeOut', delay: 0.08 }}
-              className="relative z-10 grid gap-5 rounded-[28px] border border-cyan-100 bg-cyan-50/60 p-6 shadow-[0_24px_60px_rgba(15,41,67,0.16)] backdrop-blur"
+              className="relative z-10 grid gap-5 rounded-[28px] border border-[#8ED9FF]/45 bg-soft-accent p-6 shadow-[0_24px_60px_rgba(15,41,67,0.16)] backdrop-blur"
             >
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="flex flex-col gap-1 text-sm font-medium text-slate-700" htmlFor="name">
@@ -153,7 +151,7 @@ export default function ContactForm() {
                     id="name"
                     name="name"
                     required
-                    className="rounded-xl border border-cyan-100 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm focus:border-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-200"
+                    className="rounded-xl border border-[#8ED9FF]/45 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm focus:border-[#8ED9FF]/70 focus:outline-none focus:ring-2 focus:ring-cyan-200"
                     placeholder={contactContent.form.namePlaceholder}
                   />
                 </label>
@@ -164,7 +162,7 @@ export default function ContactForm() {
                     name="email"
                     type="email"
                     required
-                    className="rounded-xl border border-cyan-100 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm focus:border-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-200"
+                    className="rounded-xl border border-[#8ED9FF]/45 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm focus:border-[#8ED9FF]/70 focus:outline-none focus:ring-2 focus:ring-cyan-200"
                     placeholder={contactContent.form.emailPlaceholder}
                   />
                 </label>
@@ -176,16 +174,13 @@ export default function ContactForm() {
                   name="message"
                   rows={6}
                   required
-                  className="rounded-xl border border-cyan-100 bg-white px-3 py-3 text-sm text-slate-700 shadow-sm focus:border-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-200"
+                  className="rounded-xl border border-[#8ED9FF]/45 bg-white px-3 py-3 text-sm text-slate-700 shadow-sm focus:border-[#8ED9FF]/70 focus:outline-none focus:ring-2 focus:ring-cyan-200"
                   placeholder={contactContent.form.messagePlaceholder}
                 />
               </label>
 
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                <button
-                  type="submit"
-                  className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-cyan-400 via-teal-400 to-emerald-400 px-6 py-3 text-sm font-semibold text-slate-900 shadow-[0_18px_40px_rgba(79,209,197,0.35)] transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200 focus-visible:ring-offset-2 focus-visible:ring-offset-cyan-50"
-                >
+                <button type="submit" className="btn-primary">
                   {status === 'sending' ? 'Sending…' : contactContent.form.submitText}
                 </button>
                 <span className="text-xs text-slate-500" aria-live="polite">

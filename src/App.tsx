@@ -46,7 +46,7 @@ export default function App() {
             transition={{ duration: 0.35 }}
           >
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>
-              <span className="block text-center text-2xl font-semibold text-cyan-500 md:text-3xl">
+              <span className="block text-center text-2xl font-semibold text-[#8ED9FF] md:text-3xl">
                 Loading portfolio...
               </span>
             </motion.div>

@@ -43,7 +43,7 @@ export default function Resume() {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1.1, ease: 'easeOut' }}
           />
-          <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/60 to-transparent" />
+          
 
           <motion.div
             initial={{ opacity: 0, y: 26 }}
@@ -53,7 +53,7 @@ export default function Resume() {
           >
             <div className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 pb-12 pt-24 text-white md:px-6 lg:px-8">
               <div className="space-y-3">
-                <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-cyan-200">
+                <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-[#8ED9FF]">
                   Resume Snapshot
                 </span>
                 <h1 className="text-3xl font-semibold leading-tight md:text-4xl">
@@ -65,10 +65,10 @@ export default function Resume() {
               </div>
               <div className="flex flex-wrap gap-3">
                 <span className="inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/90 px-3 py-1 text-sm font-semibold text-slate-700 shadow-sm">
-                  <MapPin className="h-4 w-4 text-cyan-500" /> {site.LOCATION}
+                  <MapPin className="h-4 w-4 text-[#8ED9FF]" /> {site.LOCATION}
                 </span>
                 <span className="inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/90 px-3 py-1 text-sm font-semibold text-slate-700 shadow-sm">
-                  <Mail className="h-4 w-4 text-cyan-500" /> {site.CONTACT_EMAIL}
+                  <Mail className="h-4 w-4 text-[#8ED9FF]" /> {site.CONTACT_EMAIL}
                 </span>
               </div>
             </div>
@@ -83,10 +83,10 @@ export default function Resume() {
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1">
-              <MapPin className="h-4 w-4 text-cyan-500" /> {site.LOCATION}
+              <MapPin className="h-4 w-4 text-[#8ED9FF]" /> {site.LOCATION}
             </span>
             <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1">
-              <Mail className="h-4 w-4 text-cyan-500" /> {site.CONTACT_EMAIL}
+              <Mail className="h-4 w-4 text-[#8ED9FF]" /> {site.CONTACT_EMAIL}
             </span>
           </div>
         </div>
@@ -95,7 +95,7 @@ export default function Resume() {
           <a
             href={site.RESUME_PDF_PATH}
             download
-            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-400 via-teal-400 to-emerald-400 px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-[0_18px_40px_rgba(79,209,197,0.35)] transition hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 rounded-full bg-gradient-accent px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-[0_18px_40px_rgba(79,209,197,0.35)] transition hover:-translate-y-0.5"
           >
             <Download className="h-4 w-4" /> Download PDF
           </a>
@@ -103,21 +103,21 @@ export default function Resume() {
             href={site.RESUME_PDF_PATH}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-5 py-2.5 text-sm font-semibold text-slate-600 shadow-sm transition hover:border-cyan-200 hover:bg-cyan-50/70 hover:text-cyan-600"
+            className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-5 py-2.5 text-sm font-semibold text-slate-600 shadow-sm transition hover:border-[#8ED9FF]/60 hover:bg-soft-accent hover:text-[#23354A]"
           >
             <ExternalLink className="h-4 w-4" /> Open in new tab
           </a>
           <a
             href="/#contact"
-            className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-5 py-2.5 text-sm font-semibold text-slate-600 shadow-sm transition hover:border-cyan-200 hover:bg-cyan-50/70 hover:text-cyan-600"
+            className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-5 py-2.5 text-sm font-semibold text-slate-600 shadow-sm transition hover:border-[#8ED9FF]/60 hover:bg-soft-accent hover:text-[#23354A]"
           >
             <Mail className="h-4 w-4" /> Hire me
           </a>
         </div>
 
-        <div className="mt-10 rounded-[32px] border border-cyan-100 bg-white/92 p-4 shadow-[0_28px_80px_rgba(15,41,67,0.16)] md:p-6">
+        <div className="mt-10 rounded-[32px] border border-[#8ED9FF]/45 bg-white/92 p-4 shadow-[0_28px_80px_rgba(15,41,67,0.16)] md:p-6">
           {!ready && !error && (
-            <div className="grid place-items-center rounded-[24px] border border-cyan-100 bg-cyan-50/60 p-10 text-sm text-slate-500">
+            <div className="grid place-items-center rounded-[24px] border border-[#8ED9FF]/45 bg-soft-accent p-10 text-sm text-slate-500">
               Loading resume…
             </div>
           )}
@@ -155,13 +155,13 @@ export default function Resume() {
           )}
         </div>
 
-        <div className="mt-8 flex flex-col gap-3 rounded-[32px] border border-cyan-100 bg-gradient-to-r from-cyan-50/90 via-white/95 to-sky-50/90 px-6 py-7 text-sm text-slate-600 shadow-[0_24px_60px_rgba(15,41,67,0.12)] md:flex-row md:items-center md:justify-between md:px-10">
+        <div className="mt-8 flex flex-col gap-3 rounded-[32px] border border-[#8ED9FF]/45 bg-soft-accent px-6 py-7 text-sm text-slate-600 shadow-[0_24px_60px_rgba(15,41,67,0.12)] md:flex-row md:items-center md:justify-between md:px-10">
           <p className="max-w-3xl">
             Need a tailored resume or portfolio for a specific role? I’m happy to highlight relevant experience in more detail—just let me know what you’re hiring for.
           </p>
           <a
             href="/#contact"
-            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-400 via-teal-400 to-emerald-400 px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-[0_18px_40px_rgba(79,209,197,0.35)] transition hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 rounded-full bg-gradient-accent px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-[0_18px_40px_rgba(79,209,197,0.35)] transition hover:-translate-y-0.5"
           >
             Start a conversation
           </a>

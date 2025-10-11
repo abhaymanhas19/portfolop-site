@@ -42,7 +42,6 @@ export default function CertificationsPreview() {
         transition={{ duration: 1.1, ease: 'easeOut' }}
         className="absolute inset-0 h-full w-full object-cover"
       />
-      <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/40 to-transparent" />
 
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 text-white">
         <motion.div

@@ -30,7 +30,6 @@ export default function ImageShowcase() {
         transition={{ duration: 1.05, ease: 'easeOut' }}
         className="absolute inset-0 h-full w-full object-cover"
       />
-      <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/40 to-transparent" />
 
       <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center gap-12 px-6 text-white">
         <motion.div

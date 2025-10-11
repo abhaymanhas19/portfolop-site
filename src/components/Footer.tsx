@@ -40,7 +40,7 @@ export default function Footer() {
             <button
               key={link.label}
               onClick={() => navigate(link.to)}
-              className="rounded-full px-3 py-1 text-slate-500 transition hover:bg-cyan-50 hover:text-cyan-600"
+              className="rounded-full px-3 py-1 text-slate-500 transition hover:bg-soft-accent hover:text-[#23354A]"
             >
               {link.label}
             </button>
@@ -57,16 +57,13 @@ export default function Footer() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label={handle.label}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200 bg-white/85 text-slate-500 transition hover:-translate-y-0.5 hover:border-cyan-200 hover:bg-cyan-50 hover:text-cyan-600"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200 bg-white/85 text-slate-500 transition hover:-translate-y-0.5 hover:border-[#8ED9FF]/60 hover:bg-soft-accent hover:text-[#23354A]"
               >
                 <Icon className="h-4 w-4" />
               </a>
             )
           })}
-          <button
-            onClick={gotoContact}
-            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-400 via-teal-400 to-emerald-400 px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-[0_18px_40px_rgba(79,209,197,0.32)] transition hover:-translate-y-0.5"
-          >
+          <button onClick={gotoContact} className="btn-primary px-5 py-2.5 text-sm">
             <Mail className="h-4 w-4" /> Contact
           </button>
         </div>

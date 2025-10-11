@@ -18,9 +18,8 @@ export default function AboutPreview() {
         transition={{ duration: 1, ease: 'easeOut' }}
         className="absolute inset-0 h-full w-full object-cover"
       />
-      <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/40 to-transparent" />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-12 px-6 text-white">
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-12 px-6 text-slate-900">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -29,20 +28,17 @@ export default function AboutPreview() {
           className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
         >
           <div className="space-y-3">
-            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-cyan-200/80 bg-white/80 px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-cyan-600">
-              <Sparkles className="h-4 w-4" /> Meet Abhay
+            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[#8ED9FF]/60 bg-soft-accent px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-[#23354A]">
+              <Sparkles className="h-4 w-4 text-[#8ED9FF]" /> Meet Abhay
             </span>
-            <h2 className="text-3xl font-semibold text-white drop-shadow-[0_12px_35px_rgba(15,23,42,0.55)] md:text-4xl">
+            <h2 className="text-3xl font-semibold md:text-4xl">
               {aboutContent.headline}
             </h2>
-            <p className="max-w-3xl text-sm text-white/85 drop-shadow-[0_10px_32px_rgba(15,23,42,0.45)] md:text-base">
+            <p className="max-w-3xl text-sm text-slate-600 md:text-base">
               {aboutContent.intro}
             </p>
           </div>
-          <Link
-            to="/about"
-            className="inline-flex h-fit items-center justify-center gap-2 rounded-full border border-slate-200 bg-white/85 px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-cyan-200 hover:bg-cyan-50/70 hover:text-cyan-600"
-          >
+          <Link to="/about" className="btn-secondary">
             Dive into the story <ArrowRight className="h-4 w-4" />
           </Link>
         </motion.div>
@@ -58,10 +54,10 @@ export default function AboutPreview() {
             <motion.div
               key={tile.title}
               whileHover={{ translateY: -6 }}
-              className="rounded-[28px] border border-cyan-100 bg-white/85 p-6 shadow-[0_26px_60px_rgba(15,41,67,0.12)] backdrop-blur"
+              className="rounded-[28px] border border-[#8ED9FF]/45 bg-white/92 p-6 shadow-[0_26px_60px_rgba(15,41,67,0.12)] backdrop-blur"
             >
-              <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.26em] text-cyan-500">
-                <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl border border-cyan-100 bg-cyan-50 text-sm text-cyan-600">
+              <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.26em] text-[#23354A]">
+                <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl border border-[#8ED9FF]/55 bg-soft-accent text-sm text-[#23354A]">
                   {index + 1}
                 </span>
                 Focus area
@@ -77,7 +73,7 @@ export default function AboutPreview() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
-          className="rounded-[32px] border border-cyan-100 bg-gradient-to-r from-cyan-50/90 via-white/95 to-sky-50/85 px-6 py-7 text-slate-700 shadow-[0_24px_60px_rgba(15,41,67,0.12)] md:px-10"
+          className="rounded-[32px] border border-[#8ED9FF]/45 bg-soft-accent px-6 py-7 text-slate-700 shadow-[0_24px_60px_rgba(15,41,67,0.12)] md:px-10"
         >
           <p className="text-sm md:text-base">
             Curious about the delivery principles, day-to-day rituals, or how the playbook scales across teams?

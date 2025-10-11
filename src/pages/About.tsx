@@ -30,7 +30,7 @@ export default function About() {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1.1, ease: 'easeOut' }}
           />
-          <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/42 to-transparent" />
+          
 
           <motion.div
             initial={{ opacity: 0, y: 28 }}
@@ -40,7 +40,7 @@ export default function About() {
           >
             <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 pb-12 pt-24 text-white md:flex-row md:items-center md:justify-between md:px-6 lg:px-8">
               <div className="max-w-3xl space-y-4">
-                <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-cyan-200">
+                <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-[#8ED9FF]">
                   <Sparkles className="h-3.5 w-3.5" /> About {aboutContent.headline.split(' ')[0]}
                 </span>
                 <h1 className="text-3xl font-semibold leading-tight md:text-5xl">{aboutContent.headline}</h1>
@@ -55,7 +55,7 @@ export default function About() {
                 </Link>
                 <Link
                   to="/#contact"
-                  className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-300 via-teal-300 to-emerald-300 px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-[0_18px_48px_rgba(79,209,197,0.4)] transition hover:-translate-y-0.5"
+                  className="inline-flex items-center gap-2 rounded-full bg-gradient-accent px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-[0_18px_48px_rgba(79,209,197,0.4)] transition hover:-translate-y-0.5"
                 >
                   Start a project
                 </Link>
@@ -70,15 +70,15 @@ export default function About() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
-          className="mt-10 rounded-[38px] border border-cyan-100 bg-white/92 px-6 py-10 shadow-[0_32px_80px_rgba(15,41,67,0.18)] backdrop-blur md:px-10"
+          className="mt-10 rounded-[38px] border border-[#8ED9FF]/45 bg-white/92 px-6 py-10 shadow-[0_32px_80px_rgba(15,41,67,0.18)] backdrop-blur md:px-10"
         >
           <MagicBento items={focusItems} columnsClassName="md:grid-cols-3" />
         </motion.div>
 
         <section className="mt-16 space-y-6">
           <div className="flex items-center gap-3 text-slate-700">
-            <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-cyan-100 bg-cyan-50">
-              <Workflow className="h-5 w-5 text-cyan-500" />
+            <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-[#8ED9FF]/45 bg-soft-accent">
+              <Workflow className="h-5 w-5 text-[#8ED9FF]" />
             </span>
             <h2 className="text-2xl font-semibold text-slate-900">Experience snapshots</h2>
           </div>
@@ -86,7 +86,7 @@ export default function About() {
             {aboutContent.experience.map(experience => (
               <div
                 key={experience.company}
-                className="rounded-[28px] border border-cyan-100 bg-white/92 p-6 shadow-[0_24px_60px_rgba(15,41,67,0.12)] backdrop-blur"
+                className="rounded-[28px] border border-[#8ED9FF]/45 bg-white/92 p-6 shadow-[0_24px_60px_rgba(15,41,67,0.12)] backdrop-blur"
               >
                 <div className="flex items-center justify-between gap-3 text-xs uppercase tracking-[0.26em] text-slate-400">
                   <span>{experience.company}</span>
@@ -97,7 +97,7 @@ export default function About() {
                 <ul className="mt-4 space-y-2 text-sm text-slate-600">
                   {experience.achievements.map(point => (
                     <li key={point} className="flex gap-3">
-                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-500" aria-hidden />
+                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-soft-accent0" aria-hidden />
                       <span>{point}</span>
                     </li>
                   ))}
@@ -139,7 +139,7 @@ export default function About() {
               </p>
               <Link
                 to="/image-gallery"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-cyan-600 hover:text-cyan-700"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-[#23354A] hover:text-[#1F2A37]"
               >
                 Explore the gallery <ArrowRight className="h-4 w-4" />
               </Link>

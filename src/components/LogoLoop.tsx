@@ -14,7 +14,7 @@ export default function LogoLoop() {
       <div className="absolute inset-0 bg-gradient-to-b from-white via-white/70 to-transparent" aria-hidden />
       <div className="relative mx-auto flex w-full max-w-6xl flex-col items-center gap-12 px-6">
         <div className="text-center text-slate-800">
-          <p className="text-sm uppercase tracking-[0.55em] text-cyan-500/80">Ecosystem</p>
+          <p className="text-sm uppercase tracking-[0.55em] text-[#8ED9FF]/80">Ecosystem</p>
           <h2 className="mt-3 text-3xl font-semibold text-slate-900 md:text-4xl">Technologies in Motion</h2>
           <p className="mt-4 max-w-3xl text-balance text-sm text-slate-600 md:text-base">
             A pulse of the tools and platforms powering Python, AI, and realtime projects. Hover to pause and
@@ -23,7 +23,7 @@ export default function LogoLoop() {
         </div>
 
         <div
-          className="group relative isolate w-full max-w-[min(820px,95vw)] overflow-hidden rounded-[36px] border border-cyan-100 bg-white/85 px-4 py-12 shadow-[0_32px_80px_rgba(15,41,67,0.18)] backdrop-blur"
+          className="group relative isolate w-full max-w-[min(820px,95vw)] overflow-hidden rounded-[36px] border border-[#8ED9FF]/45 bg-white/85 px-4 py-12 shadow-[0_32px_80px_rgba(15,41,67,0.18)] backdrop-blur"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
@@ -40,7 +40,7 @@ export default function LogoLoop() {
                 href={item.url}
                 target="_blank"
                 rel="noreferrer"
-                className="relative flex select-none flex-col items-center justify-center rounded-[24px] border border-cyan-100 bg-white px-4 text-center text-slate-600 shadow-[0_20px_45px_rgba(15,41,67,0.16)] transition-transform duration-500 hover:scale-[1.05] hover:border-cyan-200 hover:shadow-[0_24px_55px_rgba(15,41,67,0.2)]"
+                className="relative flex select-none flex-col items-center justify-center rounded-[24px] border border-[#8ED9FF]/45 bg-white px-4 text-center text-slate-600 shadow-[0_20px_45px_rgba(15,41,67,0.16)] transition-transform duration-500 hover:scale-[1.05] hover:border-[#8ED9FF]/60 hover:shadow-[0_24px_55px_rgba(15,41,67,0.2)]"
                 style={{
                   width: ITEM_WIDTH,
                   height: ITEM_HEIGHT,

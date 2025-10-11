@@ -43,7 +43,7 @@ export default function WhatICanBuild() {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1.1, ease: 'easeOut' }}
           />
-          <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/42 to-transparent" />
+          
 
           <motion.div
             initial={{ opacity: 0, y: 28 }}
@@ -52,7 +52,7 @@ export default function WhatICanBuild() {
             className="absolute inset-0 flex items-end"
           >
             <div className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-6 pb-12 pt-24 text-white md:px-8">
-              <span className="inline-flex w-fit items-center rounded-full border border-white/60 bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-200">
+              <span className="inline-flex w-fit items-center rounded-full border border-white/60 bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-[#8ED9FF]">
                 What I Can Build
               </span>
               <h1 className="text-3xl font-semibold leading-tight md:text-4xl">
@@ -87,7 +87,7 @@ export default function WhatICanBuild() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.4, ease: 'easeOut' }}
-                className="relative overflow-hidden rounded-[32px] border border-cyan-100 bg-white/90 p-[1px] shadow-[0_30px_80px_rgba(15,41,67,0.16)] backdrop-blur"
+                className="relative overflow-hidden rounded-[32px] border border-[#8ED9FF]/45 bg-white/90 p-[1px] shadow-[0_30px_80px_rgba(15,41,67,0.16)] backdrop-blur"
               >
                 <div className="relative h-full rounded-[31px] bg-gradient-to-br from-white via-cyan-50/65 to-white">
                   <button
@@ -98,12 +98,12 @@ export default function WhatICanBuild() {
                     className="flex w-full items-center justify-between gap-3 rounded-[31px] px-6 py-6 text-left text-lg font-semibold text-slate-900 transition hover:bg-white/80"
                   >
                     <span className="inline-flex items-center gap-3">
-                      <span className="flex h-10 w-10 items-center justify-center rounded-2xl border border-cyan-100 bg-white text-cyan-500 shadow-sm">
+                      <span className="flex h-10 w-10 items-center justify-center rounded-2xl border border-[#8ED9FF]/45 bg-white text-[#8ED9FF] shadow-sm">
                         <Icon className="h-5 w-5" />
                       </span>
                       {title}
                     </span>
-                    <ChevronDown className={`h-5 w-5 shrink-0 transition-transform ${isOpen ? 'rotate-180 text-cyan-600' : 'text-slate-400'}`} />
+                    <ChevronDown className={`h-5 w-5 shrink-0 transition-transform ${isOpen ? 'rotate-180 text-[#23354A]' : 'text-slate-400'}`} />
                   </button>
                   <AnimatePresence initial={false}>
                     {isOpen && (
