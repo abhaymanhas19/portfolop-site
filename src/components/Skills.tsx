@@ -43,29 +43,29 @@ export default function Skills() {
         alt=""
         aria-hidden
         initial={{ opacity: 0, scale: 1.05 }}
-        whileInView={{ opacity: 0.28, scale: 1 }}
+        whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1, ease: 'easeOut' }}
         className="absolute inset-0 h-full w-full object-cover"
       />
-      <div aria-hidden className="absolute inset-0 bg-gradient-to-br from-white/95 via-white/90 to-[#E8F9F7]/85" />
+      <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/40 to-transparent" />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-12 px-6">
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-12 px-6 text-white">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="flex flex-col gap-6 text-slate-800 md:flex-row md:items-end md:justify-between"
+          className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
         >
           <div className="space-y-3">
-            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-cyan-200/80 bg-white/80 px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-cyan-600">
+            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-cyan-200/80 bg-white/90 px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-cyan-600">
               Skill Stack
             </span>
-            <h2 className="text-3xl font-semibold text-slate-900 md:text-4xl">
+            <h2 className="text-3xl font-semibold text-white drop-shadow-[0_12px_35px_rgba(15,23,42,0.55)] md:text-4xl">
               Focus areas across the engineering toolkit
             </h2>
-            <p className="max-w-2xl text-sm text-slate-600 md:text-base">
+            <p className="max-w-2xl text-sm text-white/85 drop-shadow-[0_10px_32px_rgba(15,23,42,0.45)] md:text-base">
               Tap a category tile to preview core skills. Progress bars show confidence delivering those
               capabilities in production.
             </p>
@@ -133,7 +133,6 @@ export default function Skills() {
                 className="h-full w-full object-cover"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-cyan-900/20 via-transparent to-transparent" />
             </motion.div>
           </div>
 

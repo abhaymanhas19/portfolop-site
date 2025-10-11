@@ -11,6 +11,7 @@ export type HeroContent = {
   highlight: string
   description: string
   detail: string
+  aiSummary: string
   primaryAction: { label: string; to: string }
   secondaryAction: { label: string; to: string }
   backgroundImage: string
@@ -121,18 +122,19 @@ export const content = {
     { id: 'github', label: 'GitHub', icon: 'Github', url: 'https://github.com/abhaymanhas19' },
     { id: 'linkedin', label: 'LinkedIn', icon: 'Linkedin', url: 'https://www.linkedin.com/in/abhaymanhas19' },
     { id: 'instagram', label: 'Instagram', icon: 'Instagram', url: 'https://www.instagram.com/abhaymanhas19' },
-    { id: 'x', label: 'X', icon: 'Twitter', url: 'https://x.com/' },
+    { id: 'x', label: 'X', icon: 'Twitter', url: 'https://x.com/abhaymanhas_19' },
   ] satisfies SocialChannel[],
   hero: {
-    eyebrow: 'Realtime Python Engineering',
+    eyebrow: 'Realtime Software Engineering',
     title: 'Abhay Manhas',
-    highlight: 'Full-Stack Developer & AI Engineer',
+    highlight: 'Python & AI/ML Engineer',
     description: 'Designing robust Django and FastAPI platforms that fuse realtime collaboration with grounded AI features.',
     detail: 'Helping teams deploy multilingual AI copilots, automate insight pipelines, and keep production services observability-first.',
+    aiSummary: 'From linear regression baselines to backpropagation-heavy PyTorch + scikit model training across large datasets, I keep experimentation production-aware.',
     primaryAction: { label: 'Explore My Projects', to: '/projects' },
     secondaryAction: { label: 'Download Resume', to: '/resume' },
     backgroundImage: 'https://images.unsplash.com/photo-1523475472560-d2df97ec485c?auto=format&fit=crop&w=1600&q=80',
-    portraitIllustration: '/hero-abhay.svg',
+    portraitIllustration: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1760182542/DALL_E_2025-10-11_02.11.56_-_A_digital_avatar_of_a_young_full-stack_developer_and_AI_engineer_with_short_wavy_dark_brown_hair_and_black-rimmed_glasses._He_is_sitting_at_a_desk_us_j8bzeu.webp',
     codeTiles: [
       {
         id: 'realtime-stream',
@@ -164,9 +166,12 @@ export const content = {
       },
     ],
     stats: [
-      { label: 'Realtime systems launched', value: '15+' },
-      { label: 'LLM experiments shipped', value: '30+' },
-      { label: 'Industries served', value: '8' },
+      { label: 'Realtime systems launched', value: '110+' },
+      { label: 'LLM experiments shipped', value: '5+' },
+      { label: 'Industries served', value: '3' },
+      { label: 'Web apps delivered', value: '5+' },
+      { label: 'Backend processes orchestrated', value: '10+' },
+      { label: 'Deployments automated', value: '10+' },
     ],
   } satisfies HeroContent,
   home: {

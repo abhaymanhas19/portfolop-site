@@ -24,8 +24,11 @@ export default function CertificationsPreview() {
     return Array.from(map.entries()).map(([name, badges]) => ({ name, badges }))
   }, [])
 
-  const [activeCategory, setActiveCategory] = useState(categories[0]?.name ?? '')
-  const activeBadges = categories.find(category => category.name === activeCategory)?.badges ?? []
+  const allCategory: CategoryGroup = useMemo(() => ({ name: 'All Achievements', badges: certificationBadges }), [])
+  const categoriesWithAll = useMemo(() => [allCategory, ...categories], [allCategory, categories])
+
+  const [activeCategory, setActiveCategory] = useState(categoriesWithAll[0]?.name ?? 'All Achievements')
+  const activeBadges = categoriesWithAll.find(category => category.name === activeCategory)?.badges ?? []
 
   return (
     <section className="relative overflow-hidden py-20">
@@ -34,29 +37,29 @@ export default function CertificationsPreview() {
         alt=""
         aria-hidden
         initial={{ opacity: 0, scale: 1.05 }}
-        whileInView={{ opacity: 0.28, scale: 1 }}
+        whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1.1, ease: 'easeOut' }}
         className="absolute inset-0 h-full w-full object-cover"
       />
-      <div aria-hidden className="absolute inset-0 bg-gradient-to-br from-white/94 via-white/90 to-[#F7F0FF]/85" />
+      <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/40 to-transparent" />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-10 px-6">
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 text-white">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="flex flex-col gap-4 text-slate-800 md:flex-row md:items-end md:justify-between"
+          className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between"
         >
           <div className="space-y-3">
-            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-violet-200/80 bg-white/80 px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-violet-600">
+            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-violet-200/80 bg-white/90 px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-violet-600">
               <Award className="h-4 w-4" /> Achievements
             </span>
-            <h2 className="text-3xl font-semibold text-slate-900 md:text-4xl">
+            <h2 className="text-3xl font-semibold text-white drop-shadow-[0_12px_35px_rgba(15,23,42,0.55)] md:text-4xl">
               Credentials by specialisation
             </h2>
-            <p className="max-w-3xl text-sm text-slate-600 md:text-base">
+            <p className="max-w-3xl text-sm text-white/85 drop-shadow-[0_10px_32px_rgba(15,23,42,0.45)] md:text-base">
               Switch categories to see the badges that back each practice—from AI experimentation to resilient cloud delivery.
             </p>
           </div>
@@ -69,7 +72,7 @@ export default function CertificationsPreview() {
         </motion.div>
 
         <div className="flex flex-wrap gap-3">
-          {categories.map(category => {
+          {categoriesWithAll.map(category => {
             const active = category.name === activeCategory
             return (
               <button
@@ -113,7 +116,6 @@ export default function CertificationsPreview() {
                       whileHover={{ scale: 1.08 }}
                       transition={{ duration: 0.8, ease: 'easeOut' }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-violet-900/25 via-transparent to-transparent" />
                   </div>
                   <div className="space-y-4 px-5 pb-6 pt-5 text-left">
                     <div className="space-y-1.5">

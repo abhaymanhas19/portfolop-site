@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, MessageSquare, LineChart, Sparkles, Globe, type LucideIcon } from 'lucide-react'
+import { useLocation } from 'react-router-dom'
 import { capabilitiesContent, homeContent } from '../data/content'
 
 const iconMap: Record<string, LucideIcon> = {
@@ -11,7 +12,15 @@ const iconMap: Record<string, LucideIcon> = {
 }
 
 export default function WhatICanBuild() {
+  const location = useLocation()
   const [openId, setOpenId] = useState<string | null>(capabilitiesContent[0]?.id ?? null)
+
+  useEffect(() => {
+    const state = location.state as { capabilityId?: string } | undefined
+    if (state?.capabilityId) {
+      setOpenId(state.capabilityId)
+    }
+  }, [location.state])
 
   const toggleItem = (id: string) => {
     setOpenId(prev => (prev === id ? null : id))
@@ -19,32 +28,42 @@ export default function WhatICanBuild() {
 
   return (
     <main className="bg-white text-slate-700">
-      <section className="relative flex min-h-[300px] items-end">
-        <motion.img
-          src={homeContent.projectBackground}
-          alt=""
-          aria-hidden
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: 0.24, scale: 1 }}
-          transition={{ duration: 1.1, ease: 'easeOut' }}
-          className="pointer-events-none absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/96 via-white/92 to-[#F2F7FF]/88" aria-hidden />
-        <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-5 px-6 pb-12 pt-24 md:px-8">
+      <section className="border-b border-slate-200/70 bg-white">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7, ease: 'easeOut' }}
+          className="relative w-full overflow-hidden"
+        >
+          <motion.img
+            src={homeContent.projectBackground}
+            alt="Capabilities hero"
+            className="block h-[min(60vh,520px)] w-full object-cover md:h-[520px]"
+            initial={{ scale: 1.05, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 1.1, ease: 'easeOut' }}
+          />
+          <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/42 to-transparent" />
+
           <motion.div
-            initial={{ opacity: 0, y: 32 }}
+            initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="space-y-4 text-center md:text-left"
+            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
+            className="absolute inset-0 flex items-end"
           >
-            <span className="inline-flex w-fit items-center rounded-full border border-cyan-200/80 bg-white/80 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-600">
-              What I Can Build
-            </span>
-            <h1 className="text-3xl font-semibold leading-tight text-slate-900 md:text-4xl">
-              Platform-ready solutions that ship value fast
-            </h1>
+            <div className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-6 pb-12 pt-24 text-white md:px-8">
+              <span className="inline-flex w-fit items-center rounded-full border border-white/60 bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-200">
+                What I Can Build
+              </span>
+              <h1 className="text-3xl font-semibold leading-tight md:text-4xl">
+                Platform-ready solutions that ship value fast
+              </h1>
+              <p className="max-w-3xl text-sm text-white/85 md:text-base">
+                Product capabilities tuned for realtime collaboration, AI copilots, and resilient delivery pipelines—ready to slot into your roadmap.
+              </p>
+            </div>
           </motion.div>
-        </div>
+        </motion.div>
       </section>
 
       <section className="relative mx-auto max-w-6xl px-6 pb-20 pt-8 md:px-8">

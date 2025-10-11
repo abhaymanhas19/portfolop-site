@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Link, useNavigate } from 'react-router-dom'
-import { ExternalLink, Github, Tag } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { ExternalLink, Github } from 'lucide-react'
 import { projectCases, homeContent } from '../data/content'
 import Modal from './Modal'
 
@@ -34,7 +34,6 @@ export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<(typeof projectCases)[number] | null>(
     null,
   )
-  const navigate = useNavigate()
 
   return (
     <section id="projects" className="relative overflow-hidden py-20">
@@ -43,31 +42,31 @@ export default function Projects() {
         alt=""
         aria-hidden
         initial={{ opacity: 0, scale: 1.05 }}
-        whileInView={{ opacity: 0.32, scale: 1 }}
+        whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1.2, ease: 'easeOut' }}
         className="absolute inset-0 h-full w-full object-cover"
       />
-      <div aria-hidden className="absolute inset-0 bg-gradient-to-br from-white/95 via-white/90 to-[#F2F7FF]/90" />
+      <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/40 to-transparent" />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-12 px-6">
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-12 px-6 text-white">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="flex flex-col gap-4 text-slate-800"
+          className="flex flex-col gap-4"
         >
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div className="space-y-3">
-              <span className="inline-flex w-fit items-center gap-2 rounded-full border border-cyan-200/80 bg-white/80 px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-cyan-600">
+              <span className="inline-flex w-fit items-center gap-2 rounded-full border border-cyan-200/80 bg-white/90 px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-cyan-600">
                 Case Studies
               </span>
               <div className="space-y-2">
-                <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+                <h2 className="text-3xl font-semibold tracking-tight text-white drop-shadow-[0_12px_35px_rgba(15,23,42,0.55)] sm:text-4xl">
                   Product builds stitched with realtime AI
                 </h2>
-                <p className="max-w-2xl text-sm text-slate-600 sm:text-base">
+                <p className="max-w-2xl text-sm text-white/85 drop-shadow-[0_10px_32px_rgba(15,23,42,0.45)] sm:text-base">
                   A curated look at platforms blending realtime collaboration, applied AI, and pragmatic
                   operations. Tap into the modal for architecture notes and live demos.
                 </p>
@@ -93,17 +92,7 @@ export default function Projects() {
             <motion.article
               key={project.slug}
               variants={card}
-              whileHover={{ translateY: -6 }}
-              className="group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_30px_60px_rgba(15,41,67,0.14)]"
-              onClick={() => setSelectedProject(project)}
-              onKeyDown={event => {
-                if (event.key === 'Enter' || event.key === ' ') {
-                  event.preventDefault()
-                  setSelectedProject(project)
-                }
-              }}
-              role="button"
-              tabIndex={0}
+              className="relative flex h-full flex-col overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_30px_60px_rgba(15,41,67,0.14)]"
             >
               <div className="relative h-56 overflow-hidden sm:h-64">
                 <motion.img
@@ -115,7 +104,6 @@ export default function Projects() {
                   whileHover={{ scale: 1.12 }}
                   transition={{ duration: 0.8, ease: 'easeOut' }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 via-transparent to-transparent" />
               </div>
 
               <div className="flex flex-1 flex-col gap-5 px-5 pb-6 pt-5 text-left">
@@ -129,17 +117,9 @@ export default function Projects() {
                 </div>
                 <div className="space-y-3">
                   <h3 className="text-xl font-semibold text-slate-900 sm:text-2xl">{project.title}</h3>
-                  <p className="text-sm text-slate-600">{project.summary}</p>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.slice(0, 4).map(tag => (
-                    <span
-                      key={tag}
-                      className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-600"
-                    >
-                      <Tag className="h-3.5 w-3.5 text-cyan-500" /> {tag}
-                    </span>
-                  ))}
+                  <p className="text-sm text-slate-600">
+                    {project.summary.length > 120 ? `${project.summary.slice(0, 120)}…` : project.summary}
+                  </p>
                 </div>
                 <div className="flex flex-wrap gap-3 pt-2 text-sm">
                   {project.demo && (
@@ -149,7 +129,6 @@ export default function Projects() {
                       rel="noreferrer"
                       className="inline-flex items-center gap-2 rounded-full border border-cyan-100 bg-cyan-50 px-4 py-2 text-cyan-700 transition hover:border-cyan-200 hover:bg-cyan-100"
                       whileHover={{ scale: 1.03 }}
-                      onClick={event => event.stopPropagation()}
                     >
                       <ExternalLink className="h-4 w-4" /> Demo
                     </motion.a>
@@ -161,7 +140,6 @@ export default function Projects() {
                       rel="noreferrer"
                       className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-600 transition hover:border-slate-300 hover:text-slate-900"
                       whileHover={{ scale: 1.03 }}
-                      onClick={event => event.stopPropagation()}
                     >
                       <Github className="h-4 w-4" /> Source
                     </motion.a>
@@ -170,20 +148,11 @@ export default function Projects() {
                     type="button"
                     className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-400 via-teal-400 to-emerald-400 px-4 py-2 text-sm font-semibold text-slate-900 shadow-[0_16px_38px_rgba(79,209,197,0.35)] transition hover:-translate-y-0.5"
                     whileHover={{ scale: 1.03 }}
-                    onClick={event => {
-                      event.stopPropagation()
-                      navigate('/projects', { state: { projectSlug: project.slug } })
-                    }}
+                    onClick={() => setSelectedProject(project)}
                   >
                     Read More
                   </motion.button>
                 </div>
-              </div>
-              <div className="absolute inset-y-0 right-0 flex w-12 translate-x-full items-center justify-center bg-gradient-to-l from-cyan-50 via-white to-white shadow-inner transition-transform duration-300 group-hover:translate-x-0">
-                <svg width="18" height="18" viewBox="0 0 24 24" className="text-cyan-500" fill="none" stroke="currentColor" strokeWidth="1.8">
-                  <path d="M5 12h14" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="m13 6 6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
               </div>
             </motion.article>
           ))}

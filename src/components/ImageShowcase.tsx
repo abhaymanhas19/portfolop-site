@@ -25,14 +25,14 @@ export default function ImageShowcase() {
         alt=""
         aria-hidden
         initial={{ opacity: 0, scale: 1.05 }}
-        whileInView={{ opacity: 0.3, scale: 1 }}
+        whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1.05, ease: 'easeOut' }}
         className="absolute inset-0 h-full w-full object-cover"
       />
-      <div aria-hidden className="absolute inset-0 bg-gradient-to-br from-white/94 via-white/90 to-[#FDF4EE]/85" />
+      <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/40 to-transparent" />
 
-      <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center gap-12 px-6 text-slate-800">
+      <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center gap-12 px-6 text-white">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -40,13 +40,13 @@ export default function ImageShowcase() {
           transition={{ duration: 0.6, ease: 'easeOut' }}
           className="flex flex-col items-center gap-4 text-center"
         >
-          <span className="inline-flex items-center rounded-full border border-amber-200/80 bg-white/80 px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-amber-600">
+          <span className="inline-flex items-center rounded-full border border-amber-200/80 bg-white/90 px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-amber-600">
             Visual Logbook
           </span>
-          <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+          <h2 className="text-3xl font-semibold tracking-tight text-white drop-shadow-[0_12px_35px_rgba(15,23,42,0.55)] sm:text-4xl">
             Everyday frames beyond the keyboard
           </h2>
-          <p className="max-w-2xl text-sm text-slate-600 sm:text-base">
+          <p className="max-w-2xl text-sm text-white/85 drop-shadow-[0_10px_32px_rgba(15,23,42,0.45)] sm:text-base">
             Little rituals, weekend escapes, and candid snapshots that refill the tank so there’s always fresh
             energy to ship reliably.
           </p>
@@ -86,7 +86,6 @@ export default function ImageShowcase() {
                   whileHover={{ scale: 1.12 }}
                   transition={{ duration: 0.8, ease: 'easeOut' }}
                 />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-amber-900/30 via-transparent to-transparent" />
               </motion.div>
 
               <div className="flex flex-col gap-4 text-left">

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
 import { Document, Page, pdfjs } from 'react-pdf'
 import { Download, ExternalLink, Mail, MapPin } from 'lucide-react'
 import { site } from '../data/site'
@@ -27,24 +28,52 @@ export default function Resume() {
 
   return (
     <div className="bg-white text-slate-700">
-      <section className="relative flex min-h-[300px] items-end">
-        <img
-          src={homeContent.projectBackground}
-          alt=""
-          className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-20"
-          aria-hidden
-        />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/96 via-white/92 to-[#ECF7FF]/88" aria-hidden />
-        <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 pb-12 pt-24 md:px-6 lg:px-8">
-          <div className="space-y-4">
-            <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-cyan-500">
-              Resume Snapshot
-            </span>
-            <h1 className="text-3xl font-semibold text-slate-900 md:text-4xl">
-              {site.NAME} · {site.ROLE}
-            </h1>
-          </div>
-        </div>
+      <section className="border-b border-slate-200/70 bg-white">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7, ease: 'easeOut' }}
+          className="relative w-full overflow-hidden"
+        >
+          <motion.img
+            src={homeContent.projectBackground}
+            alt="Resume hero"
+            className="block h-[min(55vh,460px)] w-full object-cover md:h-[460px]"
+            initial={{ scale: 1.05, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 1.1, ease: 'easeOut' }}
+          />
+          <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/60 to-transparent" />
+
+          <motion.div
+            initial={{ opacity: 0, y: 26 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
+            className="absolute inset-0 flex items-end"
+          >
+            <div className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 pb-12 pt-24 text-white md:px-6 lg:px-8">
+              <div className="space-y-3">
+                <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-cyan-200">
+                  Resume Snapshot
+                </span>
+                <h1 className="text-3xl font-semibold leading-tight md:text-4xl">
+                  {site.NAME} · {site.ROLE}
+                </h1>
+                <p className="max-w-2xl text-sm text-white/85 md:text-base">
+                  Highlights from shipping AI-led platforms, resilient Python systems, and observability-first operations across industries.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/90 px-3 py-1 text-sm font-semibold text-slate-700 shadow-sm">
+                  <MapPin className="h-4 w-4 text-cyan-500" /> {site.LOCATION}
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/90 px-3 py-1 text-sm font-semibold text-slate-700 shadow-sm">
+                  <Mail className="h-4 w-4 text-cyan-500" /> {site.CONTACT_EMAIL}
+                </span>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
       </section>
 
       <section className="relative mx-auto max-w-6xl px-4 pb-16 pt-8 md:px-6 lg:px-8">

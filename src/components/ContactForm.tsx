@@ -79,14 +79,14 @@ export default function ContactForm() {
         alt=""
         aria-hidden
         initial={{ opacity: 0, scale: 1.05 }}
-        whileInView={{ opacity: 0.24, scale: 1 }}
+        whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1.1, ease: 'easeOut' }}
         className="absolute inset-0 h-full w-full object-cover"
       />
-      <div aria-hidden className="absolute inset-0 bg-gradient-to-br from-white/96 via-white/92 to-[#E9F6FF]/88" />
+      <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/40 to-transparent" />
 
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-6">
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-6 text-white">
         <div className="overflow-hidden rounded-[36px] border border-cyan-100 bg-white/90 shadow-[0_32px_90px_rgba(15,41,67,0.18)] backdrop-blur">
           <div className="relative grid gap-12 px-6 py-12 md:px-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:items-start">
             <div className="pointer-events-none absolute -top-24 right-0 h-40 w-40 rounded-full bg-cyan-100/70 blur-3xl" aria-hidden />
@@ -100,35 +100,38 @@ export default function ContactForm() {
               className="relative space-y-8"
             >
               <div className="space-y-4">
-                <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-cyan-500">
+                <span className="inline-flex items-center gap-2 rounded-full border border-cyan-100 bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-600">
                   <MessageCircle className="h-3.5 w-3.5" /> Let’s talk
                 </span>
                 <h2 className="text-3xl font-semibold text-slate-900 md:text-4xl">
                   {contactContent.title}
                 </h2>
-                <p className="text-base text-slate-600 md:text-lg">{contactContent.subtitle}</p>
+                <p className="max-w-2xl text-base text-slate-600 md:text-lg">
+                  {contactContent.subtitle}
+                </p>
               </div>
 
               <div className="grid gap-4 sm:grid-cols-2">
                 {detailCards.map(card => (
                   <div
                     key={card.title}
-                    className="rounded-[24px] border border-cyan-100 bg-white/90 p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-[0_18px_42px_rgba(15,41,67,0.18)]"
+                    className="group relative overflow-hidden rounded-[24px] border border-white/20 bg-slate-950/45 p-5 shadow-[0_18px_42px_rgba(3,7,18,0.28)] backdrop-blur transition hover:-translate-y-1 hover:shadow-[0_20px_46px_rgba(8,47,73,0.35)]"
                   >
-                    <card.icon className="h-5 w-5 text-cyan-500" />
-                    <div className="mt-3 space-y-1">
-                      <p className="text-xs uppercase tracking-[0.2em] text-slate-400">{card.title}</p>
+                    <div aria-hidden className="pointer-events-none absolute inset-0 rounded-[inherit] bg-[radial-gradient(circle_at_top_left,_rgba(86,207,255,0.28),_transparent_60%),radial-gradient(circle_at_bottom_right,_rgba(45,212,191,0.22),_transparent_55%)] opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
+                    <card.icon className="relative z-10 h-5 w-5 text-cyan-300" />
+                    <div className="relative z-10 mt-3 space-y-1">
+                      <p className="text-xs uppercase tracking-[0.2em] text-cyan-200/80">{card.title}</p>
                       {card.href ? (
                         <a
                           href={card.href}
-                          className="text-sm font-semibold text-slate-900 transition hover:text-cyan-600 break-all"
+                          className="text-sm font-semibold text-white transition hover:text-cyan-200 break-all"
                         >
                           {card.value}
                         </a>
                       ) : (
-                        <p className="text-sm font-semibold text-slate-900">{card.value}</p>
+                        <p className="text-sm font-semibold text-white">{card.value}</p>
                       )}
-                      <p className="text-xs leading-relaxed text-slate-500">{card.description}</p>
+                      <p className="text-xs leading-relaxed text-white/70">{card.description}</p>
                     </div>
                   </div>
                 ))}

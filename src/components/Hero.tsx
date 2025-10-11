@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import {
   ArrowRight,
@@ -29,7 +30,18 @@ const tilePositions = [
 ]
 
 export default function HeroSection() {
-  const subheadingLines = [heroContent.description, heroContent.detail]
+  const subheadingLines = [heroContent.description, heroContent.detail, heroContent.aiSummary]
+  const [activeLine, setActiveLine] = useState(0)
+
+  useEffect(() => {
+    if (subheadingLines.length <= 1) return () => {}
+
+    const cycle = setInterval(() => {
+      setActiveLine(prev => (prev + 1) % subheadingLines.length)
+    }, 5000)
+
+    return () => clearInterval(cycle)
+  }, [subheadingLines.length])
 
   return (
     <section className="relative isolate overflow-hidden">
@@ -38,11 +50,10 @@ export default function HeroSection() {
         alt=""
         aria-hidden
         initial={{ scale: 1.08, opacity: 0 }}
-        animate={{ scale: 1, opacity: 0.65 }}
+        animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 1.2, ease }}
         className="absolute inset-0 h-full w-full object-cover"
       />
-      <div aria-hidden className="absolute inset-0 bg-gradient-to-br from-white/95 via-white/92 to-[#ECF4FF]/88" />
       <div aria-hidden className="hero-aurora" />
       <div aria-hidden className="grid-floor" />
 
@@ -62,11 +73,11 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.26, duration: 0.8, ease }}
-            className="max-w-3xl text-4xl font-semibold leading-tight text-slate-900 md:text-6xl lg:self-start lg:pl-6"
+            className="max-w-3xl text-4xl font-semibold leading-tight text-white drop-shadow-[0_14px_45px_rgba(0,0,0,0.45)] md:text-6xl lg:self-start lg:pl-6"
           >
-            <span className="block text-slate-600">{heroContent.title}</span>
+            <span className="block text-white/90">{heroContent.title}</span>
             <motion.span
-              className="mt-1 block bg-gradient-to-r from-cyan-500 via-teal-400 to-sky-500 bg-clip-text text-transparent"
+              className="mt-1 block bg-gradient-to-r from-cyan-200 via-teal-300 to-sky-300 bg-clip-text text-transparent drop-shadow-[0_10px_35px_rgba(0,0,0,0.35)]"
               initial={{ backgroundPositionX: '0%' }}
               animate={{ backgroundPositionX: '100%' }}
               transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
@@ -76,18 +87,23 @@ export default function HeroSection() {
             </motion.span>
           </motion.h1>
 
-          <div className="mt-6 flex flex-col gap-3">
-            {subheadingLines.map((line, index) => (
+          <div className="mt-6 min-h-[4.5rem]">
+            <AnimatePresence mode="wait">
               <motion.p
-                key={line}
-                initial={{ opacity: 0, y: 18 }}
+                key={activeLine}
+                initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.38 + index * 0.12, duration: 0.6, ease }}
-                className={index === 0 ? 'max-w-2xl text-lg font-medium text-slate-700 md:text-xl' : 'max-w-2xl text-base text-slate-600 md:text-lg'}
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.6, ease }}
+                className={
+                  activeLine === 0
+                    ? 'max-w-2xl text-lg font-medium text-slate-200 drop-shadow-[0_10px_30px_rgba(15,23,42,0.35)] md:text-xl'
+                    : 'max-w-2xl text-base text-slate-200/90 drop-shadow-[0_8px_24px_rgba(15,23,42,0.35)] md:text-lg'
+                }
               >
-                {line}
+                {subheadingLines[activeLine]}
               </motion.p>
-            ))}
+            </AnimatePresence>
           </div>
 
           <motion.div
@@ -136,24 +152,6 @@ export default function HeroSection() {
             })}
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.92, duration: 0.6, ease }}
-            className="mt-8 flex flex-wrap items-center justify-center gap-4 text-sm text-slate-500 lg:justify-start"
-          >
-            {heroContent.stats.map(stat => (
-              <div
-                key={stat.label}
-                className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 shadow-sm backdrop-blur"
-              >
-                <span className="text-xl font-semibold text-slate-900">{stat.value}</span>
-                <span className="max-w-[8rem] text-xs uppercase tracking-[0.18em] text-slate-500">
-                  {stat.label}
-                </span>
-              </div>
-            ))}
-          </motion.div>
         </div>
 
         <motion.div
