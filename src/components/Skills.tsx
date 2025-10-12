@@ -61,10 +61,10 @@ export default function Skills() {
             <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[#8ED9FF]/60 bg-white/90 px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-[#23354A]">
               Skill Stack
             </span>
-            <h2 className="text-3xl font-semibold text-slate-900 md:text-4xl">
+            <h2 className="text-3xl font-semibold text-white md:text-4xl">
               Focus areas across the engineering toolkit
             </h2>
-            <p className="max-w-2xl text-sm text-slate-600 md:text-base">
+            <p className="max-w-2xl text-sm text-white/80 md:text-base">
               Tap a category tile to preview core skills. Progress bars show confidence delivering those
               capabilities in production.
             </p>

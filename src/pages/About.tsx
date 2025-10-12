@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, Sparkles, Target, Workflow, Heart } from 'lucide-react'
 import MagicBento from '../components/MagicBento'
 import { aboutContent, homeContent } from '../data/content'
+import { site } from '../data/site'
 
 export default function About() {
   const focusItems = aboutContent.tiles.map((tile, index) => ({
@@ -66,6 +67,54 @@ export default function About() {
       </section>
 
       <section className="relative mx-auto max-w-6xl px-4 pb-16 pt-8 md:px-6 lg:px-8">
+        <motion.section
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: 'easeOut', delay: 0.05 }}
+          className="mt-10 rounded-[36px] border border-[#8ED9FF]/45 bg-white/92 px-6 py-10 shadow-[0_28px_70px_rgba(15,41,67,0.16)] backdrop-blur md:px-10"
+        >
+          <div className="grid gap-8 md:grid-cols-[1.25fr,0.85fr] md:items-center">
+            <div className="space-y-4">
+              <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.28em] text-emerald-700">
+                Profile
+              </span>
+              <h2 className="text-3xl font-semibold text-slate-900 md:text-4xl">
+                My Go-To Python &amp; AI/ML Engineer
+              </h2>
+              <p className="text-sm leading-relaxed text-slate-600 md:text-base">
+                Hi, I&apos;m Abhay Manhas, a seasoned Python developer specializing in AI/ML and web applications.
+                With a background in Python platforms and bootstrapped AI startups, I help businesses automate
+                processes, predict trends, and launch user-friendly web applications.
+              </p>
+              <p className="text-sm leading-relaxed text-slate-600 md:text-base">
+                What sets me apart? Hands-on expertise across the Python ecosystem (Django and Flask for web, plus
+                Scikit-learn and PyTorch for ML) paired with a results-driven mindset. Clients see outcomes like 30%
+                faster insights or 2x user engagement. Ready to collaborate?
+              </p>
+            </div>
+            <div className="flex flex-col items-start gap-3 md:items-end">
+              <a
+                href={site.RESUME_PDF_PATH}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-[#8ED9FF]/60 bg-soft-accent px-6 py-3 text-sm font-semibold text-[#23354A] shadow-[0_16px_40px_rgba(15,41,67,0.18)] transition hover:-translate-y-0.5 hover:border-[#8ED9FF] hover:bg-white hover:text-[#1f2a37]"
+              >
+                View My Full Resume
+                <ArrowRight className="h-4 w-4" />
+              </a>
+              <Link
+                to="https://www.linkedin.com/in/abhaymanhas19"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 transition hover:text-[#23354A]"
+              >
+                Connect on LinkedIn
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+        </motion.section>
+
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}

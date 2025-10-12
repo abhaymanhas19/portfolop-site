@@ -12,6 +12,7 @@ export type HeroContent = {
   description: string
   detail: string
   aiSummary: string
+  trustBadge: string
   primaryAction: { label: string; to: string }
   secondaryAction: { label: string; to: string }
   backgroundImage: string
@@ -23,7 +24,7 @@ export type HeroContent = {
     accent: string
     delay: number
   }>
-  stats: Array<{ label: string; value: string }>
+  stats: Array<{ label: string; value: string; icon?: keyof typeof import('lucide-react') }>
 }
 
 export type SkillCluster = {
@@ -125,14 +126,16 @@ export const content = {
     { id: 'x', label: 'X', icon: 'Twitter', url: 'https://x.com/abhaymanhas_19' },
   ] satisfies SocialChannel[],
   hero: {
-    eyebrow: 'Realtime Software Engineering',
-    title: 'Abhay Manhas',
+    eyebrow: 'Available to Work',
+    title: 'Transform Your Ideas into AI-Powered Solutions',
     highlight: 'Python & AI/ML Engineer',
-    description: 'Designing robust Django and FastAPI platforms that fuse realtime collaboration with grounded AI features.',
-    detail: 'Helping teams deploy multilingual AI copilots, automate insight pipelines, and keep production services observability-first.',
-    aiSummary: 'From linear regression baselines to backpropagation-heavy PyTorch + scikit model training across large datasets, I keep experimentation production-aware.',
-    primaryAction: { label: 'Explore My Projects', to: '/projects' },
-    secondaryAction: { label: 'Download Resume', to: '/resume' },
+    description:
+      'As a Python & AI/ML expert, I build scalable web apps, intelligent models, and automation tools that drive growth.',
+    detail: "From custom ML algorithms to full-stack deployments, let's turn your vision into reality.",
+    aiSummary: 'Partner with an engineer who blends ML strategy, backend architecture, and automation to ship results.',
+    trustBadge: 'Python | PyTorch | Django',
+    primaryAction: { label: 'Get a Free Project Quote', to: '/#contact' },
+    secondaryAction: { label: 'What I Can Offer', to: '/what-i-can-build' },
     backgroundImage: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1760205991/Firefly_A_clean_glossy_3D_object_in_shape_of_a_speech_bubble_in_soft_white_material_minimal_162578_hm8yka.jpg',
     portraitIllustration: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1760182542/DALL_E_2025-10-11_02.11.56_-_A_digital_avatar_of_a_young_full-stack_developer_and_AI_engineer_with_short_wavy_dark_brown_hair_and_black-rimmed_glasses._He_is_sitting_at_a_desk_us_j8bzeu.webp',
     codeTiles: [
@@ -166,12 +169,9 @@ export const content = {
       },
     ],
     stats: [
-      { label: 'Realtime systems launched', value: '10+' },
-      { label: 'LLM experiments shipped', value: '5+' },
-      { label: 'Industries served', value: '3' },
-      { label: 'Web apps delivered', value: '5+' },
-      { label: 'Backend processes orchestrated', value: '10+' },
-      { label: 'Deployments automated', value: '10+' },
+      { label: 'Years Experience', value: '4+', icon: 'BriefcaseBusiness' },
+      { label: 'Clients Served', value: '10+', icon: 'UsersRound' },
+      { label: 'Companies Partnered', value: '3+', icon: 'Building2' },
     ],
   } satisfies HeroContent,
   home: {
@@ -179,7 +179,7 @@ export const content = {
     skillBackground: 'https://images.unsplash.com/photo-1508780709619-79562169bc64?auto=format&fit=crop&w=1600&q=80',
     projectBackground: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1600&q=80',
     achievementsBackground: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1600&q=80',
-    aboutBackground: 'https://images.unsplash.com/photo-1523289333742-be1143f6b766?auto=format&fit=crop&w=1600&q=80',
+    aboutBackground: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1760285796/Firefly_extreme_close_up_of_a_digital_computer_futuristic_human_eye_detailed_pupil_laser_o_73970_i4rp8d.jpg',
     contactBackground: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80',
     galleryBackground: 'https://images.unsplash.com/photo-1463107971871-fbac9ddb920f?auto=format&fit=crop&w=1600&q=80',
   },
@@ -197,7 +197,8 @@ export const content = {
           { name: 'Python', level: 95, highlight: 'AsyncIO, typing, profiling' },
           { name: 'Django + DRF', level: 92, highlight: 'Schema-first APIs, multi-tenant auth' },
           { name: 'Django Channels', level: 88, highlight: 'Realtime dashboards & collab suites' },
-          { name: 'Celery & Redis', level: 90, highlight: 'Task orchestration & monitoring' },
+          { name: 'Asynchronous Programming', level: 90, highlight: 'Asycnio' },
+          { name: 'Celery & Redis & RabbitMQ', level: 90, highlight: 'Task orchestration & monitoring' },
           { name: 'PostgreSQL', level: 86, highlight: 'Query tuning & migration strategy' },
         ],
       },
@@ -210,10 +211,11 @@ export const content = {
         accent: 'from-emerald-100 via-teal-100 to-white',
         tint: 'bg-teal-500/10',
         skills: [
-          { name: 'RAG Pipelines', level: 91, highlight: 'Hybrid search, reranking, evaluation' },
-          { name: 'LLM APIs (OpenAI, Azure)', level: 89, highlight: 'Cost-aware orchestration' },
           { name: 'PyTorch', level: 82, highlight: 'Fine-tuning & experimentation' },
-          { name: 'LangChain & LlamaIndex', level: 84, highlight: 'Tooling & guardrails' },
+          { name: 'Scikit Learn', level: 75, highlight: 'Fine-tuning & experimentation' },
+          { name: 'RAG Pipelines', level: 91, highlight: 'Hybrid search, reranking, evaluation' },
+          { name: 'LLM APIs (OpenAI, Azure, Gemini)', level: 89, highlight: 'Cost-aware orchestration' },
+          { name: 'AI Unified Platforms (openrouter , langchain)', level: 84, highlight: 'Tooling & guardrails' },
           { name: 'Model Evaluation', level: 88, highlight: 'Offline + automated reporting' },
         ],
       },
@@ -230,21 +232,6 @@ export const content = {
           { name: 'Kubernetes (AKS)', level: 84, highlight: 'Scalable workloads & GitOps' },
           { name: 'GitHub + Azure DevOps', level: 88, highlight: 'CI/CD pipelines & environments' },
           { name: 'Prometheus & Grafana', level: 80, highlight: 'Dashboards, tracing, alert fatigue fixes' },
-        ],
-      },
-      {
-        id: 'pipelines',
-        label: 'Processing Pipelines',
-        icon: 'Workflow',
-        summary: 'Data ingestion and transformation pipelines feeding realtime analytics and training workflows.',
-        image: 'https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80',
-        accent: 'from-[#8ED9FF] via-[#C7B2FF] to-[#FFD1B3]',
-        tint: 'bg-indigo-500/10',
-        skills: [
-          { name: 'ETL (Pandas, Dask)', level: 86, highlight: 'Large dataset wrangling' },
-          { name: 'Streaming (Kafka, RabbitMQ)', level: 80, highlight: 'Event-driven insights' },
-          { name: 'Data Quality Checks', level: 82, highlight: 'Great Expectations / custom tools' },
-          { name: 'Workflow Orchestration', level: 78, highlight: 'Celery, Temporal patterns' },
         ],
       },
       {
@@ -274,6 +261,21 @@ export const content = {
           { name: 'Azure OpenAI', level: 88, highlight: 'Model deployment & safety' },
           { name: 'Azure Storage & CosmosDB', level: 78, highlight: 'Multi-region data' },
           { name: 'Azure Monitor', level: 82, highlight: 'Dashboards & Log Analytics' },
+        ],
+      },
+      {
+        id: 'pipelines',
+        label: 'Processing Pipelines',
+        icon: 'Workflow',
+        summary: 'Data ingestion and transformation pipelines feeding realtime analytics and training workflows.',
+        image: 'https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80',
+        accent: 'from-[#8ED9FF] via-[#C7B2FF] to-[#FFD1B3]',
+        tint: 'bg-indigo-500/10',
+        skills: [
+          { name: 'ETL (Pandas, Dask)', level: 86, highlight: 'Large dataset wrangling' },
+          { name: 'Streaming (Kafka, RabbitMQ)', level: 80, highlight: 'Event-driven insights' },
+          { name: 'Data Quality Checks', level: 82, highlight: 'Great Expectations / custom tools' },
+          { name: 'Workflow Orchestration', level: 78, highlight: 'Celery, Temporal patterns' },
         ],
       },
     ] satisfies SkillCluster[],
@@ -352,12 +354,22 @@ export const content = {
       },
       {
         id: 'problem-solving',
-        title: 'Problem Solving Certified',
+        title: 'Problem Solving Certified-Basic',
         issuer: 'HackerRank',
         year: '2021',
         summary: 'Rigorous algorithmic problem solving with focus on optimisation and clean implementation.',
         badgeImage: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=80',
         credentialUrl: 'https://shorturl.at/9SQfY',
+        category: 'Problem Solving',
+      },
+      {
+        id: 'problem-solving',
+        title: 'Problem Solving Certified-Medium',
+        issuer: 'HackerRank',
+        year: '2021',
+        summary: 'Rigorous algorithmic problem solving with focus on optimisation and clean implementation.',
+        badgeImage: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=80',
+        credentialUrl: 'https://shorturl.at/BVIEg',
         category: 'Problem Solving',
       },
     ] satisfies AchievementBadge[],
@@ -366,7 +378,7 @@ export const content = {
     headline: 'Python engineer delivering AI platforms that hold up in production',
     intro:
       'I translate fuzzy ideas into reliable AI-driven products—pairing pragmatic Python craftsmanship with evaluation-driven delivery so features make it to prod and stay there.',
-    heroImage: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1600&q=80',
+    heroImage: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1760285796/Firefly_extreme_close_up_of_a_digital_computer_futuristic_human_eye_detailed_pupil_laser_o_73970_i4rp8d.jpg',
     tiles: [
       {
         title: 'Applied AI systems',
@@ -458,18 +470,18 @@ export const content = {
     images: [
       {
         id: 'mountain-trail',
-        src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80',
+        src: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1760293028/generated-image_zqbcum.png',
         alt: 'Standing at the ridge watching sunrise spill over the hills',
         title: 'First Light',
         width: 1200,
-        height: 1600,
-        location: 'Triund, Himachal',
+        height: 1200,
+        location: 'Digital world.',
         capturedAt: 'October 2024',
-        description: 'Solo hike reward—quiet air, hot chai, and a pink sky worth the climb.',
+        description: 'Deep Learning.',
       },
       {
         id: 'city-evening',
-        src: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80',
+        src: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1760293020/download_4_enpbfz.jpg',
         alt: 'Leaning on a railing overlooking city lights after dusk',
         title: 'Golden Hour Rewind',
         width: 1200,
@@ -480,47 +492,47 @@ export const content = {
       },
       {
         id: 'coffee-break',
-        src: 'https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80',
+        src: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1760293018/download_5_gqzwrd.jpg',
         alt: 'Pouring latte art in a sunlit kitchen nook',
         title: 'Sunday Ritual',
         width: 1200,
         height: 1500,
         location: 'Home base',
         capturedAt: 'January 2025',
-        description: 'My reset button: slow brew, a new playlist, and scribbling ideas in the notebook nearby.',
+        description: 'Code with nature.',
       },
       {
         id: 'book-lounge',
-        src: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80',
+        src: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1760285796/Firefly_extreme_close_up_of_a_digital_computer_futuristic_human_eye_detailed_pupil_laser_o_73970_i4rp8d.jpg',
         alt: 'Relaxing with a favourite book and headphones beside a window',
         title: 'Quiet Chapters',
         width: 1200,
         height: 1500,
         location: 'Home library',
         capturedAt: 'August 2024',
-        description: 'Wind-down hour with Murakami on the page and lo-fi in the background.',
+        description: 'Digital computer futuristic  human eye, detailed pupil laser,.',
       },
       {
         id: 'friends-laugh',
-        src: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80',
+        src: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1760293020/download_2_tsicr5.jpg',
         alt: 'Laughing with close friends over street food',
         title: 'Laugh Lines',
         width: 1200,
         height: 900,
         location: 'Sector 17, Chandigarh',
         capturedAt: 'April 2024',
-        description: 'Nothing beats late-night chaat and belly laughs with the core crew.',
+        description: 'Era of AI.',
       },
       {
         id: 'cycle-trail',
-        src: 'https://images.unsplash.com/photo-1463107971871-fbac9ddb920f?auto=format&fit=crop&w=1200&q=80',
+        src: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1760293020/download_1_jvbjzt.jpg',
         alt: 'Taking a break beside the cycle on a forest trail',
         title: 'Trail Pause',
         width: 1200,
         height: 1500,
         location: 'Siswan Forest',
         capturedAt: 'February 2025',
-        description: 'Weekend cycling loop—parked up to soak in the green and stretch.',
+        description: 'World with AI systems.',
       },
     ] satisfies GalleryImage[],
   },

@@ -140,12 +140,13 @@ export default function ImageGallery() {
       >
         {selectedImage ? (
           <div className="space-y-4">
-            <img
-              src={selectedImage.src}
-              alt={selectedImage.alt}
-              className="max-h-[60vh] w-full rounded-[28px] object-cover"
-              style={{ aspectRatio: `${selectedImage.width} / ${selectedImage.height}` }}
-            />
+            <div className="flex items-center justify-center rounded-[28px] bg-slate-100/70 p-3">
+              <img
+                src={selectedImage.src}
+                alt={selectedImage.alt}
+                className="max-h-[70vh] w-auto max-w-full rounded-[20px] object-contain shadow-[0_24px_60px_rgba(15,23,42,0.18)]"
+              />
+            </div>
             {selectedImage.description ? (
               <p className="text-sm leading-relaxed text-slate-600">{selectedImage.description}</p>
             ) : null}

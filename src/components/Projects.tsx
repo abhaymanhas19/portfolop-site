@@ -58,14 +58,14 @@ export default function Projects() {
         >
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div className="space-y-3">
-              <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[#8ED9FF]/60 bg-soft-accent px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-[#23354A]">
+              <span className="inline-flex w-fit text-[#FFFFFF] items-center gap-2 rounded-full border border-[#8ED9FF]/60 bg-soft-accent px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-[#23354A]">
                 Case Studies
               </span>
               <div className="space-y-2">
-                <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+                <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
                   Product builds stitched with realtime AI
                 </h2>
-                <p className="max-w-2xl text-sm text-slate-600 sm:text-base">
+                <p className="max-w-2xl text-sm text-white/80 sm:text-base">
                   A curated look at platforms blending realtime collaboration, applied AI, and pragmatic
                   operations. Tap into the modal for architecture notes and live demos.
                 </p>

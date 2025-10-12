@@ -105,7 +105,7 @@ export default function ImageShowcase() {
                   <button
                     type="button"
                     onClick={() => navigate('/image-gallery')}
-                    className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-300 via-rose-300 to-amber-400 px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-[0_16px_38px_rgba(255,183,66,0.35)] transition hover:-translate-y-0.5"
+                    className="btn-primary px-5 py-2.5 text-sm"
                   >
                     {profile.cta}
                   </button>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import {
@@ -7,11 +7,11 @@ import {
   Github,
   Instagram,
   Linkedin,
-  Sparkles,
   Twitter,
   type LucideIcon,
 } from 'lucide-react'
 import { heroContent, socials } from '../data/content'
+import SplitText from './SplitText'
 
 const ease = [0.18, 0.78, 0.24, 1] as const
 
@@ -23,15 +23,24 @@ const socialIcons: Record<string, LucideIcon> = {
 }
 
 const tilePositions = [
-  'top-24 left-[6%]',
-  'top-24 right-[6%]',
-  'bottom-20 left-[8%]',
-  'bottom-20 right-[6%]',
+  'top-28 left-[8%]',
+  'top-20 right-[8%]',
+  'bottom-14 left-[4%]',
+  'bottom-16 right-[12%]',
 ]
 
 export default function HeroSection() {
-  const subheadingLines = [heroContent.description, heroContent.detail, heroContent.aiSummary]
+  const subheadingLines = [heroContent.description, heroContent.detail, heroContent.aiSummary].filter(
+    Boolean,
+  )
   const [activeLine, setActiveLine] = useState(0)
+
+  useEffect(() => {
+    if (!subheadingLines.length) return
+    if (activeLine >= subheadingLines.length) {
+      setActiveLine(0)
+    }
+  }, [activeLine, subheadingLines.length])
 
   useEffect(() => {
     if (subheadingLines.length <= 1) return () => {}
@@ -70,29 +79,48 @@ export default function HeroSection() {
             transition={{ delay: 0.18, duration: 0.6, ease }}
             className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#8ED9FF]/60 bg-soft-accent px-4 py-1.5 text-xs font-semibold text-[#23354A] shadow-sm backdrop-blur"
           >
-            <Sparkles className="h-4 w-4 text-[#8ED9FF]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_0_3px_rgba(16,185,129,0.25)]" />
             {heroContent.eyebrow}
           </motion.span>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.26, duration: 0.8, ease }}
-            className="max-w-3xl text-5xl font-bold leading-tight text-slate-50 drop-shadow-[0_18px_55px_rgba(15,23,42,0.6)] md:text-6xl"
-          >
-            <span className="block text-slate-50">{heroContent.title}</span>
-            <motion.span
-              className="mt-4 block bg-gradient-accent bg-clip-text text-transparent text-[0.98em] font-semibold tracking-tight drop-shadow-[0_12px_30px_rgba(15,23,42,0.5)]"
-              initial={{ backgroundPositionX: '0%' }}
-              animate={{ backgroundPositionX: '100%' }}
-              transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
-              style={{ backgroundSize: '200%' }}
-            >
-              {heroContent.highlight}
-            </motion.span>
-          </motion.h1>
+          <div className="w-full max-w-3xl">
+            <SplitText
+              text={heroContent.title}
+              tag="h1"
+              splitType="chars"
+              delay={60}
+              duration={0.55}
+              ease="power3.out"
+              from={{ opacity: 0, y: 28 }}
+              to={{ opacity: 1, y: 0 }}
+              className="text-5xl font-bold leading-tight text-[#1f2d4d] text-glow-primary md:text-6xl"
+              textAlign="left"
+              mutateSplit={split => {
+                split.chars?.forEach(char => {
+                  char.classList.add('inline-block', 'text-glow-primary')
+                })
+              }}
+            />
+            <SplitText
+              text={heroContent.highlight}
+              tag="span"
+              splitType="chars"
+              delay={60}
+              duration={0.55}
+              ease="power3.out"
+              from={{ opacity: 0, y: 24 }}
+              to={{ opacity: 1, y: 0 }}
+              className="mt-2 block text-[1.12em] font-semibold tracking-tight text-[#1f2d4d] text-glow-accent md:text-[1.18em]"
+              textAlign="left"
+              mutateSplit={split => {
+                split.chars?.forEach(char => {
+                  char.classList.add('inline-block', 'text-glow-accent')
+                })
+              }}
+            />
+          </div>
 
-          <div className="mt-8 min-h-[4.5rem]">
+          <div className="mt-5 min-h-[4.5rem]">
             <AnimatePresence mode="wait">
               <motion.p
                 key={activeLine}
@@ -100,11 +128,7 @@ export default function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -16 }}
                 transition={{ duration: 0.6, ease }}
-                className={
-                  activeLine === 0
-                    ? 'max-w-2xl text-lg font-medium text-slate-100 drop-shadow-[0_10px_30px_rgba(15,23,42,0.4)]'
-                    : 'max-w-2xl text-lg text-slate-100/90 drop-shadow-[0_8px_24px_rgba(15,23,42,0.4)]'
-                }
+                className="max-w-2xl text-lg font-semibold text-slate-100 drop-shadow-[0_32px_32px_rgba(23,36,70,0.28)]"
               >
                 {subheadingLines[activeLine]}
               </motion.p>
@@ -115,11 +139,11 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.58, duration: 0.6, ease }}
-            className="mt-12 flex w-full flex-col items-center gap-5 sm:flex-row sm:justify-center lg:justify-start"
+            className="mt-6a flex w-full max-w-[430px] flex-col items-center gap-4 self-center sm:flex-row sm:justify-between lg:self-start"
           >
             <Link
               to={heroContent.primaryAction.to}
-              className="btn-primary px-7 py-3 text-base"
+              className="btn-primary text-base"
             >
               {heroContent.primaryAction.label}
               <ArrowRight className="ml-2 h-5 w-5" />
@@ -127,37 +151,26 @@ export default function HeroSection() {
 
             <Link
               to={heroContent.secondaryAction.to}
-              className="btn-secondary-invert px-6 py-3 text-base"
+              className="btn-secondary-invert text-base"
             >
               <Download className="h-5 w-5" />
               {heroContent.secondaryAction.label}
             </Link>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.78, duration: 0.6, ease }}
-            className="mt-12 flex w-full justify-center lg:justify-start"
-          >
-            <div className="inline-flex items-center gap-4 rounded-full bg-slate-950/40 px-5 py-3 shadow-[0_18px_42px_rgba(15,23,42,0.5)] backdrop-blur">
-              {socials.map(handle => {
-                const Icon = socialIcons[handle.icon] ?? GlobeIconFallback
-                return (
-                  <a
-                    key={handle.id}
-                    href={handle.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={handle.label}
-                    className="group inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-white/30 text-white/80 transition hover:-translate-y-0.5 hover:border-white hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200 focus-visible:ring-offset-1 focus-visible:ring-offset-slate-900/50"
-                  >
-                    <Icon className="h-5 w-5 transition-transform group-hover:scale-110" />
-                  </a>
-                )
-              })}
-            </div>
-          </motion.div>
+          {heroContent.trustBadge && (
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.68, duration: 0.6, ease }}
+              className="mt-2 flex w-full justify-center lg:justify-start"
+            >
+              <span className="inline-flex items-center gap-2 rounded-full border border-emerald-300/70 bg-white/80 px-4 py-1.5 text-xs font-semibold tracking-[0.18em] text-emerald-700 shadow-sm backdrop-blur">
+                <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                {heroContent.trustBadge}
+              </span>
+            </motion.div>
+          )}
 
         </div>
 
@@ -173,7 +186,7 @@ export default function HeroSection() {
               <img
                 src={heroContent.portraitIllustration}
                 alt="Abhay building with a laptop"
-                className="w-full drop-shadow-[0_26px_52px_rgba(15,182,196,0.32)]"
+                className="w-full"
                 loading="lazy"
               />
             </div>
@@ -185,6 +198,30 @@ export default function HeroSection() {
             </div>
           </div>
           <div className="absolute inset-x-10 -bottom-10 h-24 rounded-full bg-soft-accent/45 blur-3xl" aria-hidden />
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.82, duration: 0.6, ease }}
+            className="mt-10 flex justify-center"
+          >
+            <div className="flex items-center justify-center gap-3 rounded-full border border-white/50 bg-slate-950/40 px-5 py-3 shadow-[0_18px_42px_rgba(15,23,42,0.5)] backdrop-blur">
+              {socials.map(handle => {
+                const Icon = socialIcons[handle.icon] ?? GlobeIconFallback
+                return (
+                  <a
+                    key={handle.id}
+                    href={handle.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={handle.label}
+                    className="group inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-cyan-300/60 bg-cyan-500/20 text-cyan-100 transition-all hover:-translate-y-0.5 hover:border-cyan-200 hover:bg-cyan-400/30 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200 focus-visible:ring-offset-1 focus-visible:ring-offset-slate-900/50"
+                  >
+                    <Icon className="h-5 w-5 transition-transform group-hover:scale-110" />
+                  </a>
+                )
+              })}
+            </div>
+          </motion.div>
         </motion.div>
       </div>
 

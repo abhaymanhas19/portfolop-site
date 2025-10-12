@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion'
+import type { LucideIcon } from 'lucide-react'
+import { Building2, BriefcaseBusiness, UsersRound } from 'lucide-react'
 import { heroContent } from '../data/content'
 
 const container = {
@@ -17,6 +19,12 @@ const container = {
 const item = {
   hidden: { opacity: 0, y: 16 },
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.18, 0.78, 0.24, 1] } },
+}
+
+const statIcons: Record<string, LucideIcon> = {
+  BriefcaseBusiness,
+  UsersRound,
+  Building2,
 }
 
 export default function HeroStats() {
@@ -43,29 +51,37 @@ export default function HeroStats() {
             className="relative flex flex-wrap items-center justify-center gap-5 text-sm text-slate-500 md:justify-between"
             variants={container}
           >
-            {heroContent.stats.map(stat => (
-              <motion.div
-                key={stat.label}
-                variants={item}
-                whileHover={{ y: -4, scale: 1.02 }}
-                className="group relative flex min-w-[220px] items-center gap-4 rounded-3xl border border-white/40 bg-white/90 px-6 py-5 shadow-[0_18px_50px_rgba(15,41,67,0.12)] ring-1 ring-inset ring-cyan-100/55 transition-transform"
-              >
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-cyan-100/25 via-transparent to-sky-100/25 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                <span className="relative text-2xl font-semibold text-slate-900">
-                  <motion.span
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, ease: [0.18, 0.78, 0.24, 1] }}
-                    className="block"
-                  >
-                    {stat.value}
-                  </motion.span>
-                </span>
-                <span className="relative max-w-[10rem] text-xs uppercase tracking-[0.22em] text-slate-500">
-                  {stat.label}
-                </span>
-              </motion.div>
-            ))}
+            {heroContent.stats.map(stat => {
+              const Icon = stat.icon ? statIcons[stat.icon] : undefined
+              return (
+                <motion.div
+                  key={stat.label}
+                  variants={item}
+                  whileHover={{ y: -4, scale: 1.02 }}
+                  className="group relative flex min-w-[240px] items-center gap-4 rounded-3xl border border-white/40 bg-white/90 px-6 py-5 shadow-[0_18px_50px_rgba(15,41,67,0.12)] ring-1 ring-inset ring-cyan-100/55 transition-transform"
+                >
+                  <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-cyan-100/25 via-transparent to-sky-100/25 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  {Icon && (
+                    <span className="relative flex h-11 w-11 items-center justify-center rounded-2xl border border-emerald-200/70 bg-emerald-50/90 text-emerald-600 shadow-inner">
+                      <Icon className="h-5 w-5" aria-hidden />
+                    </span>
+                  )}
+                  <span className="relative text-2xl font-semibold text-slate-900">
+                    <motion.span
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, ease: [0.18, 0.78, 0.24, 1] }}
+                      className="block"
+                    >
+                      {stat.value}
+                    </motion.span>
+                  </span>
+                  <span className="relative max-w-[10rem] text-xs uppercase tracking-[0.22em] text-slate-500">
+                    {stat.label}
+                  </span>
+                </motion.div>
+              )
+            })}
           </motion.div>
         </div>
       </motion.div>
