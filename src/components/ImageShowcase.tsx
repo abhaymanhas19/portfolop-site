@@ -19,7 +19,7 @@ export default function ImageShowcase() {
   const handlePointerLeave = () => setSpotlight(prev => ({ ...prev, active: false }))
 
   return (
-    <section className="relative overflow-hidden py-20">
+    <section className="relative overflow-hidden bg-white py-20">
       <motion.img
         src={homeContent.galleryBackground}
         alt=""
@@ -27,25 +27,29 @@ export default function ImageShowcase() {
         initial={{ opacity: 0, scale: 1.05 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 1.05, ease: 'easeOut' }}
-        className="absolute inset-0 h-full w-full object-cover"
+        transition={{ duration: 1.1, ease: 'easeOut' }}
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/92 via-white/80 to-white/60 backdrop-blur-[1.5px]"
       />
 
-      <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center gap-12 px-6 text-white">
+      <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center gap-12 px-6 text-slate-900">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="flex flex-col items-center gap-4 text-center"
+          className="flex flex-col items-center gap-4 text-center text-white"
         >
-          <span className="inline-flex items-center rounded-full border border-amber-200/80 bg-white/90 px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-amber-600">
+          <span className="tag-pill">
             Visual Logbook
           </span>
-          <h2 className="text-3xl font-semibold tracking-tight text-white drop-shadow-[0_12px_35px_rgba(15,23,42,0.55)] sm:text-4xl">
+          <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
             Everyday frames beyond the keyboard
           </h2>
-          <p className="max-w-2xl text-sm text-white/85 drop-shadow-[0_10px_32px_rgba(15,23,42,0.45)] sm:text-base">
+          <p className="max-w-2xl text-sm text-white/85 sm:text-base">
             Little rituals, weekend escapes, and candid snapshots that refill the tank so there’s always fresh
             energy to ship reliably.
           </p>
@@ -58,16 +62,16 @@ export default function ImageShowcase() {
           transition={{ duration: 0.65, ease: 'easeOut' }}
           onMouseMove={handlePointerMove}
           onMouseLeave={handlePointerLeave}
-          className="group relative w-full max-w-3xl overflow-hidden rounded-[36px] border border-amber-100 bg-white/80 p-[1px] shadow-[0_32px_80px_rgba(120,72,0,0.18)] backdrop-blur"
+          className="group relative w-full max-w-3xl overflow-hidden rounded-[36px] border border-slate-200 bg-white p-[1px] shadow-[0_32px_80px_rgba(15,23,42,0.12)]"
         >
-          <div className="relative h-full w-full overflow-hidden rounded-[35px] bg-gradient-to-br from-white via-amber-50/70 to-white">
+          <div className="relative h-full w-full overflow-hidden rounded-[35px] bg-white">
             <motion.div
               className="absolute inset-0"
               aria-hidden
               animate={{ opacity: spotlight.active ? 1 : 0 }}
               transition={{ duration: 0.3 }}
               style={{
-                background: `radial-gradient(420px circle at ${spotlight.x}% ${spotlight.y}%, rgba(255,183,66,0.25), transparent 65%)`,
+                background: `radial-gradient(420px circle at ${spotlight.x}% ${spotlight.y}%, rgba(226,232,240,0.45), transparent 65%)`,
               }}
             />
 
@@ -89,15 +93,15 @@ export default function ImageShowcase() {
 
               <div className="flex flex-col gap-4 text-left">
                 <div className="space-y-1">
-                  <p className="text-xs uppercase tracking-[0.3em] text-amber-500">{profile.tagline}</p>
+                  <p className="text-xs uppercase tracking-[0.3em] text-slate-500">{profile.tagline}</p>
                   <h3 className="text-2xl font-semibold text-slate-900 sm:text-3xl">{profile.name}</h3>
                 </div>
                 <p className="text-sm text-slate-600 sm:text-base">{profile.highlight}</p>
                 <div className="flex flex-wrap gap-3">
-                  <span className="inline-flex items-center rounded-full border border-amber-100 bg-white px-3 py-1 text-xs uppercase tracking-[0.25em] text-amber-500">
+                  <span className="tag-pill px-3 py-1 text-[11px] tracking-[0.3em]">
                     Personal moments
                   </span>
-                  <span className="inline-flex items-center rounded-full border border-amber-100 bg-white px-3 py-1 text-xs uppercase tracking-[0.25em] text-amber-500">
+                  <span className="tag-pill px-3 py-1 text-[11px] tracking-[0.3em]">
                     Off-duty energy
                   </span>
                 </div>
@@ -114,7 +118,7 @@ export default function ImageShowcase() {
             </div>
 
             <motion.div
-              className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-amber-200/80 to-transparent"
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-slate-200/80 to-transparent"
               animate={{ opacity: [0.25, 0.75, 0.25] }}
               transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
             />

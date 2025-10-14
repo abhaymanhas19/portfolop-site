@@ -11,6 +11,7 @@ export type ExperienceItem = {
   period: string
   summary: string
   achievements: string[]
+  link?: string
 }
 
 export type ValueStatement = {
@@ -52,6 +53,7 @@ export const profile: ProfileContent = {
       period: item.period,
       summary: item.summary,
       achievements: item.achievements,
+      link: item.link,
     })),
     values: content.about.values.map(value => ({
       title: value.title,

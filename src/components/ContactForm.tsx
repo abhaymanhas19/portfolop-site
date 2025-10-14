@@ -74,19 +74,9 @@ export default function ContactForm() {
 
   return (
     <section id="contact" className="relative overflow-hidden py-20">
-      <motion.img
-        src={homeContent.contactBackground}
-        alt=""
-        aria-hidden
-        initial={{ opacity: 0, scale: 1.05 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.1, ease: 'easeOut' }}
-        className="absolute inset-0 h-full w-full object-cover"
-      />
 
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-6 text-white">
-        <div className="overflow-hidden rounded-[36px] border border-[#8ED9FF]/45 bg-white/90 shadow-[0_32px_90px_rgba(15,41,67,0.18)] backdrop-blur">
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-6 text-slate-900">
+        <div className="overflow-hidden rounded-[36px] border border-slate-200 bg-white shadow-[0_32px_90px_rgba(15,23,42,0.12)]">
           <div className="relative grid gap-12 px-6 py-12 md:px-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:items-start">
             <div className="pointer-events-none absolute -top-24 right-0 h-40 w-40 rounded-full bg-soft-accent/70 blur-3xl" aria-hidden />
             <div className="pointer-events-none absolute bottom-[-60px] left-[-60px] h-48 w-48 rounded-full bg-emerald-100/70 blur-[120px]" aria-hidden />
@@ -99,7 +89,7 @@ export default function ContactForm() {
               className="relative space-y-8"
             >
               <div className="space-y-4">
-                <span className="inline-flex items-center gap-2 rounded-full border border-[#8ED9FF]/45 bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-[#23354A]">
+                <span className="tag-pill px-3">
                   <MessageCircle className="h-3.5 w-3.5" /> Let’s talk
                 </span>
                 <h2 className="text-3xl font-semibold text-slate-900 md:text-4xl">
@@ -114,20 +104,20 @@ export default function ContactForm() {
                 {detailCards.map(card => (
                   <div
                     key={card.title}
-                    className="rounded-[24px] border border-[#8ED9FF]/45 bg-white/94 p-5 shadow-[0_18px_42px_rgba(15,41,67,0.12)] transition hover:-translate-y-1 hover:shadow-[0_20px_48px_rgba(15,41,67,0.18)]"
+                    className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-[0_18px_42px_rgba(15,23,42,0.12)] transition hover:-translate-y-1 hover:shadow-[0_22px_52px_rgba(15,23,42,0.16)]"
                   >
-                    <card.icon className="h-5 w-5 text-[#8ED9FF]" />
+                    <card.icon className="h-5 w-5 text-slate-600" />
                     <div className="mt-3 space-y-1">
-                      <p className="text-xs uppercase tracking-[0.2em] text-[#23354A]">{card.title}</p>
+                      <p className="text-xs uppercase tracking-[0.2em] text-slate-500">{card.title}</p>
                       {card.href ? (
                         <a
                           href={card.href}
-                          className="text-sm font-semibold text-[#1f2a37] transition hover:text-[#8ED9FF] break-all"
+                          className="break-all text-sm font-semibold text-slate-700 transition hover:text-slate-900"
                         >
                           {card.value}
                         </a>
                       ) : (
-                        <p className="text-sm font-semibold text-[#1f2a37]">{card.value}</p>
+                        <p className="text-sm font-semibold text-slate-700">{card.value}</p>
                       )}
                       <p className="text-xs leading-relaxed text-slate-500">{card.description}</p>
                     </div>
@@ -142,7 +132,7 @@ export default function ContactForm() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, ease: 'easeOut', delay: 0.08 }}
-              className="relative z-10 grid gap-5 rounded-[28px] border border-[#8ED9FF]/45 bg-soft-accent p-6 shadow-[0_24px_60px_rgba(15,41,67,0.16)] backdrop-blur"
+              className="relative z-10 grid gap-5 rounded-[28px] border border-slate-200 bg-slate-50 p-6 shadow-[0_24px_60px_rgba(15,23,42,0.12)]"
             >
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="flex flex-col gap-1 text-sm font-medium text-slate-700" htmlFor="name">
@@ -151,7 +141,7 @@ export default function ContactForm() {
                     id="name"
                     name="name"
                     required
-                    className="rounded-xl border border-[#8ED9FF]/45 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm focus:border-[#8ED9FF]/70 focus:outline-none focus:ring-2 focus:ring-cyan-200"
+                    className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-300"
                     placeholder={contactContent.form.namePlaceholder}
                   />
                 </label>
@@ -162,7 +152,7 @@ export default function ContactForm() {
                     name="email"
                     type="email"
                     required
-                    className="rounded-xl border border-[#8ED9FF]/45 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm focus:border-[#8ED9FF]/70 focus:outline-none focus:ring-2 focus:ring-cyan-200"
+                    className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-300"
                     placeholder={contactContent.form.emailPlaceholder}
                   />
                 </label>
@@ -174,7 +164,7 @@ export default function ContactForm() {
                   name="message"
                   rows={6}
                   required
-                  className="rounded-xl border border-[#8ED9FF]/45 bg-white px-3 py-3 text-sm text-slate-700 shadow-sm focus:border-[#8ED9FF]/70 focus:outline-none focus:ring-2 focus:ring-cyan-200"
+                  className="rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm text-slate-700 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-300"
                   placeholder={contactContent.form.messagePlaceholder}
                 />
               </label>

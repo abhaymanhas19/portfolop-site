@@ -1,6 +1,7 @@
 import { Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import CapabilityTicker from './components/CapabilityTicker'
 import Home from './pages/Home'
 import About from './pages/About'
 import WhatICanBuild from './pages/WhatICanBuild'
@@ -36,23 +37,8 @@ export default function App() {
   return (
     <div className="relative flex min-h-screen flex-col bg-white text-slate-700">
       <Navbar />
+      <CapabilityTicker />
       <ScrollToHash />
-      <AnimatePresence>
-        {loading && (
-          <motion.div
-            className="fixed inset-0 z-[60] grid place-items-center bg-white/80 backdrop-blur"
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.35 }}
-          >
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>
-              <span className="block text-center text-2xl font-semibold text-[#8ED9FF] md:text-3xl">
-                Loading portfolio...
-              </span>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
       <main className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />

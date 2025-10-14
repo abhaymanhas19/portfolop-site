@@ -53,7 +53,7 @@ export default function HeroSection() {
   }, [subheadingLines.length])
 
   return (
-    <section className="relative isolate overflow-hidden">
+    <section className="relative overflow-hidden bg-white">
       <motion.img
         src={heroContent.backgroundImage}
         alt=""
@@ -61,25 +61,27 @@ export default function HeroSection() {
         initial={{ scale: 1.08, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 1.2, ease }}
-        className="absolute inset-0 h-full w-full object-cover"
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/92 via-white/75 to-white/60 backdrop-blur-[2px]"
       />
       <motion.div
         aria-hidden
         className="hero-aurora"
-        animate={{ opacity: [0.35, 0.55, 0.35] }}
+        animate={{ opacity: [0.25, 0.5, 0.25] }}
         transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
       />
       <div aria-hidden className="grid-floor" />
-
       <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-6xl flex-col items-center justify-center gap-16 px-6 py-24 lg:flex-row lg:items-center lg:gap-16">
         <div className="flex w-full flex-1 flex-col items-center text-center lg:max-w-[55%] lg:items-start lg:text-left">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.18, duration: 0.6, ease }}
-            className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#8ED9FF]/60 bg-soft-accent px-4 py-1.5 text-xs font-semibold text-[#23354A] shadow-sm backdrop-blur"
+            className="tag-pill mb-6"
           >
-            <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_0_3px_rgba(16,185,129,0.25)]" />
             {heroContent.eyebrow}
           </motion.span>
 
@@ -93,12 +95,10 @@ export default function HeroSection() {
               ease="power3.out"
               from={{ opacity: 0, y: 28 }}
               to={{ opacity: 1, y: 0 }}
-              className="text-5xl font-bold leading-tight text-[#1f2d4d] text-glow-primary md:text-6xl"
+              className="text-5xl font-bold leading-tight text-slate-900 md:text-6xl"
               textAlign="left"
               mutateSplit={split => {
-                split.chars?.forEach(char => {
-                  char.classList.add('inline-block', 'text-glow-primary')
-                })
+                split.chars?.forEach(char => char.classList.add('inline-block'))
               }}
             />
             <SplitText
@@ -110,12 +110,10 @@ export default function HeroSection() {
               ease="power3.out"
               from={{ opacity: 0, y: 24 }}
               to={{ opacity: 1, y: 0 }}
-              className="mt-2 block text-[1.12em] font-semibold tracking-tight text-[#1f2d4d] text-glow-accent md:text-[1.18em]"
+              className="mt-2 block text-[1.12em] font-semibold tracking-tight text-slate-700 md:text-[1.18em]"
               textAlign="left"
               mutateSplit={split => {
-                split.chars?.forEach(char => {
-                  char.classList.add('inline-block', 'text-glow-accent')
-                })
+                split.chars?.forEach(char => char.classList.add('inline-block'))
               }}
             />
           </div>
@@ -128,7 +126,7 @@ export default function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -16 }}
                 transition={{ duration: 0.6, ease }}
-                className="max-w-2xl text-lg font-semibold text-slate-100 drop-shadow-[0_32px_32px_rgba(23,36,70,0.28)]"
+                className="max-w-2xl text-lg font-medium text-slate-600"
               >
                 {subheadingLines[activeLine]}
               </motion.p>
@@ -139,7 +137,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.58, duration: 0.6, ease }}
-            className="mt-6a flex w-full max-w-[430px] flex-col items-center gap-4 self-center sm:flex-row sm:justify-between lg:self-start"
+            className="mt-6 flex w-full max-w-[430px] flex-col items-center gap-4 self-center sm:flex-row sm:justify-between lg:self-start"
           >
             <Link
               to={heroContent.primaryAction.to}
@@ -165,7 +163,7 @@ export default function HeroSection() {
               transition={{ delay: 0.68, duration: 0.6, ease }}
               className="mt-2 flex w-full justify-center lg:justify-start"
             >
-              <span className="inline-flex items-center gap-2 rounded-full border border-emerald-300/70 bg-white/80 px-4 py-1.5 text-xs font-semibold tracking-[0.18em] text-emerald-700 shadow-sm backdrop-blur">
+              <span className="tag-pill">
                 <span className="h-2 w-2 rounded-full bg-emerald-500" />
                 {heroContent.trustBadge}
               </span>
@@ -180,8 +178,7 @@ export default function HeroSection() {
           transition={{ delay: 0.52, duration: 0.7, ease }}
           className="relative w-full max-w-[325px] lg:self-stretch"
         >
-          <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-cyan-200/35 via-transparent to-sky-200/25 blur-3xl" />
-          <div className="relative overflow-hidden rounded-[2rem] bg-white/78 p-7 shadow-[0_26px_64px_rgba(15,41,67,0.2)] backdrop-blur">
+          <div className="relative overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-7 shadow-[0_24px_60px_rgba(15,23,42,0.12)]">
             <div className="relative mx-auto w-full">
               <img
                 src={heroContent.portraitIllustration}
@@ -190,21 +187,21 @@ export default function HeroSection() {
                 loading="lazy"
               />
             </div>
-            <div className="mt-6 rounded-2xl border border-[#8ED9FF]/45 bg-soft-accent px-5 py-4 text-sm text-slate-600 shadow-sm">
+            <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-sm text-slate-600 shadow-sm">
               <p>
                 “Our systems need to feel seamless for operators. I obsess over latency budgets, healthy
                 pipelines, and guardrails that make AI trustworthy.”
               </p>
             </div>
           </div>
-          <div className="absolute inset-x-10 -bottom-10 h-24 rounded-full bg-soft-accent/45 blur-3xl" aria-hidden />
+          <div className="pointer-events-none absolute inset-x-10 -bottom-10 h-24 rounded-full bg-slate-100 blur-3xl" aria-hidden />
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.82, duration: 0.6, ease }}
-            className="mt-10 flex justify-center"
+            className="relative z-20 mt-10 flex justify-center"
           >
-            <div className="flex items-center justify-center gap-3 rounded-full border border-white/50 bg-slate-950/40 px-5 py-3 shadow-[0_18px_42px_rgba(15,23,42,0.5)] backdrop-blur">
+            <div className="flex items-center justify-center gap-3 rounded-full border border-slate-200 bg-white px-5 py-3 shadow-[0_18px_42px_rgba(15,23,42,0.14)]">
               {socials.map(handle => {
                 const Icon = socialIcons[handle.icon] ?? GlobeIconFallback
                 return (
@@ -214,7 +211,7 @@ export default function HeroSection() {
                     target="_blank"
                     rel="noreferrer"
                     aria-label={handle.label}
-                    className="group inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-cyan-300/60 bg-cyan-500/20 text-cyan-100 transition-all hover:-translate-y-0.5 hover:border-cyan-200 hover:bg-cyan-400/30 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200 focus-visible:ring-offset-1 focus-visible:ring-offset-slate-900/50"
+                    className="group inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-600 transition-all hover:-translate-y-0.5 hover:border-slate-300 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/60 focus-visible:ring-offset-1 focus-visible:ring-offset-white"
                   >
                     <Icon className="h-5 w-5 transition-transform group-hover:scale-110" />
                   </a>
@@ -236,7 +233,7 @@ export default function HeroSection() {
           <motion.div
             animate={{ y: [-6, 6, -6] }}
             transition={{ duration: 6 + tile.delay, repeat: Infinity, ease: 'easeInOut' }}
-            className="rounded-2xl border border-white/70 bg-white/90 p-4 shadow-[0_25px_70px_rgba(79,209,197,0.18)]"
+            className="rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_25px_70px_rgba(15,23,42,0.12)]"
           >
             <div className="mb-3 flex items-center justify-between text-xs font-medium uppercase tracking-[0.18em] text-slate-500">
               <div className="flex items-center gap-1.5 text-xs text-slate-400">

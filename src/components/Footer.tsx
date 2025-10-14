@@ -13,6 +13,8 @@ const socialIcons: Record<string, LucideIcon> = {
 const footerLinks = [
   { label: 'Skills', to: '/skills' },
   { label: 'Projects', to: '/projects' },
+  { label: 'What I Can Offer', to: '/what-i-can-build' },
+  { label: 'Image Gallery', to: '/image-gallery' },
   { label: 'Achievements', to: '/certifications' },
   { label: 'About', to: '/about' },
   { label: 'Resume', to: '/resume' },
@@ -40,7 +42,7 @@ export default function Footer() {
             <button
               key={link.label}
               onClick={() => navigate(link.to)}
-              className="rounded-full px-3 py-1 text-slate-500 transition hover:bg-soft-accent hover:text-[#05202d]"
+              className="rounded-full px-3 py-1 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
             >
               {link.label}
             </button>
@@ -57,7 +59,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label={handle.label}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200 bg-white/85 text-slate-500 transition hover:-translate-y-0.5 hover:border-cyan-300/70 hover:bg-soft-accent hover:text-[#05202d]"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-500 transition hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-100 hover:text-slate-900"
               >
                 <Icon className="h-4 w-4" />
               </a>

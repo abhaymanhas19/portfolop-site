@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Sparkles, Target, Workflow, Heart } from 'lucide-react'
+import { ArrowRight, Sparkles, Target, Workflow, Heart, ExternalLink } from 'lucide-react'
 import MagicBento from '../components/MagicBento'
 import { aboutContent, homeContent } from '../data/content'
 import { site } from '../data/site'
@@ -146,11 +146,21 @@ export default function About() {
                 <ul className="mt-4 space-y-2 text-sm text-slate-600">
                   {experience.achievements.map(point => (
                     <li key={point} className="flex gap-3">
-                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-soft-accent0" aria-hidden />
+                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-slate-300" aria-hidden />
                       <span>{point}</span>
                     </li>
                   ))}
                 </ul>
+                {experience.link && (
+                  <a
+                    href={experience.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn-primary mt-5 inline-flex items-center gap-2 px-5 py-2 text-xs sm:text-sm"
+                  >
+                    Visit site <ExternalLink className="h-4 w-4" />
+                  </a>
+                )}
               </div>
             ))}
           </div>

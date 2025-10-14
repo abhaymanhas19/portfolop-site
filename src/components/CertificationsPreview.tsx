@@ -32,18 +32,8 @@ export default function CertificationsPreview() {
 
   return (
     <section className="relative overflow-hidden py-20">
-      <motion.img
-        src={homeContent.achievementsBackground}
-        alt=""
-        aria-hidden
-        initial={{ opacity: 0, scale: 1.05 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.1, ease: 'easeOut' }}
-        className="absolute inset-0 h-full w-full object-cover"
-      />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 text-white">
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 text-slate-900">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -52,17 +42,17 @@ export default function CertificationsPreview() {
           className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between"
         >
           <div className="space-y-3">
-            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-violet-200/80 bg-white/90 px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-violet-600">
+            <span className="tag-pill">
               <Award className="h-4 w-4" /> Achievements
             </span>
-            <h2 className="text-3xl font-semibold text-white drop-shadow-[0_12px_35px_rgba(15,23,42,0.55)] md:text-4xl">
+            <h2 className="text-3xl font-semibold text-slate-900 md:text-4xl">
               Credentials by specialisation
             </h2>
-            <p className="max-w-3xl text-sm text-white/85 drop-shadow-[0_10px_32px_rgba(15,23,42,0.45)] md:text-base">
+            <p className="max-w-3xl text-sm text-slate-600 md:text-base">
               Switch categories to see the badges that back each practice—from AI experimentation to resilient cloud delivery.
             </p>
           </div>
-          <Link to="/certifications" className="btn-secondary-invert gap-2 px-6 py-2.5 text-sm">
+          <Link to="/certifications" className="btn-secondary gap-2 px-6 py-2.5 text-sm">
             View all achievements <ArrowRight className="h-4 w-4" />
           </Link>
         </motion.div>
@@ -77,8 +67,8 @@ export default function CertificationsPreview() {
                 onClick={() => setActiveCategory(category.name)}
                 className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
                   active
-                    ? 'bg-gradient-accent text-[#05202d] shadow-[0_18px_42px_rgba(14,165,233,0.28)]'
-                    : 'border border-slate-200 bg-white/85 text-slate-600 hover:border-cyan-200 hover:text-cyan-600'
+                    ? 'bg-slate-900 text-white shadow-[0_18px_42px_rgba(15,23,42,0.16)]'
+                    : 'border border-slate-300 bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900'
                 }`}
               >
                 {category.name}
@@ -115,7 +105,7 @@ export default function CertificationsPreview() {
                   </div>
                   <div className="space-y-4 px-5 pb-6 pt-5 text-left">
                     <div className="space-y-1.5">
-                      <span className="inline-flex items-center gap-2 rounded-full border border-violet-100 bg-violet-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.26em] text-violet-600">
+                      <span className="tag-pill px-3 py-1 text-[11px] tracking-[0.28em]">
                         {badge.year}
                       </span>
                       <h3 className="text-lg font-semibold text-slate-900">{badge.title}</h3>

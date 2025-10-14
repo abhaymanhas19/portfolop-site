@@ -73,6 +73,7 @@ export type ExperienceItem = {
   period: string
   summary: string
   achievements: string[]
+  link?: string
 }
 
 export type ValueStatement = {
@@ -408,6 +409,7 @@ export const content = {
           'Implemented a RAG service with semantic chunking, re-ranking, and automated evaluation reports for stakeholders.',
           'Built distributed Celery pipelines and WebSocket dashboards keeping ops teams informed in real time.',
         ],
+        link: 'https://www.upwork.com/freelancers/~0109aadeddb63e7a39?mp_source=share',
       },
       {
         role: 'Senior Backend Engineer',
@@ -420,6 +422,7 @@ export const content = {
           'Migrated monolith workloads to Kubernetes with zero downtime releases.',
           'Mentored engineers on async workflows, testing strategy, and AI feature integration.',
         ],
+        link: 'https://shubpy.com/',
       },
       {
         role: 'Junior Backend Engineer',
@@ -430,6 +433,7 @@ export const content = {
           'Built realtime chat application with Django, WebSockets, and async patterns.',
           'Utilised multithreading and multiprocessing to trim response latency.',
         ],
+        link: 'https://www.cnttech.org/',
       },
     ] satisfies ExperienceItem[],
     values: [

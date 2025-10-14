@@ -37,18 +37,8 @@ export default function Projects() {
 
   return (
     <section id="projects" className="relative overflow-hidden py-20">
-      <motion.img
-        src={homeContent.projectBackground}
-        alt=""
-        aria-hidden
-        initial={{ opacity: 0, scale: 1.05 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.2, ease: 'easeOut' }}
-        className="absolute inset-0 h-full w-full object-cover"
-      />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-12 px-6 text-white">
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-12 px-6 text-slate-900">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -58,14 +48,14 @@ export default function Projects() {
         >
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div className="space-y-3">
-              <span className="inline-flex w-fit text-[#FFFFFF] items-center gap-2 rounded-full border border-[#8ED9FF]/60 bg-soft-accent px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-[#23354A]">
+              <span className="tag-pill">
                 Case Studies
               </span>
               <div className="space-y-2">
-                <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+                <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
                   Product builds stitched with realtime AI
                 </h2>
-                <p className="max-w-2xl text-sm text-white/80 sm:text-base">
+                <p className="max-w-2xl text-sm text-slate-600 sm:text-base">
                   A curated look at platforms blending realtime collaboration, applied AI, and pragmatic
                   operations. Tap into the modal for architecture notes and live demos.
                 </p>
@@ -104,7 +94,7 @@ export default function Projects() {
 
               <div className="flex flex-1 flex-col gap-5 px-5 pb-6 pt-5 text-left">
                 <div className="flex items-center justify-between">
-                  <span className="inline-flex items-center gap-2 rounded-full border border-[#8ED9FF]/55 bg-soft-accent px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-[#23354A]">
+                  <span className="tag-pill px-3 py-1 text-[11px] tracking-[0.3em]">
                     {index + 1 < 10 ? `0${index + 1}` : index + 1}
                   </span>
                   <span className="text-xs font-medium uppercase tracking-[0.22em] text-slate-400">
@@ -123,7 +113,7 @@ export default function Projects() {
                       href={project.demo}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full border border-[#8ED9FF]/60 bg-soft-accent px-4 py-2 text-[#21364b] transition hover:border-[#8ED9FF]/80 hover:brightness-105"
+                      className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-700 transition hover:-translate-y-0.5 hover:bg-slate-100 hover:text-slate-900"
                       whileHover={{ scale: 1.03 }}
                     >
                       <ExternalLink className="h-4 w-4" /> Demo
@@ -159,7 +149,7 @@ export default function Projects() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.12 }}
-          className="flex flex-col items-start gap-4 rounded-[32px] border border-[#8ED9FF]/45 bg-soft-accent px-6 py-7 text-slate-700 shadow-[0_24px_60px_rgba(15,41,67,0.12)] md:flex-row md:items-center md:justify-between md:px-10"
+          className="flex flex-col items-start gap-4 rounded-[32px] border border-slate-200 bg-slate-50 px-6 py-7 text-slate-700 shadow-[0_24px_60px_rgba(15,23,42,0.12)] md:flex-row md:items-center md:justify-between md:px-10"
         >
           <div className="space-y-2">
             <h3 className="text-lg font-semibold text-slate-900 md:text-xl">Looking for the deep dive?</h3>
@@ -200,7 +190,7 @@ export default function Projects() {
                     href={selectedProject.demo}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border border-[#8ED9FF]/60 bg-soft-accent px-4 py-2 text-[#1F2A37] transition hover:border-[#8ED9FF]/70 hover:bg-soft-accent"
+                    className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-700 transition hover:-translate-y-0.5 hover:bg-slate-100 hover:text-slate-900"
                   >
                     <ExternalLink className="h-4 w-4" /> Live Demo
                   </a>
