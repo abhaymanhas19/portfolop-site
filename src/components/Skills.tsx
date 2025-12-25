@@ -102,45 +102,26 @@ export default function Skills() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.08 }}
-          className="grid gap-8 rounded-[32px] border border-slate-200 bg-white p-6 shadow-[0_30px_80px_rgba(15,23,42,0.12)] lg:grid-cols-[1fr_1.1fr] lg:p-8"
+          className="flex flex-col gap-6 rounded-[32px] border border-slate-200 bg-white p-6 shadow-[0_30px_80px_rgba(15,23,42,0.12)] lg:p-8"
         >
-          <div className="flex flex-col gap-5">
+          <div className="space-y-4">
             <div className="tag-pill">
-              <Icon className="h-4 w-4" /> {activeCategory.label}
+              <Icon className="h-4 w-8" /> {activeCategory.label}
             </div>
             <p className="text-sm leading-relaxed text-slate-600 md:text-base">{activeCategory.summary}</p>
-            <motion.div
-              className="relative h-48 overflow-hidden rounded-[24px] border border-slate-200"
-              initial={{ opacity: 0.85 }}
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.6, ease: 'easeOut' }}
-            >
-              <img
-                src={activeCategory.image}
-                alt={`${activeCategory.label} illustration`}
-                className="h-full w-full object-cover"
-                loading="lazy"
-              />
-            </motion.div>
-          </div>
+          
 
-          <div className="flex flex-col gap-5">
             {displayedSkills.map(skill => (
               <div key={skill.name} className="group space-y-2">
-                <div className="flex items-center justify-between text-sm font-medium text-slate-700">
-                  <span>{skill.name}</span>
-                  <span className="text-xs text-slate-400">{skill.level}%</span>
-                </div>
-                <div className="relative h-3 overflow-hidden rounded-full bg-slate-100">
-                  <motion.div
-                    className="absolute inset-y-0 left-0 origin-left rounded-full bg-gradient-accent transition-transform duration-300 group-hover:scale-[1.04] group-hover:brightness-110"
-                    initial={{ width: 0 }}
-                    whileInView={{ width: `${skill.level}%` }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8, ease: 'easeOut' }}
-                  />
-                </div>
+               <div key={skill.name} className="space-y-2 rounded-[20px] border border-slate-100 bg-slate-50/70 px-4 py-4">
+                <div className="flex items-center justify-between text-[15px] font-medium text-slate-700">
+                      <span>{skill.name}</span>
+                    </div>
+                
+             
                 {skill.highlight && <p className="text-xs text-slate-500">{skill.highlight}</p>}
+
+                </div>
               </div>
             ))}
             <Link

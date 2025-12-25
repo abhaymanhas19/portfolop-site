@@ -11,9 +11,8 @@ import SkillsDetail from './pages/SkillsDetail'
 import ProjectsDetail from './pages/ProjectsDetail'
 import ImageGallery from './pages/ImageGallery'
 import NotFound from './pages/NotFound'
+import EasterEgg from './pages/EasterEgg'
 import { useEffect, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import SplitText from './components/SplitText'
 
 function ScrollToHash() {
   const { hash, pathname } = useLocation()
@@ -49,6 +48,7 @@ export default function App() {
           <Route path="/image-gallery" element={<ImageGallery />} />
           <Route path="/resume" element={<Resume />} />
           <Route path="/certifications" element={<Achievements />} />
+          <Route path="/easter-egg" element={<EasterEgg />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

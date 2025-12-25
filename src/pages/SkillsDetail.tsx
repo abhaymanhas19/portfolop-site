@@ -156,41 +156,18 @@ export default function SkillsDetail() {
               </div>
             </header>
 
-            <div className="grid gap-6 lg:grid-cols-[1.1fr,0.9fr]">
+          
               <div className="space-y-4">
                 {activeCategory.skills.map(skill => (
                   <div key={skill.name} className="space-y-2 rounded-[20px] border border-slate-100 bg-slate-50/70 px-4 py-4">
-                    <div className="flex items-center justify-between text-sm font-medium text-slate-700">
+                    <div className="flex items-center justify-between text-[15px] font-medium text-slate-700">
                       <span>{skill.name}</span>
-                      <span className="text-xs text-slate-400">{skill.level}%</span>
                     </div>
-                    <div className="relative h-3 rounded-full bg-white">
-                      <motion.div
-                        className="absolute inset-y-0 rounded-full bg-gradient-accent"
-                        initial={{ width: 0 }}
-                        animate={{ width: `${skill.level}%` }}
-                        transition={{ duration: 0.8, ease: 'easeOut' }}
-                      />
-                    </div>
+                 
                     {skill.highlight && <p className="text-xs text-slate-500">{skill.highlight}</p>}
                   </div>
                 ))}
               </div>
-
-              <motion.div
-                className="relative h-full rounded-[28px] border border-[#8ED9FF]/45 bg-soft-accent"
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
-              >
-                <img
-                  src={activeCategory.image}
-                  alt={`${activeCategory.label} visual`}
-                  className="h-full w-full rounded-[28px] object-cover"
-                  loading="lazy"
-                />
-              </motion.div>
-            </div>
           </motion.article>
         </div>
 

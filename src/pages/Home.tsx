@@ -12,12 +12,12 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <HeroStats />
-      <AbilityBadges />
-      <Skills />
-      <Projects />
-      <CertificationsPreview />
       <AboutPreview />
+      <Projects />
+      <Skills />
+      <CertificationsPreview />
+      <AbilityBadges />
+      <HeroStats />
       <ContactForm />
       <ImageShowcase />
     </>

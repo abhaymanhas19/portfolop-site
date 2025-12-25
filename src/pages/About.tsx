@@ -76,20 +76,16 @@ export default function About() {
           <div className="grid gap-8 md:grid-cols-[1.25fr,0.85fr] md:items-center">
             <div className="space-y-4">
               <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.28em] text-emerald-700">
-                Profile
+                {aboutContent.profile.tag}
               </span>
               <h2 className="text-3xl font-semibold text-slate-900 md:text-4xl">
-                My Go-To Python &amp; AI/ML Engineer
+                {aboutContent.profile.heading}
               </h2>
               <p className="text-sm leading-relaxed text-slate-600 md:text-base">
-                Hi, I&apos;m Abhay Manhas, a seasoned Python developer specializing in AI/ML and web applications.
-                With a background in Python platforms and bootstrapped AI startups, I help businesses automate
-                processes, predict trends, and launch user-friendly web applications.
+                {aboutContent.profile.summary}
               </p>
               <p className="text-sm leading-relaxed text-slate-600 md:text-base">
-                What sets me apart? Hands-on expertise across the Python ecosystem (Django and Flask for web, plus
-                Scikit-learn and PyTorch for ML) paired with a results-driven mindset. Clients see outcomes like 30%
-                faster insights or 2x user engagement. Ready to collaborate?
+                {aboutContent.profile.ending}
               </p>
             </div>
             <div className="flex flex-col items-start gap-3 md:items-end">

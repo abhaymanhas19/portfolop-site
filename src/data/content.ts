@@ -28,7 +28,7 @@ export type HeroContent = {
 }
 
 export type SkillCluster = {
-  id: 'backend' | 'aiml' | 'devops' | 'pipelines' | 'serverless' | 'azure'
+  id: 'backend' | 'aiml' | 'devops' | 'pipelines' | 'data-engineering' | 'ai-agents' | 'azure'
   label: string
   icon: keyof typeof import('lucide-react')
   summary: string
@@ -191,16 +191,18 @@ export const content = {
         label: 'Backend Engineering',
         icon: 'ServerCog',
         summary: 'Event-driven Python services with robust APIs, websockets, and background workers that stay performant under load.',
-        image: 'https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?auto=format&fit=crop&w=1200&q=80',
+        image: '',
         accent: 'from-[#8ED9FF] via-[#C7B2FF] to-[#FFD1B3]/80',
         tint: 'bg-cyan-500/10',
         skills: [
           { name: 'Python', level: 95, highlight: 'AsyncIO, typing, profiling' },
           { name: 'Django + DRF', level: 92, highlight: 'Schema-first APIs, multi-tenant auth' },
           { name: 'Django Channels', level: 88, highlight: 'Realtime dashboards & collab suites' },
-          { name: 'Asynchronous Programming', level: 90, highlight: 'Asycnio' },
-          { name: 'Celery & Redis & RabbitMQ', level: 90, highlight: 'Task orchestration & monitoring' },
+          { name: 'Asynchronous Programming', level: 90, highlight: 'AsyncIO' },
+          { name: 'Celery', level: 90, highlight: 'Task orchestration & monitoring' },
           { name: 'PostgreSQL', level: 86, highlight: 'Query tuning & migration strategy' },
+          { name: 'NumPy', level: 82, highlight: 'Numerical computing & vectorization' },
+          { name: 'Pandas', level: 84, highlight: 'Data wrangling & analytics' },
         ],
       },
       {
@@ -208,16 +210,20 @@ export const content = {
         label: 'AI & ML Systems',
         icon: 'BrainCircuit',
         summary: 'Applied ML stacks that pair evaluation harnesses with resilient serving for copilots, chatbots, and document intelligence.',
-        image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80',
+        image: '',
         accent: 'from-emerald-100 via-teal-100 to-white',
         tint: 'bg-teal-500/10',
         skills: [
-          { name: 'PyTorch', level: 82, highlight: 'Fine-tuning & experimentation' },
-          { name: 'Scikit Learn', level: 75, highlight: 'Fine-tuning & experimentation' },
+          { name: 'PyTorch + Scikit-Learn', level: 82, highlight: 'Modeling, training loops, pipelines' },
+          { name: 'Hugging Face', level: 80, highlight: 'Model hub & inference tooling' },
+          { name: 'Transformers', level: 84, highlight: 'Attention models & fine-tuning' },
+          { name: 'Linear Regression', level: 78, highlight: 'Baseline modeling & explainability' },
+          { name: 'Classification', level: 80, highlight: 'Supervised learning & metrics' },
+          { name: 'Model Training', level: 85, highlight: 'Forward pass, loss, backprop, optimizers' },
           { name: 'RAG Pipelines', level: 91, highlight: 'Hybrid search, reranking, evaluation' },
           { name: 'MCP Servers', level: 91, highlight: 'Actions using LLM' },
           { name: 'LLM APIs (OpenAI, Azure, Gemini)', level: 89, highlight: 'Cost-aware orchestration' },
-          { name: 'AI Unified Platforms (openrouter , langchain)', level: 84, highlight: 'Tooling & guardrails' },
+          { name: 'AI Unified Platforms (OpenRouter, LangChain)', level: 84, highlight: 'Tooling & guardrails' },
           { name: 'Model Evaluation', level: 88, highlight: 'Offline + automated reporting' },
           { name: 'Azure OpenAI', level: 88, highlight: 'Model deployment & safety' },
         ],
@@ -227,47 +233,61 @@ export const content = {
         label: 'Cloud & DevOps',
         icon: 'Cloud',
         summary: 'Container-native platforms with observability baked in so releases stay repeatable and rollbacks become rare.',
-        image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80',
+        image: '',
         accent: 'from-sky-100 via-blue-100 to-white',
         tint: 'bg-blue-500/10',
         skills: [
           { name: 'AWS, AZURE, GCP', level: 90, highlight: 'Hosting servers' },
           { name: 'Docker & Compose', level: 90, highlight: 'Local parity & developer experience' },
           { name: 'Kubernetes (Azure Kubernetes Service)', level: 84, highlight: 'Scalable workloads & GitOps' },
-          { name: 'Git, GitHub, Azure DevOps', level: 88, highlight: 'Version Control systems' },
+          { name: 'Git, GitHub, Azure DevOps', level: 88, highlight: 'Version control systems' },
+          { name: 'CI/CD Pipelines (GitHub Actions, Jenkins)', level: 88, highlight: 'Build, test, and release automation' },
           
-        ],
-      },
-      {
-        id: 'serverless',
-        label: 'Serverless Computing',
-        icon: 'Cpu',
-        summary: 'Lean functions for bursty workloads, bridging LLM APIs and core services without over-provisioning.',
-        image: 'https://images.unsplash.com/photo-1523475472560-d2df97ec485c?auto=format&fit=crop&w=1200&q=80',
-        accent: 'from-amber-100 via-orange-100 to-white',
-        tint: 'bg-amber-500/10',
-        skills: [
-          { name: 'Azure Functions', level: 85, highlight: 'Event triggers & bindings' },
-          { name: 'AWS Lambda', level: 76, highlight: 'Python runtimes & Powertools' },
-          { name: 'Cloudflare Workers', level: 70, highlight: 'Edge inference & caching' },
-          { name: 'Azure Storage', level: 78, highlight: 'Storage accounts' },
         ],
       },
       {
         id: 'pipelines',
-        label: 'Automation workflows & Processing Pipelines',
+        label: 'Agentic Automation Workflow',
         icon: 'Workflow',
-        summary: 'Data ingestion and transformation pipelines feeding realtime analytics and training workflows.',
-        image: 'https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80',
+        summary: 'LLM-driven automations that connect tools, trigger actions, and streamline ops without heavy code.',
+        image: '',
         accent: 'from-[#8ED9FF] via-[#C7B2FF] to-[#FFD1B3]',
         tint: 'bg-indigo-500/10',
         skills: [
-          { name: 'CI/CD Pipelines(Github Actions, Jenkins)', level: 88, highlight: 'CI/CD pipelines & environments' },
-          { name: 'Message Queue Pipelines', level: 88, highlight: 'Triggering actions' },
-          { name: 'Zapier & n8n', level: 80, highlight: 'Workflow Automation tools' },
-          { name: 'Prometheus & Grafana', level: 80, highlight: 'Dashboards, tracing, alert fatigue fixes' },
+          { name: 'Zapier', level: 80, highlight: 'No-code workflow automation' },
+          { name: 'n8n', level: 80, highlight: 'Self-hosted automation builder' },
+          { name: 'ChatGPT Agentic Builder', level: 82, highlight: 'LLM agent workflows' },
           
           
+        ],
+      },
+      {
+        id: 'data-engineering',
+        label: 'Data Engineering & Monitoring',
+        icon: 'Layers',
+        summary: 'Queue-backed data infrastructure with storage, observability, and reliability signals that keep pipelines healthy.',
+        image: '',
+        accent: 'from-amber-100 via-orange-100 to-white',
+        tint: 'bg-amber-500/10',
+        skills: [
+          { name: 'Redis', level: 84, highlight: 'Caching & ephemeral data' },
+          { name: 'RabbitMQ', level: 82, highlight: 'Queue routing & delivery' },
+          { name: 'Azure Blob Storage', level: 80, highlight: 'Object storage & archives' },
+          { name: 'Message Queues', level: 82, highlight: 'Backpressure & async processing' },
+          { name: 'Flower', level: 78, highlight: 'Celery monitoring & alerts' },
+        ],
+      },
+      {
+        id: 'ai-agents',
+        label: 'AI Agents',
+        icon: 'Cpu',
+        summary: 'Tool-using agent orchestration for autonomous workflows and multi-step reasoning tasks.',
+        image: '',
+        accent: 'from-slate-100 via-sky-100 to-white',
+        tint: 'bg-slate-500/10',
+        skills: [
+          { name: 'CrewAI', level: 80, highlight: 'Multi-agent coordination' },
+          { name: 'OpenAI Agents SDK', level: 82, highlight: 'Tooling, planning, and execution' },
         ],
       },
     ] satisfies SkillCluster[],
@@ -282,7 +302,7 @@ export const content = {
           'AILYZE is an online qualitative analysis platform with an avatar interviewer that autonomously conducts interviews in 20+ languages while the advanced analysis workspace ingests docx/pdf/xlsx/csv research artefacts. The system generates thematic, content, and frequency studies, cross-segment analysis, and stakeholder-ready summaries in minutes.',
         tags: ['Python', 'Django', 'Celery', 'WebSockets', 'Azure OpenAI', 'PostgreSQL'],
         image: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1758566179/ailyze_spnxi7.png',
-        backdrop: 'https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=1600&q=80',
+        backdrop: '',
         demo: 'https://www.ailyze.com',
         category: 'AI Platform',
       },
@@ -294,7 +314,7 @@ export const content = {
           'CHDS.com.au provides fresh, balanced meals across rotating menus. Customers browse curated plans, personalise dietary choices, and checkout via Stripe. The admin workspace supports menu scheduling, live order tracking, and nutrition tagging to keep the experience reliable for both chefs and customers.',
         tags: ['Python', 'Django', 'Stripe', 'Redis'],
         image: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1758565860/Screenshot_from_2025-09-23_00-00-44_yhk2hv.png',
-        backdrop: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1600&q=80',
+        backdrop: '',
         demo: 'https://chds.com.au',
         category: 'Realtime Apps',
       },
@@ -306,7 +326,7 @@ export const content = {
           'Production-grade DRF backend for retrieval-augmented generation. Semantic chunking, hybrid vector/BM25 search, re-ranking, and context windows optimised for factuality. Includes user auth, roles, and audit logs. Handles docx, pdf, and xlsx sources with streaming responses.',
         tags: ['Python', 'RAG', 'Server-Sent Events', 'PostgreSQL', 'Azure OpenAI'],
         image: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1758566203/Chatbot_vdriyv.png',
-        backdrop: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1600&q=80',
+        backdrop: '',
         demo: 'https://ailyze.com/ai-chatbot',
         category: 'AI Platform',
       },
@@ -381,11 +401,17 @@ export const content = {
     intro:
       'I translate fuzzy ideas into reliable AI-driven products—pairing pragmatic Python craftsmanship with evaluation-driven delivery so features make it to prod and stay there.',
     heroImage: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1760285796/Firefly_extreme_close_up_of_a_digital_computer_futuristic_human_eye_detailed_pupil_laser_o_73970_i4rp8d.jpg',
+    profile : {
+      "tag" : "Profile Summary",
+      "heading":  "My Go-To Python &amp; AI/ML Engineer",
+      "summary": "Hi, I'm Abhay Manhas, a seasoned Python developer specializing in Python & AI/ML.With a background in Python platforms and bootstrapped AI startups, I help businesses automate processes, predict trends, and launch user-friendly web applications and helping to integrate the AI into their business.",
+      "ending":" What sets me apart? Hands-on expertise across the Python ecosystem (Django and Flask for web, plus Scikit-learn and PyTorch for ML) paired with a results-driven mindset. Clients see outcomes like 30% faster insights or 2x user engagement. Ready to collaborate?"
+    },
     tiles: [
       {
         title: 'Applied AI systems',
         description:
-          'Retrieval augmented generation, evaluation harnesses, and guardrails that keep LLM features grounded in business outcomes.',
+          'Retrieval augmented generation, Model Context Protocol, evaluation harnesses, and guardrails that keep LLM features grounded in business outcomes.',
       },
       {
         title: 'Resilient backends',
@@ -408,6 +434,7 @@ export const content = {
         achievements: [
           'Designed a hybrid-cloud LLM gateway that trimmed cost per request by 35% while maintaining latency SLOs.',
           'Implemented a RAG service with semantic chunking, re-ranking, and automated evaluation reports for stakeholders.',
+          "Trained basic neural networks to build prediction models for regression and classification tasks",
           'Built distributed Celery pipelines and WebSocket dashboards keeping ops teams informed in real time.',
         ],
         link: 'https://www.upwork.com/freelancers/~0109aadeddb63e7a39?mp_source=share',
@@ -421,7 +448,8 @@ export const content = {
         achievements: [
           'Introduced observability instrumentation that reduced mean time to detect incidents by 45%.',
           'Migrated monolith workloads to Kubernetes with zero downtime releases.',
-          'Mentored engineers on async workflows, testing strategy, and AI feature integration.',
+          "Handled project and team management, led development, and delivered efficient results within deadlines.",
+          'Mentored engineers on code architecture,  async workflows, testing strategy, and AI feature integration.',
         ],
         link: 'https://shubpy.com/',
       },
@@ -433,6 +461,7 @@ export const content = {
         achievements: [
           'Built realtime chat application with Django, WebSockets, and async patterns.',
           'Utilised multithreading and multiprocessing to trim response latency.',
+          "Mastered Python by solving a wide range of coding problems."
         ],
         link: 'https://www.cnttech.org/',
       },
@@ -475,7 +504,7 @@ export const content = {
     images: [
       {
         id: 'mountain-trail',
-        src: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1760293028/generated-image_zqbcum.png',
+        src: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1766692120/Deep_Learning_Architecture_Diagram__by_ProjectPro_lw6ox6.webp',
         alt: 'Standing at the ridge watching sunrise spill over the hills',
         title: 'First Light',
         width: 1200,
@@ -486,7 +515,7 @@ export const content = {
       },
       {
         id: 'city-evening',
-        src: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1760293020/download_4_enpbfz.jpg',
+        src: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1766692121/1719922267958_urkgga.gif',
         alt: 'Leaning on a railing overlooking city lights after dusk',
         title: 'Golden Hour Rewind',
         width: 1200,
@@ -497,7 +526,7 @@ export const content = {
       },
       {
         id: 'coffee-break',
-        src: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1760293018/download_5_gqzwrd.jpg',
+        src: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1766692120/how-to-visualize-machine-learning-models-4_cmtmar.webp',
         alt: 'Pouring latte art in a sunlit kitchen nook',
         title: 'Sunday Ritual',
         width: 1200,
@@ -508,7 +537,7 @@ export const content = {
       },
       {
         id: 'book-lounge',
-        src: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1760285796/Firefly_extreme_close_up_of_a_digital_computer_futuristic_human_eye_detailed_pupil_laser_o_73970_i4rp8d.jpg',
+        src: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1766692120/iclh-diagram-batch-01-03-deepneuralnetwork_f3xu75.png',
         alt: 'Relaxing with a favourite book and headphones beside a window',
         title: 'Quiet Chapters',
         width: 1200,
@@ -519,7 +548,7 @@ export const content = {
       },
       {
         id: 'friends-laugh',
-        src: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1760293020/download_2_tsicr5.jpg',
+        src: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1766692120/1721922369347_bgg4hq.jpg',
         alt: 'Laughing with close friends over street food',
         title: 'Laugh Lines',
         width: 1200,
@@ -530,7 +559,7 @@ export const content = {
       },
       {
         id: 'cycle-trail',
-        src: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1760293020/download_1_jvbjzt.jpg',
+        src: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1766692119/seo-hero-machine-learning-vs-ai_kls4c0_fhxeed.webp',
         alt: 'Taking a break beside the cycle on a forest trail',
         title: 'Trail Pause',
         width: 1200,
