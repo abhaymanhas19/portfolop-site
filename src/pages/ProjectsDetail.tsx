@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, ExternalLink, Github, Sparkles, MapPin } from 'lucide-react'
-import { projectCases, homeContent } from '../data/content'
+import VantaRingsBackground from '../components/VantaRingsBackground'
+import { projectCases } from '../data/content'
 import Modal from '../components/Modal'
 
 const card = {
@@ -39,14 +40,14 @@ export default function ProjectsDetail() {
           transition={{ duration: 0.7, ease: 'easeOut' }}
           className="relative w-full overflow-hidden"
         >
-          <motion.img
-            src={homeContent.projectBackground}
-            alt="Featured project montage"
-            className="block h-[min(60vh,520px)] w-full object-cover md:h-[520px]"
-            initial={{ scale: 1.05, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
+          <motion.div
+            className="relative h-[min(60vh,520px)] w-full md:h-[520px]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 1.1, ease: 'easeOut' }}
-          />
+          >
+            <VantaRingsBackground />
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 24 }}

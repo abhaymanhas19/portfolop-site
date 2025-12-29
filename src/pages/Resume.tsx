@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Document, Page, pdfjs } from 'react-pdf'
 import { Download, ExternalLink, Mail, MapPin } from 'lucide-react'
+import VantaRingsBackground from '../components/VantaRingsBackground'
 import { site } from '../data/site'
-import { homeContent } from '../data/content'
 
 function usePdfWorker() {
   const [ready, setReady] = useState(false)
@@ -35,14 +35,14 @@ export default function Resume() {
           transition={{ duration: 0.7, ease: 'easeOut' }}
           className="relative w-full overflow-hidden"
         >
-          <motion.img
-            src={homeContent.projectBackground}
-            alt="Resume hero"
-            className="block h-[min(55vh,460px)] w-full object-cover md:h-[460px]"
-            initial={{ scale: 1.05, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
+          <motion.div
+            className="relative h-[min(55vh,460px)] w-full md:h-[460px]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 1.1, ease: 'easeOut' }}
-          />
+          >
+            <VantaRingsBackground />
+          </motion.div>
           
 
           <motion.div

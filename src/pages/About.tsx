@@ -2,7 +2,8 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Sparkles, Target, Workflow, Heart, ExternalLink } from 'lucide-react'
 import MagicBento from '../components/MagicBento'
-import { aboutContent, homeContent } from '../data/content'
+import VantaRingsBackground from '../components/VantaRingsBackground'
+import { aboutContent, galleryContent } from '../data/content'
 import { site } from '../data/site'
 
 export default function About() {
@@ -23,14 +24,14 @@ export default function About() {
           transition={{ duration: 0.7, ease: 'easeOut' }}
           className="relative w-full overflow-hidden"
         >
-          <motion.img
-            src={aboutContent.heroImage}
-            alt="About hero"
-            className="block h-[min(60vh,520px)] w-full object-cover md:h-[520px]"
-            initial={{ scale: 1.05, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
+          <motion.div
+            className="relative h-[min(60vh,520px)] w-full md:h-[520px]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 1.1, ease: 'easeOut' }}
-          />
+          >
+            <VantaRingsBackground />
+          </motion.div>
           
 
           <motion.div
@@ -206,8 +207,8 @@ export default function About() {
               transition={{ duration: 0.6, ease: 'easeOut' }}
             >
               <img
-                src={homeContent.galleryBackground}
-                alt="Lifestyle highlight"
+                src={galleryContent.images[0]?.src}
+                alt="Gallery highlight"
                 className="h-full w-full rounded-[28px] object-cover"
                 loading="lazy"
               />

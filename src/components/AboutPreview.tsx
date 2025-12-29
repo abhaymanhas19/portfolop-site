@@ -1,20 +1,20 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Sparkles,Workflow,ExternalLink} from 'lucide-react'
-import { aboutContent, homeContent } from '../data/content'
+import { aboutContent } from '../data/content'
 
 const focusPreview = aboutContent.experience.slice(0, 2)
 
 export default function AboutPreview() {
   return (
-    <section className="relative overflow-hidden py-20">
+    <section className="relative overflow-hidden py-12">
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-12 px-6 text-slate-900">
-        <section className="mt-16 space-y-6">
+        <section className="mt-6 space-y-6">
           <div className="flex items-center gap-3 text-slate-700">
             <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-[#8ED9FF]/45 bg-soft-accent">
               <Workflow className="h-5 w-5 text-[#8ED9FF]" />
             </span>
-            <h2 className="text-2xl font-semibold text-slate-900">Experience snapshots</h2>
+            <h2 className="text-2xl font-semibold text-slate-900">Experiences Snapchots</h2>
           </div>
           <Link to="/about" className="btn-secondary">
             Dive into the story <ArrowRight className="h-4 w-4" />

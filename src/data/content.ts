@@ -15,15 +15,6 @@ export type HeroContent = {
   trustBadge: string
   primaryAction: { label: string; to: string }
   secondaryAction: { label: string; to: string }
-  backgroundImage: string
-  portraitIllustration: string
-  codeTiles: Array<{
-    id: string
-    title: string
-    code: string
-    accent: string
-    delay: number
-  }>
   stats: Array<{ label: string; value: string; icon?: keyof typeof import('lucide-react') }>
 }
 
@@ -128,62 +119,21 @@ export const content = {
   ] satisfies SocialChannel[],
   hero: {
     eyebrow: 'Available to Work',
-    title: 'Transform Your Ideas into AI-Powered Solutions',
+    title: 'Abhay Manhas',
     highlight: 'Python & AI/ML Engineer',
     description:
       'As a Python & AI/ML expert, I build scalable web apps, intelligent models, and automation tools that drive growth.',
     detail: "From custom ML algorithms to full-stack deployments, let's turn your vision into reality.",
     aiSummary: 'Partner with an engineer who blends ML strategy, backend architecture, and automation to ship results.',
-    trustBadge: 'Python | PyTorch | Django',
+    trustBadge: '',
     primaryAction: { label: 'Get a Free Project Quote', to: '/#contact' },
     secondaryAction: { label: 'What I Can Offer', to: '/what-i-can-build' },
-    backgroundImage: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1760205991/Firefly_A_clean_glossy_3D_object_in_shape_of_a_speech_bubble_in_soft_white_material_minimal_162578_hm8yka.jpg',
-    portraitIllustration: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1760182542/DALL_E_2025-10-11_02.11.56_-_A_digital_avatar_of_a_young_full-stack_developer_and_AI_engineer_with_short_wavy_dark_brown_hair_and_black-rimmed_glasses._He_is_sitting_at_a_desk_us_j8bzeu.webp',
-    codeTiles: [
-      {
-        id: 'tasks',
-        title: 'worker.ts',
-        code: `queue.process("sync", async job => {\n  await orchestrate(job.data)\n  return ctx.emit("synced")\n})`,
-        accent: 'from-violet-100/80 via-blue-200/60 to-white/40',
-        delay: 0.85,
-      },
-      {
-        id: 'realtime-stream',
-        title: 'stream.py',
-        code: `@router.websocket("/events")\nasync def stream(ws):\n    await ws.accept()\n    async for payload in broker.subscribe("updates"):\n        await ws.send_json(payload)`,
-        accent: 'from-[#8ED9FF]/50 via-[#C7B2FF]/35 to-white/35',
-        delay: 0.4,
-      },
-      {
-        id: 'rag-service',
-        title: 'rag.py',
-        code: `answer = rag.generate(\n  query,\n  rerank=True,\n  stream=True,\n  guardrails=True,\n)`,
-        accent: 'from-teal-100/80 via-emerald-200/60 to-white/40',
-        delay: 0.55,
-      },
-      {
-        id: 'metrics',
-        title: 'observability.yaml',
-        code: `latency_budget: 120ms\nrealtime_feed: 99.9\nerror_budget: 0.1\nreporting: grafana`,
-        accent: 'from-[#8ED9FF]/55 via-[#C7B2FF]/35 to-[#FFD1B3]/45',
-        delay: 0.7,
-      },
-    ],
     stats: [
       { label: 'Years Experience', value: '4+', icon: 'BriefcaseBusiness' },
       { label: 'Clients Served', value: '10+', icon: 'UsersRound' },
       { label: 'Companies Partnered', value: '3+', icon: 'Building2' },
     ],
   } satisfies HeroContent,
-  home: {
-    heroBackground: 'https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1600&q=80',
-    skillBackground: 'https://images.unsplash.com/photo-1508780709619-79562169bc64?auto=format&fit=crop&w=1600&q=80',
-    projectBackground: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1600&q=80',
-    achievementsBackground: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1600&q=80',
-    aboutBackground: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1760285796/Firefly_extreme_close_up_of_a_digital_computer_futuristic_human_eye_detailed_pupil_laser_o_73970_i4rp8d.jpg',
-    contactBackground: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80',
-    galleryBackground: 'https://images.unsplash.com/photo-1463107971871-fbac9ddb920f?auto=format&fit=crop&w=1600&q=80',
-  },
   skills: {
     categories: [
       {
@@ -400,7 +350,6 @@ export const content = {
     headline: 'Python engineer delivering AI platforms that hold up in production',
     intro:
       'I translate fuzzy ideas into reliable AI-driven products—pairing pragmatic Python craftsmanship with evaluation-driven delivery so features make it to prod and stay there.',
-    heroImage: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1760285796/Firefly_extreme_close_up_of_a_digital_computer_futuristic_human_eye_detailed_pupil_laser_o_73970_i4rp8d.jpg',
     profile : {
       "tag" : "Profile Summary",
       "heading":  "My Go-To Python &amp; AI/ML Engineer",
@@ -490,7 +439,6 @@ export const content = {
     title: 'Let’s build something reliable together',
     subtitle:
       'Whether you need to retrofit AI features into an existing product or launch a greenfield realtime platform, I can help map the path and ship the build.',
-    backgroundImage: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80',
     form: {
       namePlaceholder: 'Your name',
       emailPlaceholder: 'Work email',
@@ -501,10 +449,10 @@ export const content = {
   gallery: {
     profile: {
       name: 'Abhay Manhas',
-      tagline: 'Small snapshots from the life behind the commits.',
+      tagline: 'AI/ML snapshots from the systems shipped into production.',
       image: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1758565569/display_aivyvw.png',
-      highlight: 'Work off energy with technical pictures, encourage in-depth exploration',
-      cta: 'View Technical Gallery',
+      highlight: 'Model evaluation frames, pipeline diagrams, and ops readouts captured between releases.',
+      cta: 'View AI/ML Visuals',
     } satisfies GalleryHighlight,
     images: [
       {
@@ -622,4 +570,3 @@ export const contactContent = content.contact
 export const galleryContent = content.gallery
 export const logoLoopContent = content.logoLoop
 export const capabilitiesContent = content.capabilities
-export const homeContent = content.home

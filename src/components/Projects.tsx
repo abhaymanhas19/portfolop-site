@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ExternalLink, Github } from 'lucide-react'
-import { projectCases, homeContent } from '../data/content'
+import { projectCases } from '../data/content'
 import Modal from './Modal'
 
 const previewProjects = projectCases.slice(0, 3)

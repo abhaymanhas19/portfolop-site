@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { Mail, CalendarCheck, Clock, MessageCircle } from 'lucide-react'
 import emailjs from '@emailjs/browser'
 import { site } from '../data/site'
-import { contactContent, homeContent } from '../data/content'
+import { contactContent } from '../data/content'
 
 const detailCards = [
   {

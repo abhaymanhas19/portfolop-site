@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { galleryContent } from '../data/content'
 import Modal from '../components/Modal'
+import VantaRingsBackground from '../components/VantaRingsBackground'
 
 const containerVariants = {
   hidden: { opacity: 0, y: 32 },
@@ -28,7 +29,7 @@ const itemVariants = {
 
 export default function ImageGallery() {
   const [selectedImage, setSelectedImage] = useState<(typeof galleryContent.images)[number] | null>(null)
-  const { images, profile } = galleryContent
+  const { images } = galleryContent
 
   return (
     <div className="bg-white text-slate-700">
@@ -39,14 +40,14 @@ export default function ImageGallery() {
           transition={{ duration: 0.7, ease: 'easeOut' }}
           className="relative w-full overflow-hidden"
         >
-          <motion.img
-            src={profile.image}
-            alt="Gallery hero"
-            className="block h-[min(55vh,480px)] w-full object-cover md:h-[480px]"
-            initial={{ scale: 1.05, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
+          <motion.div
+            className="relative h-[min(55vh,480px)] w-full md:h-[480px]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 1.1, ease: 'easeOut' }}
-          />
+          >
+            <VantaRingsBackground />
+          </motion.div>
           
 
           <motion.div
@@ -61,10 +62,10 @@ export default function ImageGallery() {
                   Image Gallery
                 </span>
                 <h1 className="text-3xl font-semibold leading-tight md:text-5xl">
-                  Moments from the journey of building products
+                  AI/ML delivery snapshots from live systems
                 </h1>
                 <p className="max-w-3xl text-sm text-white/85 md:text-base">
-                  Rituals, workspaces, and the people who keep delivery grounded—captured between releases and retros.
+                  Architecture sketches, model evaluations, and deployment moments that capture how AI products are built and shipped.
                 </p>
               </div>
 
@@ -81,7 +82,7 @@ export default function ImageGallery() {
 
       <section className="relative mx-auto max-w-6xl px-4 pb-16 pt-8 md:px-6 lg:px-8">
         <p className="max-w-3xl text-sm text-slate-600 md:text-base">
-          A masonry collection of workspaces, teams, and small rituals that keep delivery grounded. Each photo is a checkpoint along the shipping journey.
+          A visual log of evaluation runs, pipeline diagrams, and team moments that keep AI delivery measurable and dependable.
         </p>
 
         <motion.div

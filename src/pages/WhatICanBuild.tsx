@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, MessageSquare, LineChart, Sparkles, Globe, type LucideIcon } from 'lucide-react'
-import { useLocation } from 'react-router-dom'
-import { capabilitiesContent, homeContent } from '../data/content'
+import VantaRingsBackground from '../components/VantaRingsBackground'
+import { capabilitiesContent } from '../data/content'
 
 const iconMap: Record<string, LucideIcon> = {
   MessageSquare,
@@ -12,18 +12,12 @@ const iconMap: Record<string, LucideIcon> = {
 }
 
 export default function WhatICanBuild() {
-  const location = useLocation()
-  const [openId, setOpenId] = useState<string | null>(capabilitiesContent[0]?.id ?? null)
-
-  useEffect(() => {
-    const state = location.state as { capabilityId?: string } | undefined
-    if (state?.capabilityId) {
-      setOpenId(state.capabilityId)
-    }
-  }, [location.state])
+  const [openIds, setOpenIds] = useState<string[]>(() =>
+    capabilitiesContent.map(({ id }) => id),
+  )
 
   const toggleItem = (id: string) => {
-    setOpenId(prev => (prev === id ? null : id))
+    setOpenIds(prev => (prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]))
   }
 
   return (
@@ -35,14 +29,14 @@ export default function WhatICanBuild() {
           transition={{ duration: 0.7, ease: 'easeOut' }}
           className="relative w-full overflow-hidden"
         >
-          <motion.img
-            src={homeContent.projectBackground}
-            alt="Capabilities hero"
-            className="block h-[min(60vh,520px)] w-full object-cover md:h-[520px]"
-            initial={{ scale: 1.05, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
+          <motion.div
+            className="relative h-[min(60vh,520px)] w-full md:h-[520px]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 1.1, ease: 'easeOut' }}
-          />
+          >
+            <VantaRingsBackground />
+          </motion.div>
           
 
           <motion.div
@@ -78,7 +72,7 @@ export default function WhatICanBuild() {
 
         <div className="mt-10 space-y-5">
           {capabilitiesContent.map(({ id, title, description, icon, bullets }) => {
-            const isOpen = openId === id
+            const isOpen = openIds.includes(id)
             const Icon = iconMap[icon] ?? Globe
             return (
               <motion.article

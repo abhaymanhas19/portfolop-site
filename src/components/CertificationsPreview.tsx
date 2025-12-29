@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Award, ArrowRight, ExternalLink } from 'lucide-react'
-import { certificationBadges, homeContent } from '../data/content'
+import { certificationBadges } from '../data/content'
 
 type CategoryGroup = {
   name: string

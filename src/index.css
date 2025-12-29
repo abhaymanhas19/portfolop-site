@@ -117,38 +117,6 @@ body {
   }
 }
 
-.gradient-overlay {
-  background-image:
-    linear-gradient(180deg, rgba(18, 20, 48, 0) 0%, rgba(18, 20, 48, 0.78) 100%),
-    linear-gradient(115deg, rgba(142, 217, 255, 0.85) 0%, rgba(199, 178, 255, 0.58) 55%, rgba(249, 166, 178, 0.68) 78%, rgba(255, 209, 179, 0.7) 100%);
-  opacity: 0.85;
-  mix-blend-mode: screen;
-}
-
-/* Light aurora ribbons */
-.hero-aurora {
-  position: absolute;
-  inset: -20% -10% -10% -10%;
-  background:
-    radial-gradient(820px 320px at 0% 15%, rgba(142, 217, 255, 0.38), transparent 58%),
-    radial-gradient(840px 360px at 95% 10%, rgba(186, 170, 255, 0.32), transparent 60%),
-    radial-gradient(760px 340px at 50% 85%, rgba(249, 166, 178, 0.28), transparent 68%);
-  filter: blur(70px);
-  opacity: .65;
-  pointer-events: none;
-}
-.grid-floor {
-  position: absolute;
-  inset: 50% -10% -10% -10%;
-  background:
-    repeating-linear-gradient(0deg, rgba(34, 70, 98, 0.08) 0px, rgba(34, 70, 98, 0.08) 1px, transparent 1px, transparent 38px),
-    repeating-linear-gradient(90deg, rgba(34, 70, 98, 0.08) 0px, rgba(34, 70, 98, 0.08) 1px, transparent 1px, transparent 38px);
-  transform: rotateX(60deg) translateY(-12%);
-  transform-origin: top center;
-  mask-image: linear-gradient(#000c, transparent);
-  pointer-events: none;
-}
-
 /* Flowing 3D text ring */
 .ring3d { position: absolute; inset: 0; perspective: 1200px; pointer-events: none; }
 .ring3d__belt { position: absolute; left: 50%; top: 40%; transform-style: preserve-3d; transform: translateX(-50%) rotateX(var(--rx, 0deg)); animation: floatY 8s ease-in-out infinite; }

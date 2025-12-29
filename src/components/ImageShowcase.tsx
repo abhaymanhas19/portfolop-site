@@ -1,12 +1,36 @@
-import { useState, type MouseEvent as ReactMouseEvent } from 'react'
+import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from 'react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import { galleryContent, homeContent } from '../data/content'
+import { galleryContent } from '../data/content'
 
 export default function ImageShowcase() {
   const navigate = useNavigate()
   const { profile } = galleryContent
   const [spotlight, setSpotlight] = useState({ x: 50, y: 50, active: false })
+  const vantaRef = useRef<HTMLDivElement | null>(null)
+  const vantaInstance = useRef<{ destroy: () => void } | null>(null)
+
+  useEffect(() => {
+    if (!vantaRef.current || !window.VANTA?.NET) return
+
+    vantaInstance.current = window.VANTA.NET({
+      el: vantaRef.current,
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.0,
+      minWidth: 200.0,
+      scale: 1.0,
+      scaleMobile: 1.0,
+      color: 0x15900c,
+      backgroundColor: 0xf0324,
+    })
+
+    return () => {
+      vantaInstance.current?.destroy()
+      vantaInstance.current = null
+    }
+  }, [])
 
   const handlePointerMove = (event: ReactMouseEvent<HTMLDivElement>) => {
     const { currentTarget, clientX, clientY } = event
@@ -19,20 +43,12 @@ export default function ImageShowcase() {
   const handlePointerLeave = () => setSpotlight(prev => ({ ...prev, active: false }))
 
   return (
-    <section className="relative overflow-hidden bg-white py-20">
-      <motion.img
-        src={homeContent.galleryBackground}
-        alt=""
-        aria-hidden
-        initial={{ opacity: 0, scale: 1.05 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.1, ease: 'easeOut' }}
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover"
-      />
+    <section className="relative overflow-hidden bg-[#0f0324] py-20">
       <div
+        ref={vantaRef}
+        id="gallery-vanta"
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/92 via-white/80 to-white/60 backdrop-blur-[1.5px]"
+        className="pointer-events-none absolute inset-0"
       />
 
       <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center gap-12 px-6 text-slate-900">
@@ -41,17 +57,16 @@ export default function ImageShowcase() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="flex flex-col items-center gap-4 text-center text-white"
+          className="flex flex-col items-center gap-4 text-center text-emerald-50"
         >
-          <span className="tag-pill">
-            Visual Logbook
+          <span className="tag-pill border-emerald-200/40 bg-white/10 text-emerald-100">
+            AI/ML Field Notes
           </span>
-          <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-            Everyday frames beyond the keyboard
+          <h2 className="text-3xl font-semibold tracking-tight text-emerald-50 sm:text-4xl">
+            AI/ML experience snapshots from live builds
           </h2>
-          <p className="max-w-2xl text-sm text-white/85 sm:text-base">
-            Little rituals, weekend escapes, and candid snapshots that refill the tank so there’s always fresh
-            energy to ship reliably.
+          <p className="max-w-2xl text-sm text-emerald-100/80 sm:text-base">
+            Architecture frames, evaluation readouts, and model ops visuals that show how systems behave when they hit production traffic.
           </p>
         </motion.div>
 
@@ -99,10 +114,13 @@ export default function ImageShowcase() {
                 <p className="text-sm text-slate-600 sm:text-base">{profile.highlight}</p>
                 <div className="flex flex-wrap gap-3">
                   <span className="tag-pill px-3 py-1 text-[11px] tracking-[0.3em]">
-                    Personal moments
+                    Model diagnostics
                   </span>
                   <span className="tag-pill px-3 py-1 text-[11px] tracking-[0.3em]">
-                    Off-duty energy
+                    RAG pipelines
+                  </span>
+                  <span className="tag-pill px-3 py-1 text-[11px] tracking-[0.3em]">
+                    Latency dashboards
                   </span>
                 </div>
                 <div>
