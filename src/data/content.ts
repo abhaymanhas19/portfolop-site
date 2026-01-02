@@ -108,7 +108,7 @@ export const content = {
     tagline: 'Building AI-first backends with Python, RAG, and realtime systems.',
     location: 'Pathankot, Punjab, India',
     contactEmail: 'abhayramgarhia19@outlook.com',
-    resumePath: '/resume.pdf',
+    resumePath: '/cv.pdf',
     avatar: '/hero-abhay.svg',
   },
   socials: [
