@@ -18,6 +18,6 @@ export const site: SiteInfo = {
   TAGLINE: content.branding.tagline,
   LOCATION: content.branding.location,
   CONTACT_EMAIL: import.meta.env.VITE_CONTACT_EMAIL || content.branding.contactEmail,
-  RESUME_PDF_PATH: import.meta.env.VITE_RESUME_PATH || content.branding.resumePath,
+  RESUME_PDF_PATH: content.branding.resumePath,
   SOCIAL: content.socials,
 }
