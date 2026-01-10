@@ -127,22 +127,15 @@ export default function HeroSection() {
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
 
-            <Link
-              to={heroContent.secondaryAction.to}
-              className="btn-secondary-invert text-base"
-            >
-              <Download className="h-5 w-5" />
-              {heroContent.secondaryAction.label}
-            </Link>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.74, duration: 0.6, ease }}
-            className="mt-8 flex flex-col items-start gap-3"
+            className="mt-8 flex flex-col items-start gap-4"
           >
-            <span className="text-xs font-semibold uppercase tracking-[0.32em] text-emerald-200/70">
+            <span className="text-xs font-semibold uppercase tracking-[0.40em] text-emerald-200/70">
               Socials
             </span>
             <div className="flex items-center justify-start gap-3 rounded-full border border-white/10 bg-white/10 px-5 py-3 shadow-[0_18px_42px_rgba(3,5,17,0.35)] backdrop-blur">

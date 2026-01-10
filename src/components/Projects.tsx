@@ -53,7 +53,7 @@ export default function Projects() {
               </span>
               <div className="space-y-2">
                 <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
-                  Product builds stitched with realtime AI
+                Projects builds stitched with realtime AI
                 </h2>
                 <p className="max-w-2xl text-sm text-slate-600 sm:text-base">
                   A curated look at platforms blending realtime collaboration, applied AI, and pragmatic

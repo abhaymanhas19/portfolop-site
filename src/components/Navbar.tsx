@@ -15,27 +15,22 @@ type NavItem =
 
 const navItems: NavItem[] = [
   { type: 'link', label: 'Home', to: '/' },
+  { type: 'link', to: '/projects', label: 'Projects' },
   {
     type: 'mega',
-    label: 'Work & Services',
+    label: 'Skills & Achievements',
     sections: [
       {
         title: 'Capabilities',
         description: 'How I design, build, and automate resilient products.',
         items: [
           { label: 'Skills Overview', to: '/skills', description: 'Backend, AI/ML, and automation specializations.' },
-          {
-            label: 'What I Can Offer',
-            to: '/what-i-can-build',
-            description: 'Service packages and implementation blueprints.',
-          },
         ],
       },
       {
         title: 'Portfolio & Proof',
         description: 'Explore problem spaces I have solved end-to-end.',
         items: [
-          { label: 'Projects', to: '/projects', description: 'Recent builds with measurable outcomes.' },
           {
             label: 'Achievements',
             to: '/certifications',
@@ -46,7 +41,7 @@ const navItems: NavItem[] = [
       {
         title: 'Visual Library',
         description: 'Immersive snapshots from builds, workshops, and launches.',
-        items: [{ label: 'Image Gallery', to: '/image-gallery', description: 'Visual highlights from deployments.' }],
+        items: [{ label: 'Project Visuals', to: '/image-gallery', description: 'Visual highlights from deployments.' }],
       },
       {
         title: 'Resources',

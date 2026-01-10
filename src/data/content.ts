@@ -126,7 +126,7 @@ export const content = {
     detail: "From custom ML algorithms to full-stack deployments, let's turn your vision into reality.",
     aiSummary: 'Partner with an engineer who blends ML strategy, backend architecture, and automation to ship results.',
     trustBadge: '',
-    primaryAction: { label: 'Get a Free Project Quote', to: '/#contact' },
+    primaryAction: { label: 'Contact for full-time / contract', to: '/#contact' },
     secondaryAction: { label: 'What I Can Offer', to: '/what-i-can-build' },
     stats: [
       { label: 'Years Experience', value: '4+', icon: 'BriefcaseBusiness' },
@@ -536,25 +536,6 @@ export const content = {
       { label: 'OpenAI', acronym: 'AI', background: '#F3F1FF', foreground: '#2C2160', accent: '#7B6DFF', url: 'https://openai.com/' },
     ],
   },
-  capabilities: [
-    {
-      id: 'python-core-engineering',
-      title: 'Skilled in delivering professional services',
-      description:
-        'Expert in building and deploying production-grade backend and AI systems, with a focus on reliability, scalability, and business impact.',
-      category: 'Backend',
-      bullets: [
-        "Production-ready web applications and high-performance APIs.",
-        'Multilingual voice assistants, transcription, and enterprise Q&A chatbots grounded in proprietary data.',
-        'Custom RAG systems, MCP servers, and seamless integration of AI into existing workflows.',
-        "End-to-end model training, evaluation, and deployment using modern ML stacks",
-        "Containerization (Docker) and orchestration (Kubernetes) for robust, scalable services.",
-        "Server management, background processing, workflow automation, and image processing with CNNs",
-        "Custom scripts and automation to streamline operations and reduce manual effort.",
-      ],
-      icon: 'Globe',
-    },
-  ] satisfies Capability[],
 } as const
 
 export type SiteContent = typeof content
@@ -569,4 +550,4 @@ export const aboutContent = content.about
 export const contactContent = content.contact
 export const galleryContent = content.gallery
 export const logoLoopContent = content.logoLoop
-export const capabilitiesContent = content.capabilities
+
