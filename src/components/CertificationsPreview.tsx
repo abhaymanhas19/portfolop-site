@@ -86,11 +86,11 @@ export default function CertificationsPreview() {
             transition={{ duration: 0.45, ease: 'easeOut' }}
             className="overflow-x-auto pb-2"
           >
-            <div className="flex min-w-full gap-6">
+            <div className="flex min-w-full items-stretch gap-6">
               {activeBadges.map(badge => (
                 <article
                   key={badge.id}
-                  className="relative flex min-w-[260px] max-w-xs flex-col overflow-hidden rounded-[28px] border border-violet-200/60 bg-white/85 shadow-[0_26px_60px_rgba(61,40,120,0.12)] backdrop-blur"
+                  className="relative flex h-full min-w-[260px] max-w-xs flex-col overflow-hidden rounded-[28px] border border-violet-200/60 bg-white/85 shadow-[0_26px_60px_rgba(61,40,120,0.12)] backdrop-blur"
                 >
                   <div className="relative h-40">
                     <motion.img
@@ -103,15 +103,15 @@ export default function CertificationsPreview() {
                       transition={{ duration: 0.8, ease: 'easeOut' }}
                     />
                   </div>
-                  <div className="space-y-4 px-5 pb-6 pt-5 text-left">
+                  <div className="flex h-[240px] flex-col gap-4 px-5 pb-6 pt-5 text-left">
                     <div className="space-y-1.5">
                       <span className="tag-pill px-3 py-1 text-[11px] tracking-[0.28em]">
                         {badge.year}
                       </span>
-                      <h3 className="text-lg font-semibold text-slate-900">{badge.title}</h3>
-                      <p className="text-sm text-slate-600">{badge.summary}</p>
+                      <h3 className="line-clamp-2 text-lg font-semibold text-slate-900">{badge.title}</h3>
+                      <p className="line-clamp-3 min-h-[3.75rem] text-sm text-slate-600">{badge.summary}</p>
                     </div>
-                    <div className="flex items-center justify-between text-xs uppercase tracking-[0.18em] text-slate-400">
+                    <div className="mt-auto flex items-center justify-between text-xs uppercase tracking-[0.18em] text-slate-400">
                       <span>{badge.issuer}</span>
                       {badge.credentialUrl && (
                         <a
