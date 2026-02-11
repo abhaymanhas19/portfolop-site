@@ -194,10 +194,10 @@ export default function About() {
                 Weekend hikes, sunrise coffee rituals, and candid moments with the people who keep me grounded fuel the energy I bring to complex delivery.
               </p>
               <Link
-                to="/image-gallery"
+                to="/blogs"
                 className="inline-flex items-center gap-2 text-sm font-semibold text-[#23354A] hover:text-[#1F2A37]"
               >
-                Explore the gallery <ArrowRight className="h-4 w-4" />
+                Read the study blogs <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
             <motion.div

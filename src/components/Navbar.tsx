@@ -41,7 +41,7 @@ const navItems: NavItem[] = [
       {
         title: 'Visual Library',
         description: 'Immersive snapshots from builds, workshops, and launches.',
-        items: [{ label: 'Project Visuals', to: '/image-gallery', description: 'Visual highlights from deployments.' }],
+        items: [{ label: 'Study Blogs', to: '/blogs', description: 'Notes from ongoing builds and experiments.' }],
       },
       {
         title: 'Resources',

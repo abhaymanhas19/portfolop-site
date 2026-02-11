@@ -8,7 +8,8 @@ import Resume from './pages/Resume'
 import Achievements from './pages/Certifications'
 import SkillsDetail from './pages/SkillsDetail'
 import ProjectsDetail from './pages/ProjectsDetail'
-import ImageGallery from './pages/ImageGallery'
+import Blogs from './pages/Blogs'
+import BlogDetail from './pages/BlogDetail'
 import NotFound from './pages/NotFound'
 import EasterEgg from './pages/EasterEgg'
 import { useEffect, useState } from 'react'
@@ -43,7 +44,8 @@ export default function App() {
           <Route path="/skills" element={<SkillsDetail />} />
           <Route path="/projects" element={<ProjectsDetail />} />
           <Route path="/about" element={<About />} />
-          <Route path="/image-gallery" element={<ImageGallery />} />
+          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/blogs/:slug" element={<BlogDetail />} />
           <Route path="/resume" element={<Resume />} />
           <Route path="/certifications" element={<Achievements />} />
           <Route path="/easter-egg" element={<EasterEgg />} />

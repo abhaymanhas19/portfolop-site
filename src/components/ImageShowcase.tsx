@@ -126,7 +126,7 @@ export default function ImageShowcase() {
                 <div>
                   <button
                     type="button"
-                    onClick={() => navigate('/image-gallery')}
+                    onClick={() => navigate('/blogs')}
                     className="btn-primary px-5 py-2.5 text-sm"
                   >
                     {profile.cta}

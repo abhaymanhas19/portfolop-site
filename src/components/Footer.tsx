@@ -14,7 +14,7 @@ const footerLinks = [
   { label: 'Home', to: '/' },
   { label: 'Skills', to: '/skills' },
   { label: 'Projects', to: '/projects' },
-  { label: 'Project Visuals', to: '/image-gallery' },
+  { label: 'Study Blogs', to: '/blogs' },
   { label: 'Achievements', to: '/certifications' },
   { label: 'About', to: '/about' },
   { label: 'Resume', to: '/resume' },
