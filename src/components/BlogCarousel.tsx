@@ -2,20 +2,58 @@ import { useEffect, useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, BookOpen, Sparkles } from 'lucide-react'
-import { blogs } from '../pages/blogsData'
+import { useBlogs } from '../hooks/useBlogs'
 
 export default function BlogCarousel() {
-  const featured = useMemo(() => blogs.slice(0, 4), [])
+  const { blogs, loading, error } = useBlogs()
+  const featured = useMemo(() => blogs.slice(0, 4), [blogs])
   const [index, setIndex] = useState(0)
 
   useEffect(() => {
+    if (!featured.length) return
     const timer = setInterval(() => setIndex(i => (i + 1) % featured.length), 5200)
     return () => clearInterval(timer)
   }, [featured.length])
 
+  useEffect(() => {
+    if (index >= featured.length && featured.length > 0) {
+      setIndex(0)
+    }
+  }, [featured.length, index])
+
   const goto = (next: number) => {
     const normalized = (next + featured.length) % featured.length
     setIndex(normalized)
+  }
+
+  if (loading) {
+    return (
+      <section className="relative overflow-hidden bg-gradient-to-br from-emerald-50 via-white to-sky-50 py-16">
+        <div className="relative mx-auto max-w-6xl px-4 md:px-6 lg:px-8">
+          <p className="text-slate-600">Loading blogs...</p>
+        </div>
+      </section>
+    )
+  }
+
+  if (error) {
+    return (
+      <section className="relative overflow-hidden bg-gradient-to-br from-emerald-50 via-white to-sky-50 py-16">
+        <div className="relative mx-auto max-w-6xl px-4 md:px-6 lg:px-8">
+          <p className="text-red-600">{error}</p>
+        </div>
+      </section>
+    )
+  }
+
+  if (!featured.length) {
+    return (
+      <section className="relative overflow-hidden bg-gradient-to-br from-emerald-50 via-white to-sky-50 py-16">
+        <div className="relative mx-auto max-w-6xl px-4 md:px-6 lg:px-8">
+          <p className="text-slate-600">No blogs available yet.</p>
+        </div>
+      </section>
+    )
   }
 
   const active = featured[index]

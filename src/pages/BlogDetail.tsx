@@ -2,12 +2,30 @@ import { useMemo } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowLeft, ArrowRight, BookOpen, Clock3 } from 'lucide-react'
-import { blogs } from './blogsData'
+import { useBlogs } from '../hooks/useBlogs'
 
 export default function BlogDetail() {
   const { slug } = useParams<{ slug: string }>()
   const navigate = useNavigate()
-  const blog = useMemo(() => blogs.find(b => b.slug === slug), [slug])
+  const { blogs, loading, error } = useBlogs()
+  const blog = useMemo(() => blogs.find(b => b.slug === slug), [blogs, slug])
+
+  if (loading) {
+    return (
+      <div className="mx-auto flex max-w-4xl flex-col items-center gap-4 px-4 py-16 text-slate-700">
+        <p className="text-lg font-semibold">Loading blog...</p>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="mx-auto flex max-w-4xl flex-col items-center gap-4 px-4 py-16 text-slate-700">
+        <p className="text-lg font-semibold text-red-600">{error}</p>
+        <button onClick={() => navigate('/blogs')} className="btn-primary px-4 py-2 text-sm">Back to blogs</button>
+      </div>
+    )
+  }
 
   if (!blog) {
     return (

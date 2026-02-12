@@ -1,9 +1,26 @@
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowRight, BookOpen, Clock3 } from 'lucide-react'
-import { blogs } from './blogsData'
+import { ArrowRight, Clock3 } from 'lucide-react'
+import { useBlogs } from '../hooks/useBlogs'
 
 export default function Blogs() {
+  const { blogs, loading, error } = useBlogs()
+  const PAGE_SIZE = 10
+  const [page, setPage] = useState(1)
+
+  const totalPages = Math.max(1, Math.ceil(blogs.length / PAGE_SIZE) || 1)
+  const visibleBlogs = useMemo(
+    () => blogs.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE),
+    [blogs, page]
+  )
+
+  useEffect(() => {
+    if (page > totalPages) {
+      setPage(totalPages)
+    }
+  }, [page, totalPages])
+
   return (
     <div className="bg-white text-slate-700">
       <section className="border-b border-slate-200/70 bg-gradient-to-br from-emerald-50 via-white to-sky-50">
@@ -28,7 +45,14 @@ export default function Blogs() {
 
       <section className="mx-auto max-w-6xl px-4 pb-16 pt-10 md:px-6 lg:px-8">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {blogs.map((blog, index) => (
+          {loading && <p className="text-slate-600 sm:col-span-2 lg:col-span-3">Loading blogs...</p>}
+          {error && !loading && (
+            <p className="text-red-600 sm:col-span-2 lg:col-span-3">{error}</p>
+          )}
+          {!loading && !error && blogs.length === 0 && (
+            <p className="text-slate-600 sm:col-span-2 lg:col-span-3">No blogs found.</p>
+          )}
+          {visibleBlogs.map((blog, index) => (
             <motion.article
               key={blog.slug}
               className="group flex h-full flex-col overflow-hidden rounded-[26px] border border-slate-200 bg-white shadow-[0_28px_70px_rgba(15,41,67,0.12)]"
@@ -69,6 +93,55 @@ export default function Blogs() {
             </motion.article>
           ))}
         </div>
+
+        {!loading && !error && blogs.length > PAGE_SIZE && (
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3 text-sm font-semibold text-slate-700">
+            <button
+              type="button"
+              onClick={() => setPage(p => Math.max(1, p - 1))}
+              disabled={page === 1}
+              className={`rounded-full border px-3 py-2 transition hover:-translate-y-0.5 ${
+                page === 1
+                  ? 'cursor-not-allowed border-slate-200 bg-slate-100 text-slate-400'
+                  : 'border-slate-200 bg-white hover:border-emerald-200'
+              }`}
+            >
+              Previous
+            </button>
+            <div className="flex items-center gap-2">
+              {Array.from({ length: totalPages }).map((_, idx) => {
+                const pageNumber = idx + 1
+                const isActive = pageNumber === page
+                return (
+                  <button
+                    key={pageNumber}
+                    onClick={() => setPage(pageNumber)}
+                    className={`h-9 w-9 rounded-full border text-sm transition hover:-translate-y-0.5 ${
+                      isActive
+                        ? 'border-emerald-300 bg-emerald-50 text-emerald-700 shadow-sm'
+                        : 'border-slate-200 bg-white text-slate-700 hover:border-emerald-200'
+                    }`}
+                    aria-current={isActive}
+                  >
+                    {pageNumber}
+                  </button>
+                )
+              })}
+            </div>
+            <button
+              type="button"
+              onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+              disabled={page === totalPages}
+              className={`rounded-full border px-3 py-2 transition hover:-translate-y-0.5 ${
+                page === totalPages
+                  ? 'cursor-not-allowed border-slate-200 bg-slate-100 text-slate-400'
+                  : 'border-slate-200 bg-white hover:border-emerald-200'
+              }`}
+            >
+              Next
+            </button>
+          </div>
+        )}
       </section>
     </div>
   )
