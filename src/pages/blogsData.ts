@@ -6,8 +6,14 @@ export type BlogPost = {
   publishedAt: string
   readTime: string
   image: string
-  body: string[]
+  images?: string[]
+  body: string
   skills: string[]
+}
+
+type RawBlogPost = Omit<BlogPost, 'body' | 'images'> & {
+  body: string | string[]
+  images?: string[]
 }
 
 // Raw GitHub Gist serving the blogs JSON
@@ -20,6 +26,22 @@ export async function fetchBlogs(): Promise<BlogPost[]> {
     throw new Error('Unable to load blogs right now')
   }
 
-  const data = (await response.json()) as BlogPost[]
-  return data
+  const data = (await response.json()) as RawBlogPost[]
+
+  const normalized: BlogPost[] = data.map(post => {
+    const images = (post.images && post.images.length > 0)
+      ? post.images
+      : post.image
+        ? [post.image]
+        : []
+
+    return {
+      ...post,
+      body: Array.isArray(post.body) ? post.body.join('\n\n') : post.body,
+      image: post.image ?? images[0] ?? '',
+      images,
+    }
+  })
+
+  return normalized
 }

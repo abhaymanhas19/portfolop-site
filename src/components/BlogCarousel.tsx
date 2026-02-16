@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, BookOpen, Sparkles } from 'lucide-react'
 import { useBlogs } from '../hooks/useBlogs'
 
 export default function BlogCarousel() {
   const { blogs, loading, error } = useBlogs()
+  const navigate = useNavigate()
   const featured = useMemo(() => blogs.slice(0, 4), [blogs])
   const [index, setIndex] = useState(0)
 
@@ -81,7 +82,18 @@ export default function BlogCarousel() {
         </div>
 
         <div className="mt-10 grid gap-8 lg:grid-cols-[1.2fr,0.9fr]">
-          <div className="relative overflow-hidden rounded-[32px] border border-emerald-100 bg-white shadow-[0_32px_90px_rgba(16,185,129,0.16)]">
+          <div
+            className="relative overflow-hidden rounded-[32px] border border-emerald-100 bg-white shadow-[0_32px_90px_rgba(16,185,129,0.16)] cursor-pointer"
+            role="button"
+            tabIndex={0}
+            onClick={() => navigate(`/blogs/${active.slug}`)}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                navigate(`/blogs/${active.slug}`)
+              }
+            }}
+          >
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={active.slug}
@@ -146,15 +158,18 @@ export default function BlogCarousel() {
 
           <div className="space-y-3">
             {featured.map((blog, idx) => (
-              <button
+              <Link
                 key={blog.slug}
-                onClick={() => goto(idx)}
-                className={`w-full rounded-[22px] border px-4 py-4 text-left transition hover:-translate-y-0.5 hover:border-emerald-200 hover:bg-white shadow-sm ${
+                to={`/blogs/${blog.slug}`}
+                onMouseEnter={() => goto(idx)}
+                onFocus={() => goto(idx)}
+                className={`block w-full rounded-[22px] border px-4 py-4 text-left transition hover:-translate-y-0.5 hover:border-emerald-200 hover:bg-white shadow-sm focus-visible:-translate-y-0.5 focus-visible:border-emerald-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-200 ${
                   idx === index
                     ? 'border-emerald-200 bg-white'
                     : 'border-slate-200/80 bg-white/80 text-slate-600'
                 }`}
                 aria-current={idx === index}
+                aria-label={`Open blog ${blog.title}`}
               >
                 <div className="flex items-center justify-between gap-3">
                   <div className="space-y-1">
@@ -169,7 +184,7 @@ export default function BlogCarousel() {
                     loading="lazy"
                   />
                 </div>
-              </button>
+              </Link>
             ))}
           </div>
         </div>
