@@ -11,7 +11,8 @@ export type BlogPost = {
   skills: string[]
 }
 
-type RawBlogPost = Omit<BlogPost, 'body' | 'images'> & {
+type RawBlogPost = Omit<BlogPost, 'body' | 'images' | 'image'> & {
+  image: string | string[]
   body: string | string[]
   images?: string[]
 }
@@ -83,10 +84,11 @@ export async function fetchBlogs(): Promise<BlogPost[]> {
   const data = (await response.json()) as RawBlogPost[]
 
   const normalized: BlogPost[] = await Promise.all(data.map(async post => {
-    const images = (post.images && post.images.length > 0)
-      ? post.images
+    const rawImages = Array.isArray(post.image) ? post.image : post.images
+    const images = (rawImages && rawImages.length > 0)
+      ? rawImages
       : post.image
-        ? [post.image]
+        ? [post.image as string]
         : []
 
     const body = await resolveBodyContent(post.body)
@@ -94,7 +96,7 @@ export async function fetchBlogs(): Promise<BlogPost[]> {
     return {
       ...post,
       body,
-      image: post.image ?? images[0] ?? '',
+      image: Array.isArray(post.image) ? (post.image[0] ?? '') : (post.image ?? images[0] ?? ''),
       images,
     }
   }))
