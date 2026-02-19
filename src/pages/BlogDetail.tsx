@@ -4,26 +4,39 @@ import { motion } from 'framer-motion'
 import { ArrowLeft, ArrowRight, BookOpen, Clock3 } from 'lucide-react'
 import { useBlogs } from '../hooks/useBlogs'
 import Markdown from '../components/Markdown'
+import Modal from '../components/Modal'
 
 export default function BlogDetail() {
   const { slug } = useParams<{ slug: string }>()
   const navigate = useNavigate()
   const { blogs, loading, error } = useBlogs()
   const blog = useMemo(() => blogs.find(b => b.slug === slug), [blogs, slug])
+  const images = useMemo(
+    () => (blog?.images?.length ? blog.images : blog ? [blog.image] : []),
+    [blog],
+  )
   const [activeImage, setActiveImage] = useState(0)
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+  const [isPaused, setIsPaused] = useState(false)
 
   // Ensure each blog detail view starts at the top even when navigating from deep scroll positions
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' })
   }, [slug])
 
+  // Pause autoplay when modal is open so the clicked image stays in view
   useEffect(() => {
-    if (!blog?.images?.length) return
+    setIsPaused(lightboxOpen)
+  }, [lightboxOpen])
+
+  useEffect(() => {
+    if (images.length <= 1) return
+    if (isPaused) return
     const timer = setInterval(() => {
-      setActiveImage(idx => (idx + 1) % blog.images!.length)
+      setActiveImage(idx => (idx + 1) % images.length)
     }, 3000)
     return () => clearInterval(timer)
-  }, [blog?.images])
+  }, [images, isPaused])
 
   useEffect(() => {
     setActiveImage(0)
@@ -91,54 +104,58 @@ export default function BlogDetail() {
             transition={{ duration: 0.45, ease: 'easeOut' }}
             className="md:float-right md:ml-6 md:mb-4 md:w-[420px] md:max-w-[48%] overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-[0_18px_50px_rgba(15,41,67,0.12)]"
           >
-            <div className="relative">
-              {blog.images && blog.images.length > 0 ? (
+            <div
+              className="relative block cursor-pointer"
+              onClick={() => setLightboxOpen(true)}
+              onMouseEnter={() => setIsPaused(true)}
+              onMouseLeave={() => setIsPaused(false)}
+            >
+              {images.length > 0 ? (
                 <>
                   <motion.img
-                    key={blog.images[activeImage]}
-                    src={blog.images[activeImage]}
+                    key={images[activeImage]}
+                    src={images[activeImage]}
                     alt={`${blog.title} visual ${activeImage + 1}`}
-                    className="w-full object-cover"
+                    className="w-full bg-slate-50 object-contain"
                     style={{ aspectRatio: '4 / 3', maxHeight: 460 }}
                     loading="lazy"
                     initial={{ opacity: 0.3, scale: 0.98 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.4, ease: 'easeOut' }}
+                    transition={{ duration: 0.75, ease: 'easeInOut' }}
                   />
-                  <div className="absolute inset-0 flex items-center justify-between px-3">
-                    <button
-                      type="button"
-                      onClick={() => setActiveImage(i => (i - 1 + blog.images!.length) % blog.images!.length)}
-                      className="rounded-full bg-white/80 p-2 text-slate-700 shadow hover:bg-white"
-                      aria-label="Previous image"
-                    >
-                      <ArrowLeft className="h-4 w-4" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setActiveImage(i => (i + 1) % blog.images!.length)}
-                      className="rounded-full bg-white/80 p-2 text-slate-700 shadow hover:bg-white"
-                      aria-label="Next image"
-                    >
-                      <ArrowRight className="h-4 w-4" />
-                    </button>
-                  </div>
-                  <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-2">
-                    {blog.images.map((_, dotIdx) => (
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-900/4 via-transparent to-transparent" />
+                  {images.length > 1 && (
+                    <div className="absolute inset-0 flex items-center justify-between px-3">
                       <button
-                        key={dotIdx}
-                        onClick={() => setActiveImage(dotIdx)}
-                        className={`h-2.5 w-2.5 rounded-full border border-white transition ${dotIdx === activeImage ? 'bg-white' : 'bg-white/50'}`}
-                        aria-label={`Go to image ${dotIdx + 1}`}
-                      />
-                    ))}
-                  </div>
+                        type="button"
+                        onClick={e => {
+                          e.stopPropagation()
+                          setActiveImage(i => (i - 1 + images.length) % images.length)
+                        }}
+                        className="rounded-full bg-white/85 p-2 text-slate-700 shadow hover:bg-white"
+                        aria-label="Previous image"
+                      >
+                        <ArrowLeft className="h-4 w-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={e => {
+                          e.stopPropagation()
+                          setActiveImage(i => (i + 1) % images.length)
+                        }}
+                        className="rounded-full bg-white/85 p-2 text-slate-700 shadow hover:bg-white"
+                        aria-label="Next image"
+                      >
+                        <ArrowRight className="h-4 w-4" />
+                      </button>
+                    </div>
+                  )}
                 </>
               ) : (
                 <img
                   src={blog.image}
                   alt={`${blog.title} visual`}
-                  className="w-full object-cover"
+                  className="w-full bg-slate-50 object-contain"
                   style={{ aspectRatio: '4 / 3', maxHeight: 460 }}
                   loading="lazy"
                 />
@@ -146,16 +163,29 @@ export default function BlogDetail() {
             </div>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.35, ease: 'easeOut' }}
-          >
+          <div>
             <Markdown content={blog.body} />
-          </motion.div>
+          </div>
           <div className="clear-both" />
         </div>
+
+        {images.length > 0 && (
+          <Modal
+            open={lightboxOpen}
+            onClose={() => setLightboxOpen(false)}
+            title="Image preview"
+            subtitle="Full-size view of the selected shot"
+          >
+            <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
+              <img
+                src={images[activeImage]}
+                alt={`${blog.title} visual ${activeImage + 1}`}
+                className="mx-auto max-h-[80vh] w-full object-contain bg-slate-900/2"
+                loading="lazy"
+              />
+            </div>
+          </Modal>
+        )}
 
         <div className="mt-12 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-6">
           <button onClick={() => navigate('/blogs')} className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-700">
