@@ -12,6 +12,11 @@ export default function BlogDetail() {
   const blog = useMemo(() => blogs.find(b => b.slug === slug), [blogs, slug])
   const [activeImage, setActiveImage] = useState(0)
 
+  // Ensure each blog detail view starts at the top even when navigating from deep scroll positions
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' })
+  }, [slug])
+
   useEffect(() => {
     if (!blog?.images?.length) return
     const timer = setInterval(() => {

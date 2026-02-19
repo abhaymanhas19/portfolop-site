@@ -20,56 +20,105 @@ type RawBlogPost = Omit<BlogPost, 'body' | 'images' | 'image'> & {
 // Raw GitHub Gist serving the blogs JSON
 export const BLOGS_DATA_URL = 'https://gist.githubusercontent.com/abhaymanhas19/640fe4a76bf5b81b39aa6c5e48f5104d/raw/sitesblogs.json'
 
-// Base URL + token come from env (Vite requires VITE_ prefix for exposure).
-const BASE_URL_FOR_BLOGS =
-  (import.meta.env.VITE_BASE_URL_FOR_BLOGS as string | undefined) ??
-  (import.meta.env.BASE_URL_FOR_BLOGS as string | undefined) ??
-  ''
+const DROPBOX_APP_KEY =
+  (import.meta.env.VITE_DROPBOX_APP_KEY as string | undefined) ??
+  (import.meta.env.DROPBOX_APP_KEY as string | undefined)
 
-const GITHUB_TOKEN =
-  (import.meta.env.VITE_GITHUB_TOKEN as string | undefined) ??
-  (import.meta.env.GITHUB_TOKEN as string | undefined)
+const DROPBOX_APP_SECRET =
+  (import.meta.env.VITE_DROPBOX_APP_SECRET as string | undefined) ??
+  (import.meta.env.DROPBOX_APP_SECRET as string | undefined)
+
+const DROPBOX_REFRESH_TOKEN =
+  (import.meta.env.VITE_DROPBOX_REFRESH_TOKEN as string | undefined) ??
+  (import.meta.env.DROPBOX_REFRESH_TOKEN as string | undefined)
+
+const DROPBOX_ACCESS_TOKEN =
+  (import.meta.env.VITE_DROPBOX_ACCESS_TOKEN as string | undefined) ??
+  (import.meta.env.DROPBOX_ACCESS_TOKEN as string | undefined)
+
+let cachedDropboxToken: string | null = null
+
+async function getDropboxAccessToken(): Promise<string> {
+  if (DROPBOX_ACCESS_TOKEN) return DROPBOX_ACCESS_TOKEN
+  if (cachedDropboxToken) return cachedDropboxToken
+
+  if (!DROPBOX_APP_KEY || !DROPBOX_APP_SECRET || !DROPBOX_REFRESH_TOKEN) {
+    throw new Error('Missing Dropbox credentials')
+  }
+
+  const tokenResponse = await fetch('https://api.dropboxapi.com/oauth2/token', {
+    method: 'POST',
+    headers: {
+      Authorization: `Basic ${btoa(`${DROPBOX_APP_KEY}:${DROPBOX_APP_SECRET}`)}`,
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: new URLSearchParams({
+      grant_type: 'refresh_token',
+      refresh_token: DROPBOX_REFRESH_TOKEN
+    }).toString(),
+    mode: 'cors'
+  })
+
+  if (!tokenResponse.ok) {
+    throw new Error(`Unable to refresh Dropbox token (${tokenResponse.status})`)
+  }
+
+  const tokenJson = (await tokenResponse.json()) as { access_token?: string }
+  if (!tokenJson.access_token) {
+    throw new Error('Dropbox did not return an access token')
+  }
+
+  cachedDropboxToken = tokenJson.access_token
+  return cachedDropboxToken
+}
+
+async function fetchDropboxMarkdown(path: string): Promise<string> {
+  const accessToken = await getDropboxAccessToken()
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`
+
+  const response = await fetch('https://content.dropboxapi.com/2/files/download', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Dropbox-API-Arg': JSON.stringify({ path: normalizedPath })
+    },
+    mode: 'cors'
+  })
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch markdown from Dropbox (${response.status})`)
+  }
+
+  return await response.text()
+}
+
+async function fetchDirectMarkdown(url: string): Promise<string> {
+  const response = await fetch(url, { mode: 'cors' })
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch markdown from ${url} (${response.status})`)
+  }
+
+  return await response.text()
+}
 
 async function resolveBodyContent(body: string | string[]): Promise<string> {
   const filename = Array.isArray(body) ? body.find(Boolean) ?? '' : body
   const trimmed = filename.trim()
 
-  // If the body already contains a full URL, respect it as-is.
-  const markdownUrl = /^https?:\/\//i.test(trimmed)
-    ? trimmed
-    : (() => {
-        const trimmedBase = BASE_URL_FOR_BLOGS.replace(/\/+$/, '')
-        const trimmedFile = trimmed.replace(/^\/+/, '')
-
-        if (!trimmedBase || !trimmedFile) {
-          console.error('Missing base URL or filename for blog content', {
-            trimmedBase,
-            trimmedFile
-          })
-          return ''
-        }
-
-        return `${trimmedBase}/${trimmedFile}`
-      })()
+  if (!trimmed) {
+    return 'Sorry, the blog content could not be loaded right now.'
+  }
 
   try {
-    const response = await fetch(markdownUrl, {
-      headers: {
-        ...(GITHUB_TOKEN ? { Authorization: `Bearer ${GITHUB_TOKEN}` } : {}),
-        // GitHub requires this for some raw endpoints to allow CORS
-        Accept: 'application/vnd.github.raw'
-      },
-      // Explicitly enable CORS in case defaults differ per environment
-      mode: 'cors'
-    })
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch markdown: ${response.status}`)
+    // If the body already contains a full URL (e.g. a Dropbox shared link), fetch directly.
+    if (/^https?:\/\//i.test(trimmed)) {
+      return await fetchDirectMarkdown(trimmed)
     }
 
-    return await response.text()
+    return await fetchDropboxMarkdown(trimmed)
   } catch (error) {
-    console.error('Unable to load blog markdown from', markdownUrl, error)
+    console.error('Unable to load blog markdown from Dropbox', trimmed, error)
     return 'Sorry, the blog content could not be loaded right now.'
   }
 }
