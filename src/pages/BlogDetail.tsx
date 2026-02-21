@@ -17,26 +17,23 @@ export default function BlogDetail() {
   )
   const [activeImage, setActiveImage] = useState(0)
   const [lightboxOpen, setLightboxOpen] = useState(false)
-  const [isPaused, setIsPaused] = useState(false)
+  const [modalImageIndex, setModalImageIndex] = useState(0)
+  const [isHoverPaused, setIsHoverPaused] = useState(false)
+  const autoplayPaused = lightboxOpen || isHoverPaused
 
   // Ensure each blog detail view starts at the top even when navigating from deep scroll positions
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' })
   }, [slug])
 
-  // Pause autoplay when modal is open so the clicked image stays in view
-  useEffect(() => {
-    setIsPaused(lightboxOpen)
-  }, [lightboxOpen])
-
   useEffect(() => {
     if (images.length <= 1) return
-    if (isPaused) return
+    if (autoplayPaused) return
     const timer = setInterval(() => {
       setActiveImage(idx => (idx + 1) % images.length)
     }, 3000)
     return () => clearInterval(timer)
-  }, [images, isPaused])
+  }, [images, autoplayPaused])
 
   useEffect(() => {
     setActiveImage(0)
@@ -106,9 +103,12 @@ export default function BlogDetail() {
           >
             <div
               className="relative block cursor-pointer"
-              onClick={() => setLightboxOpen(true)}
-              onMouseEnter={() => setIsPaused(true)}
-              onMouseLeave={() => setIsPaused(false)}
+              onClick={() => {
+                setModalImageIndex(activeImage)
+                setLightboxOpen(true)
+              }}
+              onMouseEnter={() => setIsHoverPaused(true)}
+              onMouseLeave={() => setIsHoverPaused(false)}
             >
               {images.length > 0 ? (
                 <>
@@ -178,8 +178,8 @@ export default function BlogDetail() {
           >
             <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
               <img
-                src={images[activeImage]}
-                alt={`${blog.title} visual ${activeImage + 1}`}
+                src={images[modalImageIndex] ?? images[0]}
+                alt={`${blog.title} visual ${modalImageIndex + 1}`}
                 className="mx-auto max-h-[80vh] w-full object-contain bg-slate-900/2"
                 loading="lazy"
               />

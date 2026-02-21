@@ -37,12 +37,26 @@ const DROPBOX_ACCESS_TOKEN =
   (import.meta.env.DROPBOX_ACCESS_TOKEN as string | undefined)
 
 let cachedDropboxToken: string | null = null
+let cachedDropboxTokenExpiresAt: number | null = null
 
-async function getDropboxAccessToken(): Promise<string> {
-  if (DROPBOX_ACCESS_TOKEN) return DROPBOX_ACCESS_TOKEN
-  if (cachedDropboxToken) return cachedDropboxToken
+function hasDropboxRefreshFlow(): boolean {
+  return Boolean(DROPBOX_APP_KEY && DROPBOX_APP_SECRET && DROPBOX_REFRESH_TOKEN)
+}
 
-  if (!DROPBOX_APP_KEY || !DROPBOX_APP_SECRET || !DROPBOX_REFRESH_TOKEN) {
+function isCachedDropboxTokenValid(): boolean {
+  if (!cachedDropboxToken || !cachedDropboxTokenExpiresAt) return false
+  // Refresh a bit early to avoid edge-of-expiry failures.
+  return Date.now() < cachedDropboxTokenExpiresAt - 30_000
+}
+
+async function getDropboxAccessToken(options?: { forceRefresh?: boolean }): Promise<string> {
+  const forceRefresh = options?.forceRefresh ?? false
+
+  if (!forceRefresh && isCachedDropboxTokenValid()) return cachedDropboxToken as string
+  // If an access token is configured (Option A), try it first; on expiry callers can force-refresh.
+  if (!forceRefresh && DROPBOX_ACCESS_TOKEN) return DROPBOX_ACCESS_TOKEN
+
+  if (!hasDropboxRefreshFlow()) {
     throw new Error('Missing Dropbox credentials')
   }
 
@@ -63,27 +77,43 @@ async function getDropboxAccessToken(): Promise<string> {
     throw new Error(`Unable to refresh Dropbox token (${tokenResponse.status})`)
   }
 
-  const tokenJson = (await tokenResponse.json()) as { access_token?: string }
+  const tokenJson = (await tokenResponse.json()) as { access_token?: string; expires_in?: number }
   if (!tokenJson.access_token) {
     throw new Error('Dropbox did not return an access token')
   }
 
+  const expiresInSeconds =
+    typeof tokenJson.expires_in === 'number' && tokenJson.expires_in > 0
+      ? tokenJson.expires_in
+      : 60 * 60
+
   cachedDropboxToken = tokenJson.access_token
+  cachedDropboxTokenExpiresAt = Date.now() + expiresInSeconds * 1000
   return cachedDropboxToken
 }
 
 async function fetchDropboxMarkdown(path: string): Promise<string> {
-  const accessToken = await getDropboxAccessToken()
+  let accessToken = await getDropboxAccessToken()
   const normalizedPath = path.startsWith('/') ? path : `/${path}`
 
-  const response = await fetch('https://content.dropboxapi.com/2/files/download', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      'Dropbox-API-Arg': JSON.stringify({ path: normalizedPath })
-    },
-    mode: 'cors'
-  })
+  const makeRequest = async (token: string) =>
+    await fetch('https://content.dropboxapi.com/2/files/download', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Dropbox-API-Arg': JSON.stringify({ path: normalizedPath })
+      },
+      mode: 'cors'
+    })
+
+  let response = await makeRequest(accessToken)
+  if (response.status === 401 && hasDropboxRefreshFlow()) {
+    // Token might be expired/revoked; refresh and retry once.
+    cachedDropboxToken = null
+    cachedDropboxTokenExpiresAt = null
+    accessToken = await getDropboxAccessToken({ forceRefresh: true })
+    response = await makeRequest(accessToken)
+  }
 
   if (!response.ok) {
     throw new Error(`Failed to fetch markdown from Dropbox (${response.status})`)
