@@ -1,7 +1,6 @@
 import { Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-import CapabilityTicker from './components/CapabilityTicker'
 import Home from './pages/Home'
 import About from './pages/About'
 import Resume from './pages/Resume'
@@ -12,7 +11,7 @@ import Blogs from './pages/Blogs'
 import BlogDetail from './pages/BlogDetail'
 import NotFound from './pages/NotFound'
 import EasterEgg from './pages/EasterEgg'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 function ScrollToHash() {
   const { hash, pathname } = useLocation()
@@ -28,15 +27,9 @@ function ScrollToHash() {
 }
 
 export default function App() {
-  const [loading, setLoading] = useState(true)
-  useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 700)
-    return () => clearTimeout(t)
-  }, [])
   return (
     <div className="relative flex min-h-screen flex-col bg-white text-slate-700">
       <Navbar />
-      <CapabilityTicker />
       <ScrollToHash />
       <main className="flex-1">
         <Routes>

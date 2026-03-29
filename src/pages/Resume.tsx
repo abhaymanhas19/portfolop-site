@@ -9,7 +9,7 @@ function usePdfWorker() {
   const [ready, setReady] = useState(false)
   useEffect(() => {
     let active = true
-    import('pdfjs-dist/build/pdf.worker.min.js?url').then(worker => {
+    import('pdfjs-dist/build/pdf.worker.min.mjs?url').then(worker => {
       if (!active) return
       pdfjs.GlobalWorkerOptions.workerSrc = worker.default
       setReady(true)

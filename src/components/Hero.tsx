@@ -1,160 +1,139 @@
-import { useEffect, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { type ReactNode, type SVGProps, useMemo, useState } from 'react'
+import { motion } from 'framer-motion'
+import { ArrowRight, Github, Linkedin, Mail, type LucideIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import {
-  ArrowRight,
-  Download,
-  Github,
-  Instagram,
-  Linkedin,
-  Twitter,
-  type LucideIcon,
-} from 'lucide-react'
-import { heroContent, socials } from '../data/content'
-import SplitText from './SplitText'
-import VantaRingsBackground from './VantaRingsBackground'
 
-const ease = [0.18, 0.78, 0.24, 1] as const
+const HERO_VIDEO_SRC = '/hero-sora-video.mp4'
+const HERO_VIDEO_POSTER = '/hero-video-poster.svg'
+
+type SocialLink = {
+  id: string
+  label: string
+  href: string
+  internal?: boolean
+}
 
 const socialIcons: Record<string, LucideIcon> = {
-  Github,
-  Linkedin,
-  Instagram,
-  Twitter,
+  github: Github,
+  linkedin: Linkedin,
+  email: Mail,
 }
 
 export default function HeroSection() {
-  const subheadingLines = [heroContent.description, heroContent.detail, heroContent.aiSummary].filter(
-    Boolean,
-  )
-  const [activeLine, setActiveLine] = useState(0)
+  const [videoReady, setVideoReady] = useState(false)
+  const [videoFailed, setVideoFailed] = useState(false)
 
-  useEffect(() => {
-    if (!subheadingLines.length) return
-    if (activeLine >= subheadingLines.length) {
-      setActiveLine(0)
-    }
-  }, [activeLine, subheadingLines.length])
+  const socialLinks = useMemo<SocialLink[]>(
+    () => [
+      { id: 'github', label: 'GitHub', href: 'https://github.com/abhaymanhas19' },
+      { id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/in/abhaymanhas19' },
+      { id: 'blog', label: 'Blog', href: '/blogs', internal: true },
+      { id: 'email', label: 'Email', href: 'mailto:abhayramgarhia19@outlook.com' },
+    ],
+    [],
+  )
 
   return (
-    <section className="relative overflow-hidden bg-[#0f0324]">
-      <VantaRingsBackground />
-      <div className="relative z-10 flex min-h-screen w-full flex-col items-start justify-center gap-10 px-20 py-10">
-        <div className="flex w-full flex-col items-start text-left">
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.18, duration: 0.6, ease }}
-            className="tag-pill mb-6 border-emerald-200/40 bg-white/10 text-emerald-100"
+    <section id="home" className="relative isolate overflow-hidden bg-[#040b16] text-white">
+      <div className="absolute inset-0">
+        {!videoFailed && (
+          <video
+            className={`h-full w-full object-cover transition-opacity duration-700 ${videoReady ? 'opacity-100' : 'opacity-0'}`}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster={HERO_VIDEO_POSTER}
+            aria-hidden="true"
+            onCanPlay={() => setVideoReady(true)}
+            onError={() => setVideoFailed(true)}
           >
-            <span className="h-2 w-2 rounded-full bg-emerald-500" />
-            {heroContent.eyebrow}
-          </motion.span>
+            <source src={HERO_VIDEO_SRC} type="video/mp4" />
+          </video>
+        )}
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(56,189,248,0.16),transparent_28%),linear-gradient(115deg,rgba(2,6,23,0.94)_15%,rgba(2,6,23,0.82)_48%,rgba(2,6,23,0.64)_72%,rgba(2,6,23,0.9)_100%)]"
+        />
+        <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-[#040b16] via-transparent to-[#040b16]/30" />
+        <div aria-hidden className="absolute inset-y-0 left-0 w-full max-w-3xl bg-gradient-to-r from-[#040b16]/92 via-[#040b16]/62 to-transparent" />
+      </div>
 
-          {heroContent.trustBadge && (
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.6, ease }}
-              className="mb-4 flex w-full justify-start"
-            >
-              <span className="tag-pill border-emerald-200/40 bg-white/10 text-emerald-100">
-                <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                {heroContent.trustBadge}
-              </span>
-            </motion.div>
-          )}
-
-          <div className="flex w-full max-w-3xl flex-col items-start text-emerald-50">
-            <SplitText
-              text={heroContent.title}
-              tag="h1"
-              splitType="chars"
-              delay={60}
-              duration={0.55}
-              ease="power3.out"
-              from={{ opacity: 0, y: 28 }}
-              to={{ opacity: 1, y: 0 }}
-              className="w-full text-left text-5xl font-bold leading-tight md:text-6xl"
-              textAlign="left"
-              mutateSplit={split => {
-                split.chars?.forEach(char => char.classList.add('inline-block'))
-              }}
-            />
-            <SplitText
-              text={heroContent.highlight}
-              tag="span"
-              splitType="chars"
-              delay={60}
-              duration={0.55}
-              ease="power3.out"
-              from={{ opacity: 0, y: 24 }}
-              to={{ opacity: 1, y: 0 }}
-              className="mt-2 block w-full text-left text-[1.12em] font-semibold tracking-tight [word-spacing:0.35em] md:text-[1.18em] md:[word-spacing:0.55em]"
-              textAlign="left"
-              mutateSplit={split => {
-                split.chars?.forEach(char => char.classList.add('inline-block'))
-              }}
-            />
-          </div>
-
-          <div className="mt-5 min-h-[4.5rem]">
-            <AnimatePresence mode="wait">
-              <motion.p
-                key={activeLine}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -16 }}
-                transition={{ duration: 0.6, ease }}
-                className="max-w-2xl text-left text-lg font-medium text-emerald-100/80"
-              >
-                {subheadingLines[activeLine]}
-              </motion.p>
-            </AnimatePresence>
-          </div>
-
+      <div className="relative z-10 mx-auto flex min-h-[calc(100vh-8.5rem)] max-w-7xl items-center px-4 py-16 sm:px-6 md:py-20 lg:px-8">
+        <div className="max-w-3xl">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.58, duration: 0.6, ease }}
-            className="mt-6 flex w-full max-w-[430px] flex-col items-start gap-4 sm:flex-row sm:justify-start"
+            transition={{ duration: 0.55, ease: 'easeOut' }}
+            className="inline-flex items-center gap-2 rounded-full border border-emerald-400/26 bg-emerald-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-emerald-100 shadow-[0_18px_45px_rgba(16,185,129,0.15)] backdrop-blur"
           >
-            <Link
-              to={heroContent.primaryAction.to}
-              className="btn-primary text-base"
-            >
-              {heroContent.primaryAction.label}
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-
+            <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
+            Available for Work
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 14 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.74, duration: 0.6, ease }}
-            className="mt-8 flex flex-col items-start gap-4"
+            transition={{ delay: 0.08, duration: 0.6, ease: 'easeOut' }}
+            className="mt-8 space-y-5"
           >
-            <span className="text-xs font-semibold uppercase tracking-[0.40em] text-emerald-200/70">
-              Socials
-            </span>
-            <div className="flex items-center justify-start gap-3 rounded-full border border-white/10 bg-white/10 px-5 py-3 shadow-[0_18px_42px_rgba(3,5,17,0.35)] backdrop-blur">
-              {socials.map(handle => {
-                const Icon = socialIcons[handle.icon] ?? GlobeIconFallback
+            <p className="text-sm font-medium uppercase tracking-[0.34em] text-white/52">Freelance Consultant</p>
+            <h1 className="text-5xl font-semibold tracking-[-0.04em] text-white sm:text-6xl lg:text-7xl">
+              Abhay Manhas
+            </h1>
+            <h2 className="max-w-2xl text-2xl font-medium tracking-[-0.03em] text-white/90 sm:text-3xl lg:text-4xl">
+              Python, AI &amp; Automation Engineer
+            </h2>
+            <p className="max-w-2xl text-base leading-8 text-white/72 sm:text-lg">
+              I build intelligent software, automation systems, and AI-powered solutions for businesses and startups.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.18, duration: 0.6, ease: 'easeOut' }}
+            className="mt-10 flex flex-col items-start gap-4 sm:flex-row"
+          >
+            <Link to="/#contact" className="btn-primary-dark px-6 py-3.5 text-sm sm:text-base">
+              Hire Me <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link to="/#projects" className="btn-secondary-dark px-6 py-3.5 text-sm sm:text-base">
+              View Projects
+            </Link>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.26, duration: 0.6, ease: 'easeOut' }}
+            className="mt-10"
+          >
+            <div className="inline-flex flex-wrap items-center gap-2 rounded-[28px] border border-white/12 bg-white/8 p-2 shadow-[0_20px_60px_rgba(2,8,23,0.28)] backdrop-blur-xl">
+              {socialLinks.map(link => {
+                const Icon = socialIcons[link.id] ?? GlobeIconFallback
                 return (
-                  <a
-                    key={handle.id}
-                    href={handle.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={handle.label}
-                    className="group inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/10 text-emerald-100/90 transition-all hover:-translate-y-0.5 hover:border-emerald-200/60 hover:text-emerald-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-200/60 focus-visible:ring-offset-1 focus-visible:ring-offset-[#0f0324]"
-                  >
-                    <Icon className="h-5 w-5 transition-transform group-hover:scale-110" />
-                  </a>
+                  <SocialLinkButton key={link.id} href={link.href} label={link.label} internal={link.internal}>
+                    <Icon className="h-4 w-4" />
+                  </SocialLinkButton>
                 )
               })}
             </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.32, duration: 0.65, ease: 'easeOut' }}
+            className="mt-12 max-w-xl rounded-[30px] border border-white/10 bg-white/7 p-5 shadow-[0_24px_80px_rgba(2,8,23,0.3)] backdrop-blur-xl"
+          >
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-200/76">
+              Trusted Focus
+            </p>
+            <p className="mt-3 text-sm leading-7 text-white/72 sm:text-[15px]">
+              Intelligent systems for teams that need dependable automation, practical AI integration, and delivery that feels senior from day one.
+            </p>
           </motion.div>
         </div>
       </div>
@@ -162,7 +141,40 @@ export default function HeroSection() {
   )
 }
 
-function GlobeIconFallback(props: React.SVGProps<SVGSVGElement>) {
+type SocialLinkButtonProps = {
+  children: ReactNode
+  href: string
+  label: string
+  internal?: boolean
+}
+
+function SocialLinkButton({ children, href, label, internal }: SocialLinkButtonProps) {
+  const className =
+    'inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/8 px-4 py-3 text-sm font-medium text-white/82 transition hover:border-cyan-300/45 hover:bg-white/12 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#040b16]'
+
+  if (internal) {
+    return (
+      <Link to={href} className={className}>
+        {children}
+        {label}
+      </Link>
+    )
+  }
+
+  return (
+    <a
+      href={href}
+      className={className}
+      target={href.startsWith('mailto:') ? undefined : '_blank'}
+      rel={href.startsWith('mailto:') ? undefined : 'noreferrer'}
+    >
+      {children}
+      {label}
+    </a>
+  )
+}
+
+function GlobeIconFallback(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} {...props}>
       <circle cx="12" cy="12" r="9" />

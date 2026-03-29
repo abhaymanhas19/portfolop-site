@@ -12,14 +12,22 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <BlogCarousel />
+      <div id="blogs">
+        <BlogCarousel />
+      </div>
       <Projects />
       <Skills />
-      <AboutPreview />
-      <CertificationsPreview />
+      <div id="experience">
+        <AboutPreview />
+      </div>
+      <div id="achievements">
+        <CertificationsPreview />
+      </div>
       <HeroStats />
       <ContactForm />
-      <ImageShowcase />
+      <div id="products">
+        <ImageShowcase />
+      </div>
     </>
   )
 }
