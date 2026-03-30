@@ -12,11 +12,10 @@ const navItems: NavItem[] = [
   { label: 'Home', to: '/#home' },
   { label: 'Skills', to: '/#skills' },
   { label: 'Projects', to: '/#projects' },
-  { label: 'Experience', to: '/#experience' },
   { label: 'Achievements', to: '/#achievements' },
   { label: 'Blogs', to: '/#blogs' },
   { label: 'Products', to: '/#products' },
-  { label: 'Contact', to: '/#contact' },
+  { label: 'About', to: '/#about' },
 ]
 
 export default function Navbar() {
