@@ -2,18 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Design tokens based on your palette */
+/* ── Design System: "The Tactile Curator" ── */
 :root {
-  --color-background: 244 247 252;
-  --color-surface: 255 255 255;
-  --color-foreground: 16 24 40;
-  --bg: rgb(var(--color-background));
-  --fg: rgb(var(--color-foreground));
-  --muted: #dfe7f5;
-  --accent: #8ED9FF;
-  --accent-2: #F9A6B2;
-  --card: #FFFFFF;
-  --border: #D4E3F2;
+  --primary: #565e74;
+  --on-primary: #f7f7ff;
+  --secondary: #005bc4;
+  --secondary-dim: #004fad;
+  --on-secondary: #f9f8ff;
+  --tertiary: #9e4400;
+  --surface: #f7f9fb;
+  --surface-low: #f0f4f7;
+  --surface-lowest: #ffffff;
+  --surface-high: #e1e9ee;
+  --surface-highest: #d9e4ea;
+  --on-surface: #2a3439;
+  --outline-variant: #a9b4b9;
+  --primary-container: #707a94;
   color-scheme: light;
 }
 
@@ -21,8 +25,8 @@ html:focus-within { scroll-behavior: smooth; }
 :target { scroll-margin-top: 88px; }
 
 body {
-  background: #fff;
-  color: var(--fg);
+  background: var(--surface);
+  color: var(--on-surface);
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
@@ -30,46 +34,29 @@ body {
   min-height: 100vh;
 }
 
-.focus-ring:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 0.75rem; }
+.focus-ring:focus-visible { outline: 3px solid var(--secondary); outline-offset: 2px; border-radius: 0.75rem; }
 
-/* Gradient utilities */
+/* ── Gradient utilities ── */
 @layer utilities {
   .text-gradient {
-    background: linear-gradient(120deg, var(--accent) 0%, #C7B2FF 55%, var(--accent-2) 82%, #FFD1B3 100%);
+    background: linear-gradient(120deg, var(--secondary) 0%, var(--primary) 55%, var(--tertiary) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-  .bg-gradient-brand {
-    background: linear-gradient(90deg, var(--accent) 0%, var(--accent-2) 100%);
+
+  .bg-gradient-cta {
+    background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dim) 100%);
   }
 
-  .bg-gradient-accent {
-    background-image: linear-gradient(120deg, #0ea5e9 0%, #22d3ee 45%, #14b8a6 100%);
-    background-size: 200% 200%;
-    background-position: 0% 50%;
-    filter: brightness(1) saturate(1);
-    transition: background-position 420ms ease, filter 220ms ease;
+  .bg-gradient-hero-cta {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-container) 100%);
   }
 
-  .bg-gradient-accent:hover,
-  .group:hover .bg-gradient-accent {
-    background-position: 100% 50%;
-    filter: brightness(1.08) saturate(1.12);
-  }
-
-  .bg-gradient-hero {
-    background-image: linear-gradient(120deg, #1f3d8a 0%, #1d2f5b 55%, #132541 100%);
-  }
-
-  .bg-soft-accent {
-    background-image: linear-gradient(
-      135deg,
-      rgba(34, 211, 238, 0.18),
-      rgba(14, 165, 233, 0.16),
-      rgba(45, 212, 191, 0.18)
-    );
-  }
+  .bg-surface { background: var(--surface); }
+  .bg-surface-low { background: var(--surface-low); }
+  .bg-surface-lowest { background: var(--surface-lowest); }
+  .bg-surface-high { background: var(--surface-high); }
 
   .line-clamp-2,
   .line-clamp-3 {
@@ -87,111 +74,101 @@ body {
   }
 }
 
+/* ── Component Styles ── */
 @layer components {
+  /* Primary Button: Pill gradient secondary→secondary_dim */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-7 py-3 text-sm font-semibold text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
-    background-image: linear-gradient(120deg, #0ea5e9 0%, #22d3ee 45%, #14b8a6 100%);
-    background-size: 200% 200%;
-    background-position: 0% 50%;
-    box-shadow: 0 18px 44px rgba(14, 165, 233, 0.28);
-    filter: brightness(1) saturate(1);
-    will-change: transform, box-shadow, background-position;
-    transition: transform 220ms ease, box-shadow 240ms ease, background-position 420ms ease;
+    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-7 py-3 text-sm font-semibold text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-200/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
+    background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dim) 100%);
+    box-shadow: 0 32px 64px rgba(0, 91, 196, 0.12);
+    will-change: transform, box-shadow;
+    transition: transform 220ms ease, box-shadow 240ms ease;
   }
 
   .btn-primary:hover {
-    transform: translateY(-2px) scale(1.04);
-    background-position: 100% 50%;
-    box-shadow: 0 24px 60px rgba(14, 165, 233, 0.35);
-    filter: brightness(1.08) saturate(1.12);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 40px 80px rgba(0, 91, 196, 0.18);
   }
 
+  /* Secondary Button: Surface lowest bg, secondary text, no border */
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition;
+    background: var(--surface-lowest);
+    color: var(--secondary);
+    box-shadow: 0 16px 32px rgba(42, 52, 57, 0.06);
   }
 
-  .btn-primary-dark {
-    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-7 py-3 text-sm font-semibold text-slate-950 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#040b16];
-    background-image: linear-gradient(120deg, #f8fafc 0%, #dbeafe 50%, #a5f3fc 100%);
-    background-size: 200% 200%;
-    background-position: 0% 50%;
-    box-shadow: 0 22px 54px rgba(6, 182, 212, 0.18);
-    transition: transform 220ms ease, box-shadow 240ms ease, background-position 420ms ease;
+  .btn-secondary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 24px 48px rgba(42, 52, 57, 0.08);
   }
 
-  .btn-primary-dark:hover {
-    transform: translateY(-2px);
-    background-position: 100% 50%;
-    box-shadow: 0 30px 72px rgba(6, 182, 212, 0.22);
+  /* Hero CTA: gradient from primary to primary_container */
+  .btn-hero {
+    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-7 py-3.5 text-sm font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-200/70 focus-visible:ring-offset-2;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-container) 100%);
+    color: var(--on-primary);
+    box-shadow: 0 32px 64px rgba(86, 94, 116, 0.15);
+    transition: transform 220ms ease, box-shadow 240ms ease;
   }
 
-  .btn-secondary-dark {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border px-5 py-2.5 text-sm font-semibold text-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[#040b16];
-    border-color: rgba(255, 255, 255, 0.16);
-    background: rgba(255, 255, 255, 0.06);
-    box-shadow: 0 18px 44px rgba(2, 8, 23, 0.18);
-    backdrop-filter: blur(16px);
+  .btn-hero:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 40px 80px rgba(86, 94, 116, 0.2);
   }
 
-  .btn-secondary-dark:hover {
-    transform: translateY(-2px);
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.24);
+  /* Ghost / outline variant for hero */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition;
+    background: rgba(255, 255, 255, 0.8);
+    color: var(--primary);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 16px 32px rgba(42, 52, 57, 0.06);
   }
 
-  .btn-secondary-invert {
-    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-6 py-3 text-sm font-semibold text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
-    background-image: linear-gradient(120deg, #0ea5e9 0%, #22d3ee 45%, #14b8a6 100%);
-    background-size: 200% 200%;
-    background-position: 0% 50%;
-    box-shadow: 0 12px 28px rgba(14, 165, 233, 0.22);
-    filter: brightness(0.96);
-    will-change: transform, box-shadow, background-position;
-    transition: transform 220ms ease, box-shadow 240ms ease, background-position 420ms ease, filter 200ms ease;
+  .btn-ghost:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.95);
   }
 
-  .btn-secondary-invert:hover {
-    background-position: 100% 50%;
-    border-color: transparent;
-    color: #ffffff;
-    transform: translateY(-2px) scale(1.04);
-    box-shadow: 0 22px 52px rgba(14, 165, 233, 0.32);
-    filter: brightness(1.05);
-  }
-
+  /* Tag pill: soft, no harsh borders */
   .tag-pill {
-    @apply inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-700 shadow-sm transition-colors;
-    animation: tagPulse 7.5s ease-in-out infinite;
+    @apply inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em];
+    background: var(--surface-low);
+    color: var(--primary);
+  }
+
+  /* Glass panel (for nav, floating elements) */
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
   }
 }
 
-/* Flowing 3D text ring */
+/* ── Flowing 3D text ring ── */
 .ring3d { position: absolute; inset: 0; perspective: 1200px; pointer-events: none; }
 .ring3d__belt { position: absolute; left: 50%; top: 40%; transform-style: preserve-3d; transform: translateX(-50%) rotateX(var(--rx, 0deg)); animation: floatY 8s ease-in-out infinite; }
 .ring3d__spin { transform-style: preserve-3d; animation: spinY var(--speed, 28s) linear infinite; }
-.ring3d__char { position: absolute; left: 0; top: 0; transform: rotateY(var(--angle)) translateZ(var(--radius)); transform-style: preserve-3d; font-weight: 700; font-size: clamp(22px, 3vw, 30px); color: rgba(13, 55, 87, 0.08); letter-spacing: 0.08em; text-transform: uppercase; will-change: transform; }
+.ring3d__char { position: absolute; left: 0; top: 0; transform: rotateY(var(--angle)) translateZ(var(--radius)); transform-style: preserve-3d; font-weight: 700; font-size: clamp(22px, 3vw, 30px); color: rgba(86, 94, 116, 0.08); letter-spacing: 0.08em; text-transform: uppercase; will-change: transform; }
 @keyframes spinY { to { transform: rotateY(360deg); } }
 @keyframes floatY { 0%,100%{ transform: translateX(-50%) rotateX(var(--rx, 36deg)) translateY(-4px);} 50%{ transform: translateX(-50%) rotateX(var(--rx, 36deg)) translateY(6px);} }
 
 .tilt { transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0); transition: transform 160ms ease, box-shadow 160ms ease; will-change: transform; }
-.tilt:hover { box-shadow: 0 18px 60px rgba(15, 41, 67, 0.14); }
+.tilt:hover { box-shadow: 0 32px 64px rgba(42, 52, 57, 0.06); }
 
-.skeleton { position: relative; overflow: hidden; background: rgba(210,224,240,0.55); }
+.skeleton { position: relative; overflow: hidden; background: rgba(217,228,234,0.55); }
 .skeleton::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent); transform: translateX(-100%); animation: shimmer 1.8s infinite; }
 @keyframes shimmer { 100% { transform: translateX(100%);} }
-
-.orange-glow { box-shadow: 0 0 60px rgba(15, 182, 196, 0.28), 0 0 120px rgba(96, 225, 211, 0.25); }
-
-.tag-pill > svg { @apply h-4 w-4 text-slate-600; }
 
 @keyframes tagPulse {
   0%, 100% {
     transform: translateY(0);
-    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+    box-shadow: 0 16px 32px rgba(42, 52, 57, 0.06);
   }
   50% {
     transform: translateY(-2px);
-    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12);
+    box-shadow: 0 24px 48px rgba(42, 52, 57, 0.08);
   }
 }
 
@@ -200,37 +177,12 @@ body {
   50% { transform: translateY(6px); }
 }
 
-@keyframes pulseGlow {
-  0%,100% { box-shadow: 0 0 40px rgba(15, 182, 196, 0.25), 0 0 80px rgba(96, 225, 211, 0.18); opacity: .9; }
-  50% { box-shadow: 0 0 80px rgba(15, 182, 196, 0.38), 0 0 140px rgba(96, 225, 211, 0.28); opacity: 1; }
-}
-
 /* Floating shape filters */
-.shape-blur { filter: blur(30px) saturate(1.2); opacity: .24; }
-
-/* Gradient border utility (for cards) */
-.gradient-border {
-  position: relative;
-  border-radius: 1rem;
-}
-.gradient-border::before {
-  content: "";
-  position: absolute; inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, rgba(15,182,196,.6), rgba(96,225,211,.35));
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  pointer-events: none;
-  opacity: .0;
-  transition: opacity .3s ease;
-}
-.gradient-border:hover::before { opacity: 1; }
+.shape-blur { filter: blur(30px) saturate(1.2); opacity: .18; }
 
 /* Caret blink for typing */
 @keyframes caretBlink { 0%, 40% { opacity: 1 } 50%, 90% { opacity: 0 } 100% { opacity: 1 } }
-.typing-caret::after { content: "▍"; margin-left: 2px; animation: caretBlink 1.2s infinite; color: var(--accent); }
+.typing-caret::after { content: "▍"; margin-left: 2px; animation: caretBlink 1.2s infinite; color: var(--secondary); }
 
 @keyframes logo-loop-marquee {
   0% {
@@ -246,4 +198,14 @@ body {
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   animation-direction: normal;
+}
+
+/* Hero GIF zoom-in animation */
+@keyframes heroZoomIn {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.08); }
+}
+
+.hero-gif-zoom {
+  animation: heroZoomIn 20s ease-out forwards;
 }

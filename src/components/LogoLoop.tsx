@@ -10,20 +10,19 @@ export default function LogoLoop() {
   const [paused, setPaused] = useState(false)
 
   return (
-    <section className="relative mx-auto w-full py-20">
-      <div className="absolute inset-0 bg-gradient-to-b from-white via-white/70 to-transparent" aria-hidden />
+    <section className="relative mx-auto w-full py-ds-16">
       <div className="relative mx-auto flex w-full max-w-6xl flex-col items-center gap-12 px-6">
-        <div className="text-center text-slate-800">
-          <p className="text-sm uppercase tracking-[0.55em] text-[#8ED9FF]/80">Ecosystem</p>
-          <h2 className="mt-3 text-3xl font-semibold text-slate-900 md:text-4xl">Technologies in Motion</h2>
-          <p className="mt-4 max-w-3xl text-balance text-sm text-slate-600 md:text-base">
+        <div className="text-center">
+          <p className="text-sm uppercase tracking-[0.55em] text-[#005bc4]/60">Ecosystem</p>
+          <h2 className="mt-3 font-display text-display-md font-semibold text-[#2a3439]">Technologies in Motion</h2>
+          <p className="mt-4 max-w-3xl text-balance text-body-lg text-[#565e74]">
             A pulse of the tools and platforms powering Python, AI, and realtime projects. Hover to pause and
             explore.
           </p>
         </div>
 
         <div
-          className="group relative isolate w-full max-w-[min(820px,95vw)] overflow-hidden rounded-[36px] border border-[#8ED9FF]/45 bg-white/85 px-4 py-12 shadow-[0_32px_80px_rgba(15,41,67,0.18)] backdrop-blur"
+          className="group relative isolate w-full max-w-[min(820px,95vw)] overflow-hidden rounded-card bg-surface-container-lowest px-4 py-12 shadow-ambient"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
@@ -40,13 +39,13 @@ export default function LogoLoop() {
                 href={item.url}
                 target="_blank"
                 rel="noreferrer"
-                className="relative flex select-none flex-col items-center justify-center rounded-[24px] border border-[#8ED9FF]/45 bg-white px-4 text-center text-slate-600 shadow-[0_20px_45px_rgba(15,41,67,0.16)] transition-transform duration-500 hover:scale-[1.05] hover:border-[#8ED9FF]/60 hover:shadow-[0_24px_55px_rgba(15,41,67,0.2)]"
+                className="relative flex select-none flex-col items-center justify-center rounded-2xl bg-surface-container-low px-4 text-center text-[#565e74] shadow-ambient-sm transition-transform duration-500 hover:scale-[1.05] hover:shadow-ambient"
                 style={{
                   width: ITEM_WIDTH,
                   height: ITEM_HEIGHT,
                 }}
               >
-                <span className="text-[11px] font-medium uppercase tracking-[0.32em] text-slate-400">
+                <span className="text-[11px] font-medium uppercase tracking-[0.32em] text-[#565e74]/60">
                   {item.label}
                 </span>
                 <span className="mt-1 text-2xl font-semibold" style={{ color: item.foreground }}>

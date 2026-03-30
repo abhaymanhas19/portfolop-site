@@ -73,14 +73,10 @@ export default function ContactForm() {
   }
 
   return (
-    <section id="contact" className="relative overflow-hidden py-20">
-
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-6 text-slate-900">
-        <div className="overflow-hidden rounded-[36px] border border-slate-200 bg-white shadow-[0_32px_90px_rgba(15,23,42,0.12)]">
+    <section id="contact" className="relative overflow-hidden bg-surface py-ds-16">
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-6">
+        <div className="overflow-hidden rounded-card bg-surface-container-lowest shadow-ambient-lg">
           <div className="relative grid gap-12 px-6 py-12 md:px-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:items-start">
-            <div className="pointer-events-none absolute -top-24 right-0 h-40 w-40 rounded-full bg-soft-accent/70 blur-3xl" aria-hidden />
-            <div className="pointer-events-none absolute bottom-[-60px] left-[-60px] h-48 w-48 rounded-full bg-emerald-100/70 blur-[120px]" aria-hidden />
-
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -90,12 +86,12 @@ export default function ContactForm() {
             >
               <div className="space-y-4">
                 <span className="tag-pill px-3">
-                  <MessageCircle className="h-3.5 w-3.5" /> Let’s talk
+                  <MessageCircle className="h-3.5 w-3.5" /> Let's talk
                 </span>
-                <h2 className="text-3xl font-semibold text-slate-900 md:text-4xl">
+                <h2 className="font-display text-display-md font-semibold text-[#2a3439]">
                   {contactContent.title}
                 </h2>
-                <p className="max-w-2xl text-base text-slate-600 md:text-lg">
+                <p className="max-w-2xl text-body-lg text-[#565e74]">
                   {contactContent.subtitle}
                 </p>
               </div>
@@ -104,22 +100,22 @@ export default function ContactForm() {
                 {detailCards.map(card => (
                   <div
                     key={card.title}
-                    className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-[0_18px_42px_rgba(15,23,42,0.12)] transition hover:-translate-y-1 hover:shadow-[0_22px_52px_rgba(15,23,42,0.16)]"
+                    className="rounded-card bg-surface-container-low p-5 shadow-ambient-sm transition hover:-translate-y-1 hover:shadow-ambient"
                   >
-                    <card.icon className="h-5 w-5 text-slate-600" />
+                    <card.icon className="h-5 w-5 text-[#005bc4]" />
                     <div className="mt-3 space-y-1">
-                      <p className="text-xs uppercase tracking-[0.2em] text-slate-500">{card.title}</p>
+                      <p className="text-xs uppercase tracking-[0.2em] text-[#565e74]/60">{card.title}</p>
                       {card.href ? (
                         <a
                           href={card.href}
-                          className="break-all text-sm font-semibold text-slate-700 transition hover:text-slate-900"
+                          className="break-all text-sm font-semibold text-[#2a3439] transition hover:text-[#005bc4]"
                         >
                           {card.value}
                         </a>
                       ) : (
-                        <p className="text-sm font-semibold text-slate-700">{card.value}</p>
+                        <p className="text-sm font-semibold text-[#2a3439]">{card.value}</p>
                       )}
-                      <p className="text-xs leading-relaxed text-slate-500">{card.description}</p>
+                      <p className="text-xs leading-relaxed text-[#565e74]">{card.description}</p>
                     </div>
                   </div>
                 ))}
@@ -132,39 +128,39 @@ export default function ContactForm() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, ease: 'easeOut', delay: 0.08 }}
-              className="relative z-10 grid gap-5 rounded-[28px] border border-slate-200 bg-slate-50 p-6 shadow-[0_24px_60px_rgba(15,23,42,0.12)]"
+              className="relative z-10 grid gap-5 rounded-card bg-surface-container-low p-6 shadow-ambient"
             >
               <div className="grid gap-4 sm:grid-cols-2">
-                <label className="flex flex-col gap-1 text-sm font-medium text-slate-700" htmlFor="name">
+                <label className="flex flex-col gap-1 text-sm font-medium text-[#2a3439]" htmlFor="name">
                   Name
                   <input
                     id="name"
                     name="name"
                     required
-                    className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-300"
+                    className="rounded-2xl bg-surface-container-low px-4 py-3 text-sm text-[#2a3439] transition focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-[#005bc4]/20"
                     placeholder={contactContent.form.namePlaceholder}
                   />
                 </label>
-                <label className="flex flex-col gap-1 text-sm font-medium text-slate-700" htmlFor="email">
+                <label className="flex flex-col gap-1 text-sm font-medium text-[#2a3439]" htmlFor="email">
                   Email
                   <input
                     id="email"
                     name="email"
                     type="email"
                     required
-                    className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-300"
+                    className="rounded-2xl bg-surface-container-low px-4 py-3 text-sm text-[#2a3439] transition focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-[#005bc4]/20"
                     placeholder={contactContent.form.emailPlaceholder}
                   />
                 </label>
               </div>
-              <label className="flex flex-col gap-1 text-sm font-medium text-slate-700" htmlFor="message">
+              <label className="flex flex-col gap-1 text-sm font-medium text-[#2a3439]" htmlFor="message">
                 Project details
                 <textarea
                   id="message"
                   name="message"
                   rows={6}
                   required
-                  className="rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm text-slate-700 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-300"
+                  className="rounded-2xl bg-surface-container-low px-4 py-3 text-sm text-[#2a3439] transition focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-[#005bc4]/20"
                   placeholder={contactContent.form.messagePlaceholder}
                 />
               </label>
@@ -173,12 +169,12 @@ export default function ContactForm() {
                 <button type="submit" className="btn-primary">
                   {status === 'sending' ? 'Sending…' : contactContent.form.submitText}
                 </button>
-                <span className="text-xs text-slate-500" aria-live="polite">
+                <span className="text-xs text-[#565e74]" aria-live="polite">
                   {status === 'success' && 'Thanks! Message delivered successfully.'}
                   {status === 'error' && error}
                 </span>
                 {!hasEmailJs && (
-                  <span className="text-xs text-slate-400">
+                  <span className="text-xs text-[#565e74]/60">
                     No email service configured—your mail client will open on submit.
                   </span>
                 )}

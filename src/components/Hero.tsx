@@ -34,11 +34,12 @@ export default function HeroSection() {
   )
 
   return (
-    <section id="home" className="relative isolate overflow-hidden bg-[#040b16] text-white">
+    <section id="home" className="relative isolate overflow-hidden bg-surface min-h-[calc(100vh-5rem)]">
+      {/* Background: GIF/Video - right-aligned with zoom-in */}
       <div className="absolute inset-0">
         {!videoFailed && (
           <video
-            className={`h-full w-full object-cover transition-opacity duration-700 ${videoReady ? 'opacity-100' : 'opacity-0'}`}
+            className={`h-full w-full object-cover object-right transition-opacity duration-700 hero-gif-zoom ${videoReady ? 'opacity-40' : 'opacity-0'}`}
             autoPlay
             muted
             loop
@@ -52,23 +53,27 @@ export default function HeroSection() {
             <source src={HERO_VIDEO_SRC} type="video/mp4" />
           </video>
         )}
+        {/* Soft gradient overlays for readability */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(56,189,248,0.16),transparent_28%),linear-gradient(115deg,rgba(2,6,23,0.94)_15%,rgba(2,6,23,0.82)_48%,rgba(2,6,23,0.64)_72%,rgba(2,6,23,0.9)_100%)]"
+          className="absolute inset-0 bg-gradient-to-r from-[#f7f9fb] via-[#f7f9fb]/95 to-[#f7f9fb]/40"
         />
-        <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-[#040b16] via-transparent to-[#040b16]/30" />
-        <div aria-hidden className="absolute inset-y-0 left-0 w-full max-w-3xl bg-gradient-to-r from-[#040b16]/92 via-[#040b16]/62 to-transparent" />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gradient-to-t from-[#f7f9fb] via-transparent to-[#f7f9fb]/30"
+        />
       </div>
 
-      <div className="relative z-10 mx-auto flex min-h-[calc(100vh-8.5rem)] max-w-7xl items-center px-4 py-16 sm:px-6 md:py-20 lg:px-8">
-        <div className="max-w-3xl">
+      {/* Content - Left-aligned with asymmetric layout */}
+      <div className="relative z-10 mx-auto flex min-h-[calc(100vh-5rem)] max-w-7xl items-center px-4 py-16 sm:px-6 md:py-20 lg:px-8">
+        <div className="max-w-2xl">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, ease: 'easeOut' }}
-            className="inline-flex items-center gap-2 rounded-full border border-emerald-400/26 bg-emerald-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-emerald-100 shadow-[0_18px_45px_rgba(16,185,129,0.15)] backdrop-blur"
+            className="tag-pill"
           >
-            <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
+            <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
             Available for Work
           </motion.div>
 
@@ -78,14 +83,14 @@ export default function HeroSection() {
             transition={{ delay: 0.08, duration: 0.6, ease: 'easeOut' }}
             className="mt-8 space-y-5"
           >
-            <p className="text-sm font-medium uppercase tracking-[0.34em] text-white/52">Freelance Consultant</p>
-            <h1 className="text-5xl font-semibold tracking-[-0.04em] text-white sm:text-6xl lg:text-7xl">
+            <p className="text-sm font-medium uppercase tracking-[0.34em] text-[#565e74]/60">Freelance Consultant</p>
+            <h1 className="font-display text-display-lg font-semibold text-[#2a3439]">
               Abhay Manhas
             </h1>
-            <h2 className="max-w-2xl text-2xl font-medium tracking-[-0.03em] text-white/90 sm:text-3xl lg:text-4xl">
+            <h2 className="font-display text-headline-lg font-medium text-[#005bc4]">
               Python, AI &amp; Automation Engineer
             </h2>
-            <p className="max-w-2xl text-base leading-8 text-white/72 sm:text-lg">
+            <p className="max-w-xl text-body-lg text-[#565e74]">
               I build intelligent software, automation systems, and AI-powered solutions for businesses and startups.
             </p>
           </motion.div>
@@ -96,10 +101,10 @@ export default function HeroSection() {
             transition={{ delay: 0.18, duration: 0.6, ease: 'easeOut' }}
             className="mt-10 flex flex-col items-start gap-4 sm:flex-row"
           >
-            <Link to="/#contact" className="btn-primary-dark px-6 py-3.5 text-sm sm:text-base">
+            <Link to="/#contact" className="btn-primary px-6 py-3.5 text-sm sm:text-base">
               Hire Me <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link to="/#projects" className="btn-secondary-dark px-6 py-3.5 text-sm sm:text-base">
+            <Link to="/#projects" className="btn-ghost px-6 py-3.5 text-sm sm:text-base">
               View Projects
             </Link>
           </motion.div>
@@ -110,7 +115,7 @@ export default function HeroSection() {
             transition={{ delay: 0.26, duration: 0.6, ease: 'easeOut' }}
             className="mt-10"
           >
-            <div className="inline-flex flex-wrap items-center gap-2 rounded-[28px] border border-white/12 bg-white/8 p-2 shadow-[0_20px_60px_rgba(2,8,23,0.28)] backdrop-blur-xl">
+            <div className="inline-flex flex-wrap items-center gap-2 rounded-full bg-surface-container-lowest p-2" style={{ boxShadow: '0 32px 64px rgba(42, 52, 57, 0.06)' }}>
               {socialLinks.map(link => {
                 const Icon = socialIcons[link.id] ?? GlobeIconFallback
                 return (
@@ -126,12 +131,13 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.32, duration: 0.65, ease: 'easeOut' }}
-            className="mt-12 max-w-xl rounded-[30px] border border-white/10 bg-white/7 p-5 shadow-[0_24px_80px_rgba(2,8,23,0.3)] backdrop-blur-xl"
+            className="mt-12 max-w-xl rounded-card bg-surface-container-lowest p-6"
+            style={{ boxShadow: '0 32px 64px rgba(42, 52, 57, 0.06)' }}
           >
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-200/76">
+            <p className="font-display text-xs font-semibold uppercase tracking-[0.3em] text-[#005bc4]">
               Trusted Focus
             </p>
-            <p className="mt-3 text-sm leading-7 text-white/72 sm:text-[15px]">
+            <p className="mt-3 text-sm leading-7 text-[#565e74]">
               Intelligent systems for teams that need dependable automation, practical AI integration, and delivery that feels senior from day one.
             </p>
           </motion.div>
@@ -150,7 +156,7 @@ type SocialLinkButtonProps = {
 
 function SocialLinkButton({ children, href, label, internal }: SocialLinkButtonProps) {
   const className =
-    'inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/8 px-4 py-3 text-sm font-medium text-white/82 transition hover:border-cyan-300/45 hover:bg-white/12 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#040b16]'
+    'inline-flex items-center gap-2 rounded-full px-4 py-3 text-sm font-medium text-[#565e74] transition hover:bg-surface-container-low hover:text-[#005bc4] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 focus-visible:ring-offset-2'
 
   if (internal) {
     return (

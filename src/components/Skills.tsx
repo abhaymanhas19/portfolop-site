@@ -37,8 +37,8 @@ export default function Skills() {
   const Icon = iconMap[activeCategory.icon] ?? ServerCog
 
   return (
-    <section id="skills" className="relative overflow-hidden py-20">
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-12 px-6 text-slate-900">
+    <section id="skills" className="relative overflow-hidden bg-surface py-ds-16">
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-12 px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -46,22 +46,17 @@ export default function Skills() {
           transition={{ duration: 0.6, ease: 'easeOut' }}
           className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
         >
-          <div className="space-y-3">
-            <span className="tag-pill">
-              Skill Stack
-            </span>
-            <h2 className="text-3xl font-semibold text-slate-900 md:text-4xl">
+          <div className="space-y-4">
+            <span className="tag-pill">Skill Stack</span>
+            <h2 className="font-display text-display-md font-semibold text-[#2a3439] md:text-4xl">
               Focus areas across the engineering toolkit
             </h2>
-            <p className="max-w-2xl text-sm text-slate-600 md:text-base">
+            <p className="max-w-2xl text-body-lg text-[#565e74]">
               Tap a category tile to preview core skills. Progress bars show confidence delivering those
               capabilities in production.
             </p>
           </div>
-          <Link
-            to="/skills"
-            className="inline-flex h-fit items-center justify-center gap-2 rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-100 hover:text-slate-900"
-          >
+          <Link to="/skills" className="btn-secondary">
             Explore the full skillset <ArrowRight className="h-4 w-4" />
           </Link>
         </motion.div>
@@ -80,16 +75,16 @@ export default function Skills() {
               <button
                 key={category.id}
                 onClick={() => setActive(category.id)}
-                className={`group relative flex h-28 flex-col items-center justify-center rounded-[24px] border transition hover:-translate-y-1 ${
+                className={`group relative flex h-28 flex-col items-center justify-center rounded-card transition hover:-translate-y-1 ${
                   selected
-                    ? 'border-[#8ED9FF]/70 bg-soft-accent/80 shadow-[0_18px_36px_rgba(15,41,67,0.18)]'
-                    : 'border-slate-200 bg-white/85 shadow-sm hover:border-[#8ED9FF]/60'
+                    ? 'bg-surface-container-lowest shadow-ambient'
+                    : 'bg-surface-container-low hover:bg-surface-container-lowest hover:shadow-ambient-sm'
                 }`}
               >
-                <span className="grid h-12 w-12 place-items-center rounded-2xl border border-slate-200 bg-white text-[#8ED9FF] shadow-sm">
+                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-surface-container-low text-[#005bc4]">
                   <CategoryIcon className="h-6 w-6" />
                 </span>
-                <span className={`mt-3 text-sm font-semibold ${selected ? 'text-slate-900' : 'text-slate-600'}`}>
+                <span className={`mt-3 text-sm font-semibold ${selected ? 'text-[#005bc4]' : 'text-[#565e74]'}`}>
                   {category.label}
                 </span>
               </button>
@@ -102,31 +97,27 @@ export default function Skills() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.08 }}
-          className="flex flex-col gap-6 rounded-[32px] border border-slate-200 bg-white p-6 shadow-[0_30px_80px_rgba(15,23,42,0.12)] lg:p-8"
+          className="flex flex-col gap-6 rounded-card bg-surface-container-lowest p-6 shadow-ambient lg:p-ds-8"
         >
           <div className="space-y-4">
             <div className="tag-pill">
               <Icon className="h-4 w-8" /> {activeCategory.label}
             </div>
-            <p className="text-sm leading-relaxed text-slate-600 md:text-base">{activeCategory.summary}</p>
-          
+            <p className="text-sm leading-relaxed text-[#565e74] md:text-base">{activeCategory.summary}</p>
 
             {displayedSkills.map(skill => (
               <div key={skill.name} className="group space-y-2">
-               <div key={skill.name} className="space-y-2 rounded-[20px] border border-slate-100 bg-slate-50/70 px-4 py-4">
-                <div className="flex items-center justify-between text-[15px] font-medium text-slate-700">
-                      <span>{skill.name}</span>
-                    </div>
-                
-             
-                {skill.highlight && <p className="text-xs text-slate-500">{skill.highlight}</p>}
-
+                <div className="space-y-2 rounded-2xl bg-surface-container-low px-4 py-4">
+                  <div className="flex items-center justify-between text-[15px] font-medium text-[#2a3439]">
+                    <span>{skill.name}</span>
+                  </div>
+                  {skill.highlight && <p className="text-xs text-[#565e74]">{skill.highlight}</p>}
                 </div>
               </div>
             ))}
             <Link
               to="/skills"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-slate-700 hover:text-slate-900"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[#005bc4] hover:text-[#004fad]"
             >
               See all {activeCategory.skills.length} tools & practices <ArrowRight className="h-4 w-4" />
             </Link>

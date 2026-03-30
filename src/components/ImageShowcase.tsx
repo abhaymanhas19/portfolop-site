@@ -43,7 +43,7 @@ export default function ImageShowcase() {
   const handlePointerLeave = () => setSpotlight(prev => ({ ...prev, active: false }))
 
   return (
-    <section className="relative overflow-hidden bg-[#0f0324] py-20">
+    <section className="relative overflow-hidden bg-[#2a3439] py-ds-16">
       <div
         ref={vantaRef}
         id="gallery-vanta"
@@ -51,21 +51,21 @@ export default function ImageShowcase() {
         className="pointer-events-none absolute inset-0"
       />
 
-      <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center gap-12 px-6 text-slate-900">
+      <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center gap-12 px-6">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="flex flex-col items-center gap-4 text-center text-emerald-50"
+          className="flex flex-col items-center gap-4 text-center"
         >
-          <span className="tag-pill border-emerald-200/40 bg-white/10 text-emerald-100">
+          <span className="tag-pill bg-white/10 text-white/80">
             AI/ML Field Notes
           </span>
-          <h2 className="text-3xl font-semibold tracking-tight text-emerald-50 sm:text-4xl">
+          <h2 className="font-display text-display-md font-semibold tracking-tight text-white">
             AI/ML experience snapshots from live builds
           </h2>
-          <p className="max-w-2xl text-sm text-emerald-100/80 sm:text-base">
+          <p className="max-w-2xl text-body-lg text-white/70">
             Architecture frames, evaluation readouts, and model ops visuals that show how systems behave when they hit production traffic.
           </p>
         </motion.div>
@@ -77,22 +77,22 @@ export default function ImageShowcase() {
           transition={{ duration: 0.65, ease: 'easeOut' }}
           onMouseMove={handlePointerMove}
           onMouseLeave={handlePointerLeave}
-          className="group relative w-full max-w-3xl overflow-hidden rounded-[36px] border border-slate-200 bg-white p-[1px] shadow-[0_32px_80px_rgba(15,23,42,0.12)]"
+          className="group relative w-full max-w-3xl overflow-hidden rounded-card bg-surface-container-lowest shadow-ambient-lg"
         >
-          <div className="relative h-full w-full overflow-hidden rounded-[35px] bg-white">
+          <div className="relative h-full w-full overflow-hidden rounded-card bg-surface-container-lowest">
             <motion.div
               className="absolute inset-0"
               aria-hidden
               animate={{ opacity: spotlight.active ? 1 : 0 }}
               transition={{ duration: 0.3 }}
               style={{
-                background: `radial-gradient(420px circle at ${spotlight.x}% ${spotlight.y}%, rgba(226,232,240,0.45), transparent 65%)`,
+                background: `radial-gradient(420px circle at ${spotlight.x}% ${spotlight.y}%, rgba(0,91,196,0.08), transparent 65%)`,
               }}
             />
 
-            <div className="relative grid gap-6 px-8 py-10 sm:grid-cols-[auto,1fr] sm:items-center">
+            <div className="relative grid gap-6 px-ds-8 py-10 sm:grid-cols-[auto,1fr] sm:items-center">
               <motion.div
-                className="relative h-40 w-40 shrink-0 overflow-hidden rounded-3xl border border-amber-100 bg-white shadow-sm"
+                className="relative h-40 w-40 shrink-0 overflow-hidden rounded-card bg-surface-container-low"
                 whileHover={{ scale: 1.02 }}
                 transition={{ type: 'spring', stiffness: 160, damping: 18 }}
               >
@@ -108,10 +108,10 @@ export default function ImageShowcase() {
 
               <div className="flex flex-col gap-4 text-left">
                 <div className="space-y-1">
-                  <p className="text-xs uppercase tracking-[0.3em] text-slate-500">{profile.tagline}</p>
-                  <h3 className="text-2xl font-semibold text-slate-900 sm:text-3xl">{profile.name}</h3>
+                  <p className="text-xs uppercase tracking-[0.3em] text-[#565e74]">{profile.tagline}</p>
+                  <h3 className="font-display text-2xl font-semibold text-[#2a3439] sm:text-3xl">{profile.name}</h3>
                 </div>
-                <p className="text-sm text-slate-600 sm:text-base">{profile.highlight}</p>
+                <p className="text-sm text-[#565e74] sm:text-base">{profile.highlight}</p>
                 <div className="flex flex-wrap gap-3">
                   <span className="tag-pill px-3 py-1 text-[11px] tracking-[0.3em]">
                     Model diagnostics
@@ -134,12 +134,6 @@ export default function ImageShowcase() {
                 </div>
               </div>
             </div>
-
-            <motion.div
-              className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-slate-200/80 to-transparent"
-              animate={{ opacity: [0.25, 0.75, 0.25] }}
-              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-            />
           </div>
         </motion.div>
       </div>

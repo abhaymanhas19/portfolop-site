@@ -21,7 +21,6 @@ export default function BlogDetail() {
   const [isHoverPaused, setIsHoverPaused] = useState(false)
   const autoplayPaused = lightboxOpen || isHoverPaused
 
-  // Ensure each blog detail view starts at the top even when navigating from deep scroll positions
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' })
   }, [slug])
@@ -41,16 +40,16 @@ export default function BlogDetail() {
 
   if (loading) {
     return (
-      <div className="mx-auto flex max-w-4xl flex-col items-center gap-4 px-4 py-16 text-slate-700">
-        <p className="text-lg font-semibold">Loading blog...</p>
+      <div className="mx-auto flex max-w-4xl flex-col items-center gap-4 px-4 py-16 text-[#565e74]">
+        <p className="font-display text-lg font-semibold">Loading blog...</p>
       </div>
     )
   }
 
   if (error) {
     return (
-      <div className="mx-auto flex max-w-4xl flex-col items-center gap-4 px-4 py-16 text-slate-700">
-        <p className="text-lg font-semibold text-red-600">{error}</p>
+      <div className="mx-auto flex max-w-4xl flex-col items-center gap-4 px-4 py-16 text-[#565e74]">
+        <p className="font-display text-lg font-semibold text-red-600">{error}</p>
         <button onClick={() => navigate('/blogs')} className="btn-primary px-4 py-2 text-sm">Back to blogs</button>
       </div>
     )
@@ -58,8 +57,8 @@ export default function BlogDetail() {
 
   if (!blog) {
     return (
-      <div className="mx-auto flex max-w-4xl flex-col items-center gap-4 px-4 py-16 text-slate-700">
-        <p className="text-lg font-semibold">Blog not found.</p>
+      <div className="mx-auto flex max-w-4xl flex-col items-center gap-4 px-4 py-16 text-[#565e74]">
+        <p className="font-display text-lg font-semibold">Blog not found.</p>
         <button onClick={() => navigate('/blogs')} className="btn-primary px-4 py-2 text-sm">Back to blogs</button>
       </div>
     )
@@ -70,23 +69,23 @@ export default function BlogDetail() {
   const next = blogs[currentIndex + 1]
 
   return (
-    <div className="bg-white text-slate-700">
-      <section className="border-b border-slate-200/70 bg-gradient-to-br from-emerald-50 via-white to-sky-50">
+    <div className="bg-surface font-body">
+      <section className="bg-surface-container-low">
         <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 pb-12 pt-14 md:px-6 lg:px-8">
-          <div className="space-y-3">
-            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.28em] text-emerald-700">
+          <div className="space-y-4">
+            <span className="tag-pill">
               <BookOpen className="h-4 w-4" /> {blog.category}
             </span>
-            <h1 className="text-3xl font-semibold text-slate-900 md:text-4xl">{blog.title}</h1>
-            <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">
+            <h1 className="font-display text-display-md font-semibold text-[#2a3439]">{blog.title}</h1>
+            <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] text-[#565e74]/60">
               <span className="inline-flex items-center gap-1"><Clock3 className="h-4 w-4" /> {blog.readTime}</span>
-              <span>•</span>
+              <span>·</span>
               <span>{blog.publishedAt}</span>
             </div>
           </div>
-          <div className="flex flex-wrap gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-700">
+          <div className="flex flex-wrap gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#005bc4]">
             {blog.skills.map(skill => (
-              <span key={skill} className="rounded-full bg-white px-3 py-1">{skill}</span>
+              <span key={skill} className="rounded-full bg-surface-container-lowest px-3 py-1">{skill}</span>
             ))}
           </div>
         </div>
@@ -99,7 +98,7 @@ export default function BlogDetail() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.45 }}
             transition={{ duration: 0.45, ease: 'easeOut' }}
-            className="md:float-right md:ml-6 md:mb-4 md:w-[420px] md:max-w-[48%] overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-[0_18px_50px_rgba(15,41,67,0.12)]"
+            className="md:float-right md:ml-6 md:mb-4 md:w-[420px] md:max-w-[48%] overflow-hidden rounded-card bg-surface-container-lowest shadow-ambient"
           >
             <div
               className="relative block cursor-pointer"
@@ -116,14 +115,13 @@ export default function BlogDetail() {
                     key={images[activeImage]}
                     src={images[activeImage]}
                     alt={`${blog.title} visual ${activeImage + 1}`}
-                    className="w-full bg-slate-50 object-contain"
+                    className="w-full bg-surface-container-low object-contain"
                     style={{ aspectRatio: '4 / 3', maxHeight: 460 }}
                     loading="lazy"
                     initial={{ opacity: 0.3, scale: 0.98 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.75, ease: 'easeInOut' }}
                   />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-900/4 via-transparent to-transparent" />
                   {images.length > 1 && (
                     <div className="absolute inset-0 flex items-center justify-between px-3">
                       <button
@@ -132,7 +130,7 @@ export default function BlogDetail() {
                           e.stopPropagation()
                           setActiveImage(i => (i - 1 + images.length) % images.length)
                         }}
-                        className="rounded-full bg-white/85 p-2 text-slate-700 shadow hover:bg-white"
+                        className="rounded-full bg-surface-container-lowest/85 p-2 text-[#565e74] shadow-ambient-sm hover:bg-surface-container-lowest"
                         aria-label="Previous image"
                       >
                         <ArrowLeft className="h-4 w-4" />
@@ -143,7 +141,7 @@ export default function BlogDetail() {
                           e.stopPropagation()
                           setActiveImage(i => (i + 1) % images.length)
                         }}
-                        className="rounded-full bg-white/85 p-2 text-slate-700 shadow hover:bg-white"
+                        className="rounded-full bg-surface-container-lowest/85 p-2 text-[#565e74] shadow-ambient-sm hover:bg-surface-container-lowest"
                         aria-label="Next image"
                       >
                         <ArrowRight className="h-4 w-4" />
@@ -155,7 +153,7 @@ export default function BlogDetail() {
                 <img
                   src={blog.image}
                   alt={`${blog.title} visual`}
-                  className="w-full bg-slate-50 object-contain"
+                  className="w-full bg-surface-container-low object-contain"
                   style={{ aspectRatio: '4 / 3', maxHeight: 460 }}
                   loading="lazy"
                 />
@@ -176,29 +174,29 @@ export default function BlogDetail() {
             title="Image preview"
             subtitle="Full-size view of the selected shot"
           >
-            <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
+            <div className="relative overflow-hidden rounded-2xl bg-surface-container-low">
               <img
                 src={images[modalImageIndex] ?? images[0]}
                 alt={`${blog.title} visual ${modalImageIndex + 1}`}
-                className="mx-auto max-h-[80vh] w-full object-contain bg-slate-900/2"
+                className="mx-auto max-h-[80vh] w-full object-contain"
                 loading="lazy"
               />
             </div>
           </Modal>
         )}
 
-        <div className="mt-12 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-6">
-          <button onClick={() => navigate('/blogs')} className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-700">
+        <div className="mt-12 flex flex-wrap items-center justify-between gap-3 pt-6">
+          <button onClick={() => navigate('/blogs')} className="inline-flex items-center gap-2 text-sm font-semibold text-[#005bc4]">
             <ArrowLeft className="h-4 w-4" /> Back to all blogs
           </button>
-          <div className="flex items-center gap-2 text-sm font-semibold text-slate-700">
+          <div className="flex items-center gap-2 text-sm font-semibold text-[#2a3439]">
             {prev ? (
-              <Link to={`/blogs/${prev.slug}`} className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-slate-700 transition hover:-translate-y-0.5 hover:border-emerald-200">
+              <Link to={`/blogs/${prev.slug}`} className="btn-secondary px-3 py-1.5 text-sm">
                 <ArrowLeft className="h-4 w-4" /> {prev.title}
               </Link>
             ) : null}
             {next ? (
-              <Link to={`/blogs/${next.slug}`} className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-slate-700 transition hover:-translate-y-0.5 hover:border-emerald-200">
+              <Link to={`/blogs/${next.slug}`} className="btn-secondary px-3 py-1.5 text-sm">
                 {next.title} <ArrowRight className="h-4 w-4" />
               </Link>
             ) : null}

@@ -36,9 +36,8 @@ export default function Projects() {
   )
 
   return (
-    <section id="projects" className="relative overflow-hidden py-20">
-
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-12 px-6 text-slate-900">
+    <section id="projects" className="relative overflow-hidden bg-surface-container-low py-ds-16">
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-12 px-6">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -47,15 +46,13 @@ export default function Projects() {
           className="flex flex-col gap-4"
         >
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-            <div className="space-y-3">
-              <span className="tag-pill">
-                Case Studies
-              </span>
+            <div className="space-y-4">
+              <span className="tag-pill">Case Studies</span>
               <div className="space-y-2">
-                <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
-                Projects builds stitched with realtime AI
+                <h2 className="font-display text-display-md font-semibold tracking-tight text-[#2a3439]">
+                  Projects builds stitched with realtime AI
                 </h2>
-                <p className="max-w-2xl text-sm text-slate-600 sm:text-base">
+                <p className="max-w-2xl text-body-lg text-[#565e74]">
                   A curated look at platforms blending realtime collaboration, applied AI, and pragmatic
                   operations. Tap into the modal for architecture notes and live demos.
                 </p>
@@ -78,7 +75,7 @@ export default function Projects() {
             <motion.article
               key={project.slug}
               variants={card}
-              className="relative flex h-full flex-col overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_30px_60px_rgba(15,41,67,0.14)]"
+              className="relative flex h-full flex-col overflow-hidden rounded-card bg-surface-container-lowest shadow-ambient"
             >
               <div className="relative h-56 overflow-hidden sm:h-64">
                 <motion.img
@@ -97,13 +94,13 @@ export default function Projects() {
                   <span className="tag-pill px-3 py-1 text-[11px] tracking-[0.3em]">
                     {index + 1 < 10 ? `0${index + 1}` : index + 1}
                   </span>
-                  <span className="text-xs font-medium uppercase tracking-[0.22em] text-slate-400">
+                  <span className="text-xs font-medium uppercase tracking-[0.22em] text-[#565e74]/60">
                     {project.category}
                   </span>
                 </div>
                 <div className="space-y-3">
-                  <h3 className="text-xl font-semibold text-slate-900 sm:text-2xl">{project.title}</h3>
-                  <p className="text-sm text-slate-600">
+                  <h3 className="font-display text-xl font-semibold text-[#2a3439] sm:text-2xl">{project.title}</h3>
+                  <p className="text-sm text-[#565e74]">
                     {project.summary.length > 120 ? `${project.summary.slice(0, 120)}…` : project.summary}
                   </p>
                 </div>
@@ -113,7 +110,7 @@ export default function Projects() {
                       href={project.demo}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-700 transition hover:-translate-y-0.5 hover:bg-slate-100 hover:text-slate-900"
+                      className="btn-secondary px-4 py-2 text-sm"
                       whileHover={{ scale: 1.03 }}
                     >
                       <ExternalLink className="h-4 w-4" /> Demo
@@ -124,7 +121,7 @@ export default function Projects() {
                       href={project.repo}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-600 transition hover:border-slate-300 hover:text-slate-900"
+                      className="btn-secondary px-4 py-2 text-sm"
                       whileHover={{ scale: 1.03 }}
                     >
                       <Github className="h-4 w-4" /> Source
@@ -149,11 +146,11 @@ export default function Projects() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.12 }}
-          className="flex flex-col items-start gap-4 rounded-[32px] border border-slate-200 bg-slate-50 px-6 py-7 text-slate-700 shadow-[0_24px_60px_rgba(15,23,42,0.12)] md:flex-row md:items-center md:justify-between md:px-10"
+          className="flex flex-col items-start gap-4 rounded-card bg-surface-container-lowest px-6 py-7 shadow-ambient md:flex-row md:items-center md:justify-between md:px-10"
         >
           <div className="space-y-2">
-            <h3 className="text-lg font-semibold text-slate-900 md:text-xl">Looking for the deep dive?</h3>
-            <p className="max-w-xl text-sm text-slate-600 md:text-base">
+            <h3 className="font-display text-lg font-semibold text-[#2a3439] md:text-xl">Looking for the deep dive?</h3>
+            <p className="max-w-xl text-sm text-[#565e74] md:text-base">
               Case studies include diagrams, evaluation dashboards, and measurable outcomes from discovery
               through roll-out.
             </p>
@@ -172,13 +169,13 @@ export default function Projects() {
             transition={{ duration: 0.35, ease: 'easeOut' }}
             className="grid gap-6 md:grid-cols-[1.1fr_0.9fr] md:items-start"
           >
-            <div className="space-y-5 text-slate-700">
+            <div className="space-y-5 text-[#565e74]">
               <p className="text-sm leading-relaxed md:text-base">{selectedProject.description}</p>
               <div className="flex flex-wrap gap-2">
                 {selectedProject.tags.map(tag => (
                   <span
                     key={tag}
-                    className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-600"
+                    className="rounded-full bg-surface-container-low px-3 py-1 text-xs font-medium text-[#565e74]"
                   >
                     {tag}
                   </span>
@@ -190,7 +187,7 @@ export default function Projects() {
                     href={selectedProject.demo}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-700 transition hover:-translate-y-0.5 hover:bg-slate-100 hover:text-slate-900"
+                    className="btn-secondary px-4 py-2 text-sm"
                   >
                     <ExternalLink className="h-4 w-4" /> Live Demo
                   </a>
@@ -200,7 +197,7 @@ export default function Projects() {
                     href={selectedProject.repo}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-600 transition hover:border-slate-300 hover:text-slate-900"
+                    className="btn-secondary px-4 py-2 text-sm"
                   >
                     <Github className="h-4 w-4" /> Source
                   </a>
@@ -211,7 +208,7 @@ export default function Projects() {
               initial={{ opacity: 0, x: 12 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.35, ease: 'easeOut', delay: 0.05 }}
-              className="overflow-hidden rounded-[24px] border border-slate-200 bg-slate-50"
+              className="overflow-hidden rounded-card bg-surface-container-low"
             >
               <img
                 src={selectedProject.image}
