@@ -12,6 +12,7 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 import { skillClusters } from '../data/content'
+import FloatingAccents from './FloatingAccents'
 
 const iconMap: Record<string, LucideIcon> = {
   ServerCog,
@@ -37,13 +38,14 @@ export default function Skills() {
   const Icon = iconMap[activeCategory.icon] ?? ServerCog
 
   return (
-    <section id="skills" className="relative overflow-hidden bg-surface py-ds-16">
+    <section id="skills" className="relative overflow-hidden bg-surface py-ds-16 section-depth">
+      <FloatingAccents variant="secondary" />
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-12 px-6">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 36, rotateX: 4 }}
+          whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
         >
           <div className="space-y-4">
@@ -62,10 +64,10 @@ export default function Skills() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: 'easeOut', delay: 0.05 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
           className="grid gap-4 sm:grid-cols-3 lg:grid-cols-6"
         >
           {categories.map(category => {
@@ -75,7 +77,7 @@ export default function Skills() {
               <button
                 key={category.id}
                 onClick={() => setActive(category.id)}
-                className={`group relative flex h-28 flex-col items-center justify-center rounded-card transition hover:-translate-y-1 ${
+                className={`group relative flex h-28 flex-col items-center justify-center rounded-card transition-all duration-200 hover:-translate-y-1.5 hover:shadow-lg ${
                   selected
                     ? 'bg-surface-container-lowest shadow-ambient'
                     : 'bg-surface-container-low hover:bg-surface-container-lowest hover:shadow-ambient-sm'

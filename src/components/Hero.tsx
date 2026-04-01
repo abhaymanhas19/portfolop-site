@@ -1,10 +1,9 @@
-import { type ReactNode, type SVGProps, useMemo, useState } from 'react'
+import { type ReactNode, type SVGProps, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, Github, Linkedin, Mail, type LucideIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
-
-const HERO_VIDEO_SRC = '/hero-sora-video.mp4'
-const HERO_VIDEO_POSTER = '/hero-video-poster.svg'
+import useReducedMotion from '../hooks/useReducedMotion'
+import { ease, heroWord, staggerContainer } from '../lib/motion'
 
 type SocialLink = {
   id: string
@@ -19,9 +18,31 @@ const socialIcons: Record<string, LucideIcon> = {
   email: Mail,
 }
 
+function WordReveal({ text, delay = 0 }: { text: string; delay?: number }) {
+  const words = text.split(' ')
+  return (
+    <motion.span
+      variants={staggerContainer(0.06)}
+      initial="hidden"
+      animate="show"
+      transition={{ delayChildren: delay }}
+      className="inline"
+    >
+      {words.map((word, i) => (
+        <motion.span
+          key={`${word}-${i}`}
+          variants={heroWord}
+          className="mr-[0.3em] inline-block"
+        >
+          {word}
+        </motion.span>
+      ))}
+    </motion.span>
+  )
+}
+
 export default function HeroSection() {
-  const [videoReady, setVideoReady] = useState(false)
-  const [videoFailed, setVideoFailed] = useState(false)
+  const reducedMotion = useReducedMotion()
 
   const socialLinks = useMemo<SocialLink[]>(
     () => [
@@ -33,75 +54,95 @@ export default function HeroSection() {
     [],
   )
 
+  const motionProps = reducedMotion
+    ? { initial: { opacity: 1 }, animate: { opacity: 1 } }
+    : undefined
+
   return (
-    <section id="home" className="relative isolate overflow-hidden bg-surface min-h-[calc(100vh-5rem)]">
-      {/* Background: GIF/Video - right-aligned with zoom-in */}
-      <div className="absolute inset-0">
-        {!videoFailed && (
-          <video
-            className={`h-full w-full object-cover object-right transition-opacity duration-700 hero-gif-zoom ${videoReady ? 'opacity-40' : 'opacity-0'}`}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            poster={HERO_VIDEO_POSTER}
-            aria-hidden="true"
-            onCanPlay={() => setVideoReady(true)}
-            onError={() => setVideoFailed(true)}
-          >
-            <source src={HERO_VIDEO_SRC} type="video/mp4" />
-          </video>
-        )}
-        {/* Soft gradient overlays for readability */}
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-gradient-to-r from-[#f7f9fb] via-[#f7f9fb]/95 to-[#f7f9fb]/40"
-        />
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-gradient-to-t from-[#f7f9fb] via-transparent to-[#f7f9fb]/30"
-        />
-      </div>
+    <section id="home" className="relative isolate overflow-hidden min-h-[calc(100vh-5rem)]" style={{ perspective: '1200px' }}>
+      {/* Video Background */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 h-full w-full object-cover"
+        src="https://res.cloudinary.com/dol8jpqwr/video/upload/v1774984665/change_this_women_202604010025_fynplv.mp4"
+      />
+
+      {/* Dark overlay for text readability */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-[1] bg-black/40"
+      />
 
       {/* Content - Left-aligned with asymmetric layout */}
       <div className="relative z-10 mx-auto flex min-h-[calc(100vh-5rem)] max-w-7xl items-center px-4 py-16 sm:px-6 md:py-20 lg:px-8">
         <div className="max-w-2xl">
+          {/* Status pill */}
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, ease: 'easeOut' }}
+            {...(reducedMotion ? motionProps : {
+              initial: { opacity: 0, y: 16, scale: 0.95 },
+              animate: { opacity: 1, y: 0, scale: 1 },
+            })}
+            transition={{ duration: 0.55, ease: ease.smooth }}
             className="tag-pill"
           >
-            <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
+            <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 hero-pulse" />
             Available for Work
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.08, duration: 0.6, ease: 'easeOut' }}
-            className="mt-8 space-y-5"
-          >
-            <p className="text-sm font-medium uppercase tracking-[0.34em] text-[#565e74]/60">Freelance Consultant</p>
-            <h1 className="font-display text-display-lg font-semibold text-[#2a3439]">
-              Abhay Manhas
-            </h1>
-            <h2 className="font-display text-headline-lg font-medium text-[#005bc4]">
-              Python, AI &amp; Automation Engineer
-            </h2>
-            <p className="max-w-xl text-body-lg text-[#565e74]">
-              I build intelligent software, automation systems, and AI-powered solutions for businesses and startups.
-            </p>
-          </motion.div>
+          {/* Main heading block */}
+          <div className="mt-8 space-y-5">
+            <motion.p
+              {...(reducedMotion ? motionProps : {
+                initial: { opacity: 0, y: 12 },
+                animate: { opacity: 1, y: 0 },
+              })}
+              transition={{ delay: 0.1, duration: 0.5, ease: ease.smooth }}
+              className="text-sm font-medium uppercase tracking-[0.34em] text-white/70"
+            >
+              Freelance Consultant
+            </motion.p>
 
+            <h1 className="font-display text-display-lg font-semibold text-white">
+              {reducedMotion ? (
+                'Abhay Manhas'
+              ) : (
+                <WordReveal text="Abhay Manhas" delay={0.15} />
+              )}
+            </h1>
+
+            <h2 className="font-display text-headline-lg font-medium text-blue-300">
+              {reducedMotion ? (
+                <>Python, AI &amp; Automation Engineer</>
+              ) : (
+                <WordReveal text="Python, AI & Automation Engineer" delay={0.35} />
+              )}
+            </h2>
+
+            <motion.p
+              {...(reducedMotion ? motionProps : {
+                initial: { opacity: 0, y: 20, filter: 'blur(4px)' },
+                animate: { opacity: 1, y: 0, filter: 'blur(0px)' },
+              })}
+              transition={{ delay: 0.6, duration: 0.6, ease: ease.smooth }}
+              className="max-w-xl text-body-lg text-white/80"
+            >
+              I build intelligent software, automation systems, and AI-powered solutions for businesses and startups.
+            </motion.p>
+          </div>
+
+          {/* CTA Buttons */}
           <motion.div
-            initial={{ opacity: 0, y: 22 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.18, duration: 0.6, ease: 'easeOut' }}
+            {...(reducedMotion ? motionProps : {
+              initial: { opacity: 0, y: 22 },
+              animate: { opacity: 1, y: 0 },
+            })}
+            transition={{ delay: 0.72, duration: 0.6, ease: ease.smooth }}
             className="mt-10 flex flex-col items-start gap-4 sm:flex-row"
           >
-            <Link to="/#contact" className="btn-primary px-6 py-3.5 text-sm sm:text-base">
+            <Link to="/#contact" className="btn-primary btn-glow px-6 py-3.5 text-sm sm:text-base">
               Hire Me <ArrowRight className="h-4 w-4" />
             </Link>
             <Link to="/#projects" className="btn-ghost px-6 py-3.5 text-sm sm:text-base">
@@ -109,13 +150,16 @@ export default function HeroSection() {
             </Link>
           </motion.div>
 
+          {/* Social links */}
           <motion.div
-            initial={{ opacity: 0, y: 22 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.26, duration: 0.6, ease: 'easeOut' }}
+            {...(reducedMotion ? motionProps : {
+              initial: { opacity: 0, y: 22 },
+              animate: { opacity: 1, y: 0 },
+            })}
+            transition={{ delay: 0.84, duration: 0.6, ease: ease.smooth }}
             className="mt-10"
           >
-            <div className="inline-flex flex-wrap items-center gap-2 rounded-full bg-surface-container-lowest p-2" style={{ boxShadow: '0 32px 64px rgba(42, 52, 57, 0.06)' }}>
+            <div className="inline-flex flex-wrap items-center gap-2 rounded-full bg-white/10 p-2 backdrop-blur-sm">
               {socialLinks.map(link => {
                 const Icon = socialIcons[link.id] ?? GlobeIconFallback
                 return (
@@ -127,17 +171,19 @@ export default function HeroSection() {
             </div>
           </motion.div>
 
+          {/* Trust badge */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.32, duration: 0.65, ease: 'easeOut' }}
-            className="mt-12 max-w-xl rounded-card bg-surface-container-lowest p-6"
-            style={{ boxShadow: '0 32px 64px rgba(42, 52, 57, 0.06)' }}
+            {...(reducedMotion ? motionProps : {
+              initial: { opacity: 0, y: 24, rotateX: 4 },
+              animate: { opacity: 1, y: 0, rotateX: 0 },
+            })}
+            transition={{ delay: 0.95, duration: 0.65, ease: ease.smooth }}
+            className="mt-12 max-w-xl rounded-card bg-white/10 p-6 backdrop-blur-sm"
           >
-            <p className="font-display text-xs font-semibold uppercase tracking-[0.3em] text-[#005bc4]">
+            <p className="font-display text-xs font-semibold uppercase tracking-[0.3em] text-blue-300">
               Trusted Focus
             </p>
-            <p className="mt-3 text-sm leading-7 text-[#565e74]">
+            <p className="mt-3 text-sm leading-7 text-white/80">
               Intelligent systems for teams that need dependable automation, practical AI integration, and delivery that feels senior from day one.
             </p>
           </motion.div>
@@ -156,7 +202,7 @@ type SocialLinkButtonProps = {
 
 function SocialLinkButton({ children, href, label, internal }: SocialLinkButtonProps) {
   const className =
-    'inline-flex items-center gap-2 rounded-full px-4 py-3 text-sm font-medium text-[#565e74] transition hover:bg-surface-container-low hover:text-[#005bc4] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 focus-visible:ring-offset-2'
+    'inline-flex items-center gap-2 rounded-full px-4 py-3 text-sm font-medium text-white/80 transition-all duration-200 hover:bg-white/20 hover:text-white hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:ring-offset-2'
 
   if (internal) {
     return (

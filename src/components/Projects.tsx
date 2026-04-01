@@ -4,29 +4,29 @@ import { Link } from 'react-router-dom'
 import { ExternalLink, Github } from 'lucide-react'
 import { projectCases } from '../data/content'
 import Modal from './Modal'
+import TiltCard from './TiltCard'
+import FloatingAccents from './FloatingAccents'
 
 const previewProjects = projectCases.slice(0, 3)
 
 const container = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    y: 0,
     transition: {
-      duration: 0.6,
-      ease: 'easeOut',
-      staggerChildren: 0.16,
+      staggerChildren: 0.14,
     },
   },
 }
 
 const card = {
-  hidden: { opacity: 0, y: 32, scale: 0.94 },
+  hidden: { opacity: 0, y: 44, rotateX: 4, scale: 0.95 },
   show: {
     opacity: 1,
     y: 0,
+    rotateX: 0,
     scale: 1,
-    transition: { duration: 0.7, ease: [0.18, 0.78, 0.24, 1] },
+    transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] },
   },
 }
 
@@ -36,7 +36,8 @@ export default function Projects() {
   )
 
   return (
-    <section id="projects" className="relative overflow-hidden bg-surface-container-low py-ds-16">
+    <section id="projects" className="relative overflow-hidden bg-surface-container-low py-ds-16 section-depth">
+      <FloatingAccents />
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-12 px-6">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -72,8 +73,8 @@ export default function Projects() {
           className="grid gap-6 md:grid-cols-2 xl:grid-cols-3"
         >
           {previewProjects.map((project, index) => (
+            <TiltCard key={project.slug} maxTilt={6}>
             <motion.article
-              key={project.slug}
               variants={card}
               className="relative flex h-full flex-col overflow-hidden rounded-card bg-surface-container-lowest shadow-ambient"
             >
@@ -138,6 +139,7 @@ export default function Projects() {
                 </div>
               </div>
             </motion.article>
+            </TiltCard>
           ))}
         </motion.div>
 

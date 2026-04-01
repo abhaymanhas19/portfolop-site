@@ -31,13 +31,13 @@ export default function CertificationsPreview() {
   const activeBadges = categoriesWithAll.find(category => category.name === activeCategory)?.badges ?? []
 
   return (
-    <section className="relative overflow-hidden bg-surface-container-low py-ds-16">
+    <section className="relative overflow-hidden bg-surface-container-low py-ds-16 section-depth">
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-10 px-6">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 36, rotateX: 4 }}
+          whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between"
         >
           <div className="space-y-4">
@@ -89,7 +89,7 @@ export default function CertificationsPreview() {
               {activeBadges.map(badge => (
                 <article
                   key={badge.id}
-                  className="relative flex h-full min-w-[260px] max-w-xs flex-col overflow-hidden rounded-card bg-surface-container-lowest shadow-ambient"
+                  className="relative flex h-full min-w-[260px] max-w-xs flex-col overflow-hidden rounded-card bg-surface-container-lowest shadow-ambient transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
                 >
                   <div className="relative h-40 overflow-hidden">
                     <motion.img

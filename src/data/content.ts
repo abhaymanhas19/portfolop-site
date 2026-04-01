@@ -92,6 +92,15 @@ export type GalleryImage = {
   description?: string
 }
 
+export type CarouselMedia = {
+  id: string
+  src: string
+  type: 'image' | 'video'
+  alt: string
+  title?: string
+  description?: string
+}
+
 export type Capability = {
   id: string
   title: string
@@ -475,6 +484,64 @@ export const content = {
       highlight: 'Model evaluation frames, pipeline diagrams, and ops readouts captured between releases.',
       cta: 'View AI/ML Visuals',
     } satisfies GalleryHighlight,
+    carousel: [
+      {
+        id: 'hand-open-throw',
+        src: 'https://res.cloudinary.com/dol8jpqwr/video/upload/v1774984792/Hand_open_throwing_202603312319_1_qegbt1.mp4',
+        type: 'video',
+        alt: 'Hand open throwing animation',
+        title: 'Motion Capture',
+        description: 'Real-time gesture tracking in action.',
+      },
+      {
+        id: 'carousel-deep-learning',
+        src: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1766692120/Deep_Learning_Architecture_Diagram__by_ProjectPro_lw6ox6.webp',
+        type: 'image',
+        alt: 'Deep Learning Architecture Diagram',
+        title: "Neuron's Communication",
+        description: 'Deep Learning architecture at a glance.',
+      },
+      {
+        id: 'carousel-flow-chart',
+        src: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1766692121/1719922267958_urkgga.gif',
+        type: 'image',
+        alt: 'AI Classification flow chart',
+        title: 'Flow Chart',
+        description: 'Types of Learning and Networks.',
+      },
+      {
+        id: 'carousel-transformer',
+        src: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1766692120/how-to-visualize-machine-learning-models-4_cmtmar.webp',
+        type: 'image',
+        alt: 'Transformer model visualization',
+        title: 'Transformer Explained',
+        description: "What's under the hood of modern LLMs.",
+      },
+      {
+        id: 'carousel-layer-arch',
+        src: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1766692120/iclh-diagram-batch-01-03-deepneuralnetwork_f3xu75.png',
+        type: 'image',
+        alt: 'Deep neural network layer architecture',
+        title: 'Layer Architecture',
+        description: 'Multi-step communication from input to output.',
+      },
+      {
+        id: 'carousel-ml-guide',
+        src: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1766692120/1721922369347_bgg4hq.jpg',
+        type: 'image',
+        alt: 'Machine Learning getting started guide',
+        title: 'Machine Learning',
+        description: 'Guide to getting started.',
+      },
+      {
+        id: 'carousel-ai-era',
+        src: 'https://res.cloudinary.com/dol8jpqwr/image/upload/v1766692119/seo-hero-machine-learning-vs-ai_kls4c0_fhxeed.webp',
+        type: 'image',
+        alt: 'The era of AI systems',
+        title: 'Era of AI',
+        description: 'World powered by AI systems.',
+      },
+    ] satisfies CarouselMedia[],
     images: [
       {
         id: 'mountain-trail',

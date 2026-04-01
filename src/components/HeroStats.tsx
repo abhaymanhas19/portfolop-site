@@ -4,21 +4,18 @@ import { Building2, BriefcaseBusiness, UsersRound } from 'lucide-react'
 import { heroContent } from '../data/content'
 
 const container = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    y: 0,
     transition: {
-      duration: 0.6,
-      ease: [0.18, 0.78, 0.24, 1],
-      staggerChildren: 0.15,
+      staggerChildren: 0.12,
     },
   },
 }
 
 const item = {
-  hidden: { opacity: 0, y: 16 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.18, 0.78, 0.24, 1] } },
+  hidden: { opacity: 0, y: 30, scale: 0.96 },
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
 }
 
 const statIcons: Record<string, LucideIcon> = {
@@ -31,7 +28,7 @@ export default function HeroStats() {
   if (!heroContent.stats?.length) return null
 
   return (
-    <section aria-label="Key delivery metrics" className="relative overflow-hidden bg-surface py-14">
+    <section aria-label="Key delivery metrics" className="relative overflow-hidden bg-surface py-14 section-depth">
       <motion.div
         className="relative mx-auto max-w-6xl px-6"
         variants={container}
