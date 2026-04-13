@@ -42,8 +42,8 @@ export default function Skills() {
       <FloatingAccents variant="secondary" />
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-12 px-6">
         <motion.div
-          initial={{ opacity: 0, y: 36, rotateX: 4 }}
-          whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+          initial={{ opacity: 0, y: 36 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between"

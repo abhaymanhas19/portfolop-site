@@ -8,15 +8,9 @@ import { site } from '../data/site'
 function usePdfWorker() {
   const [ready, setReady] = useState(false)
   useEffect(() => {
-    let active = true
-    import('pdfjs-dist/build/pdf.worker.min.mjs?url').then(worker => {
-      if (!active) return
-      pdfjs.GlobalWorkerOptions.workerSrc = worker.default
-      setReady(true)
-    })
-    return () => {
-      active = false
-    }
+    // Using CDN for worker to avoid local resolution issues that break the build
+    pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`
+    setReady(true)
   }, [])
   return ready
 }
