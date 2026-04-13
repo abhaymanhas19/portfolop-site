@@ -34,8 +34,8 @@ export default function CertificationsPreview() {
     <section className="relative overflow-hidden bg-surface-container-low py-ds-16 section-depth">
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-10 px-6">
         <motion.div
-          initial={{ opacity: 0, y: 36, rotateX: 4 }}
-          whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+          initial={{ opacity: 0, y: 36 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between"
@@ -113,14 +113,16 @@ export default function CertificationsPreview() {
                     <div className="mt-auto flex items-center justify-between text-xs uppercase tracking-[0.18em] text-[#565e74]/60">
                       <span>{badge.issuer}</span>
                       {badge.credentialUrl && (
-                        <a
-                          href={badge.credentialUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="btn-primary px-3 py-1 text-[11px]"
-                        >
-                          <ExternalLink className="h-3.5 w-3.5" /> Verify
-                        </a>
+                        <div className="relative z-10">
+                          <a
+                            href={badge.credentialUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="btn-primary px-3 py-1 text-[11px]"
+                          >
+                            <ExternalLink className="h-3.5 w-3.5" /> Verify
+                          </a>
+                        </div>
                       )}
                     </div>
                   </div>

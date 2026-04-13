@@ -76,9 +76,10 @@ export default function Projects() {
             <TiltCard key={project.slug} maxTilt={6}>
             <motion.article
               variants={card}
-              className="relative flex h-full flex-col overflow-hidden rounded-card bg-surface-container-lowest shadow-ambient"
+              className="relative flex h-full flex-col rounded-card bg-surface-container-lowest shadow-ambient"
             >
-              <div className="relative h-56 overflow-hidden sm:h-64">
+              {/* Image — own overflow-hidden so clip stays within image area only */}
+              <div className="relative h-56 overflow-hidden rounded-t-card sm:h-64">
                 <motion.img
                   src={project.image}
                   alt={`${project.title} screenshot`}
@@ -105,37 +106,35 @@ export default function Projects() {
                     {project.summary.length > 120 ? `${project.summary.slice(0, 120)}…` : project.summary}
                   </p>
                 </div>
-                <div className="flex flex-wrap gap-3 pt-2 text-sm">
+                {/* Button row — plain elements so CSS hover is never blocked by FM transforms */}
+                <div className="relative z-10 flex flex-wrap gap-3 pt-2 text-sm">
                   {project.demo && (
-                    <motion.a
+                    <a
                       href={project.demo}
                       target="_blank"
                       rel="noreferrer"
                       className="btn-secondary px-4 py-2 text-sm"
-                      whileHover={{ scale: 1.03 }}
                     >
                       <ExternalLink className="h-4 w-4" /> Demo
-                    </motion.a>
+                    </a>
                   )}
                   {project.repo && (
-                    <motion.a
+                    <a
                       href={project.repo}
                       target="_blank"
                       rel="noreferrer"
                       className="btn-secondary px-4 py-2 text-sm"
-                      whileHover={{ scale: 1.03 }}
                     >
                       <Github className="h-4 w-4" /> Source
-                    </motion.a>
+                    </a>
                   )}
-                  <motion.button
+                  <button
                     type="button"
                     className="btn-primary px-4 py-2 text-sm"
-                    whileHover={{ scale: 1.03 }}
                     onClick={() => setSelectedProject(project)}
                   >
                     Read More
-                  </motion.button>
+                  </button>
                 </div>
               </div>
             </motion.article>

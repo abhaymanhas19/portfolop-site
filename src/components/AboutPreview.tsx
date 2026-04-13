@@ -64,14 +64,16 @@ export default function AboutPreview() {
                   ))}
                 </ul>
                 {experience.link && (
-                  <a
-                    href={experience.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn-primary mt-5 inline-flex items-center gap-2 px-5 py-2 text-xs sm:text-sm"
-                  >
-                    Visit site <ExternalLink className="h-4 w-4" />
-                  </a>
+                  <div className="relative z-10 mt-5">
+                    <a
+                      href={experience.link}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="btn-primary inline-flex items-center gap-2 px-5 py-2 text-xs sm:text-sm"
+                    >
+                      Visit site <ExternalLink className="h-4 w-4" />
+                    </a>
+                  </div>
                 )}
               </motion.div>
               </TiltCard>

@@ -76,59 +76,104 @@ body {
 
 /* ── Component Styles ── */
 @layer components {
-  /* Primary Button: Pill gradient secondary→secondary_dim */
-  .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-7 py-3 text-sm font-semibold text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-200/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
-    background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dim) 100%);
-    box-shadow: 0 32px 64px rgba(0, 91, 196, 0.12);
-    will-change: transform, box-shadow;
-    transition: transform 220ms ease, box-shadow 240ms ease;
+  /* Button children must never block pointer events on the button itself */
+  .btn-primary > *, .btn-secondary > *, .btn-hero > *, .btn-ghost > * {
+    pointer-events: none;
   }
 
+  /* Primary Button: Pill gradient secondary→secondary_dim */
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-7 py-3 text-sm font-semibold text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-200/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
+    background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dim) 100%);
+    box-shadow: 0 4px 14px rgba(0, 91, 196, 0.25);
+    will-change: transform, box-shadow;
+    transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 200ms ease, background 200ms ease;
+    cursor: pointer;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 60%);
+    opacity: 0;
+    transition: opacity 200ms ease;
+    border-radius: inherit;
+    z-index: 0;
+    pointer-events: none;
+  }
   .btn-primary:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 40px 80px rgba(0, 91, 196, 0.18);
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 8px 28px rgba(0, 91, 196, 0.38), 0 2px 8px rgba(0, 91, 196, 0.18);
+  }
+  .btn-primary:hover::before {
+    opacity: 1;
+  }
+  .btn-primary:active {
+    transform: translateY(-1px) scale(1.01);
+    box-shadow: 0 4px 14px rgba(0, 91, 196, 0.25);
   }
 
   /* Secondary Button: Surface lowest bg, secondary text, no border */
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition;
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold;
     background: var(--surface-lowest);
     color: var(--secondary);
-    box-shadow: 0 16px 32px rgba(42, 52, 57, 0.06);
+    box-shadow: 0 2px 8px rgba(42, 52, 57, 0.08);
+    cursor: pointer;
+    transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 200ms ease, background 200ms ease, color 200ms ease;
+    overflow: hidden;
+    isolation: isolate;
   }
-
   .btn-secondary:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 24px 48px rgba(42, 52, 57, 0.08);
+    transform: translateY(-2px) scale(1.02);
+    background: var(--secondary);
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(0, 91, 196, 0.28);
+  }
+  .btn-secondary:active {
+    transform: translateY(0) scale(0.99);
   }
 
   /* Hero CTA: gradient from primary to primary_container */
   .btn-hero {
-    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-7 py-3.5 text-sm font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-200/70 focus-visible:ring-offset-2;
+    @apply relative inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-7 py-3.5 text-sm font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-200/70 focus-visible:ring-offset-2;
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-container) 100%);
     color: var(--on-primary);
-    box-shadow: 0 32px 64px rgba(86, 94, 116, 0.15);
-    transition: transform 220ms ease, box-shadow 240ms ease;
+    box-shadow: 0 4px 16px rgba(86, 94, 116, 0.22);
+    transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 200ms ease;
+    cursor: pointer;
+    overflow: hidden;
+    isolation: isolate;
   }
-
   .btn-hero:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 40px 80px rgba(86, 94, 116, 0.2);
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 8px 28px rgba(86, 94, 116, 0.35);
+  }
+  .btn-hero:active {
+    transform: translateY(-1px) scale(1.01);
   }
 
   /* Ghost / outline variant for hero */
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition;
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold;
     background: rgba(255, 255, 255, 0.8);
     color: var(--primary);
     backdrop-filter: blur(12px);
-    box-shadow: 0 16px 32px rgba(42, 52, 57, 0.06);
+    box-shadow: 0 2px 10px rgba(42, 52, 57, 0.08);
+    cursor: pointer;
+    transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 200ms ease, background 200ms ease;
+    overflow: hidden;
+    isolation: isolate;
   }
-
   .btn-ghost:hover {
-    transform: translateY(-1px);
-    background: rgba(255, 255, 255, 0.95);
+    transform: translateY(-2px) scale(1.02);
+    background: rgba(255, 255, 255, 0.97);
+    box-shadow: 0 6px 20px rgba(42, 52, 57, 0.12);
+  }
+  .btn-ghost:active {
+    transform: translateY(0) scale(0.99);
   }
 
   /* Tag pill: soft, no harsh borders */
@@ -154,8 +199,24 @@ body {
 @keyframes spinY { to { transform: rotateY(360deg); } }
 @keyframes floatY { 0%,100%{ transform: translateX(-50%) rotateX(var(--rx, 36deg)) translateY(-4px);} 50%{ transform: translateX(-50%) rotateX(var(--rx, 36deg)) translateY(6px);} }
 
-.tilt { transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0); transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 200ms ease; will-change: transform; }
-.tilt:hover { box-shadow: 0 32px 64px rgba(42, 52, 57, 0.1); }
+/* ── Smooth 2D card lift (replaces old 3D tilt which broke click events) ── */
+.tilt-2d {
+  position: relative;
+  transform: translate(var(--tx, 0px), var(--ty, 0px));
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 180ms ease;
+  will-change: transform;
+}
+.tilt-2d:hover {
+  box-shadow: 0 20px 48px rgba(42, 52, 57, 0.13);
+}
+/* Keep old .tilt class for backward compat but make it 2D safe */
+.tilt {
+  position: relative;
+  transform: translate(var(--tx, 0px), var(--ty, 0px));
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 180ms ease;
+  will-change: transform;
+}
+.tilt:hover { box-shadow: 0 20px 48px rgba(42, 52, 57, 0.13); }
 
 .skeleton { position: relative; overflow: hidden; background: rgba(217,228,234,0.55); }
 .skeleton::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent); transform: translateX(-100%); animation: shimmer 1.8s infinite; }
@@ -251,8 +312,8 @@ body {
   pointer-events: none;
 }
 
-/* ── Section depth perspective ── */
-.section-depth { perspective: 1000px; }
+/* ── Section depth (perspective removed — caused 3D stacking context that broke button z-index) ── */
+.section-depth { isolation: isolate; }
 
 /* ── Reduced motion: disable all animation ── */
 @media (prefers-reduced-motion: reduce) {
