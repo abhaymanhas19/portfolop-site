@@ -123,7 +123,7 @@ export default function Projects() {
                       href={project.repo}
                       target="_blank"
                       rel="noreferrer"
-                      className="btn-secondary px-4 py-2 text-sm"
+                      className="btn-secondary px-4 py- 2 text-sm"
                     >
                       <Github className="h-4 w-4" /> Source
                     </a>
