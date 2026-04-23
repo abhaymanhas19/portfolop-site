@@ -33,3 +33,14 @@ Thumbs.db
 
 # Misc
 *.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+.env
+.pytest_cache/
+.coverage
+.cache/
+.mypy_cache/
