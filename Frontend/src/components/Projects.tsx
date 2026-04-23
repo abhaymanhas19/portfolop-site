@@ -2,12 +2,10 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ExternalLink, Github } from 'lucide-react'
-import { projectCases } from '../data/content'
+import { usePortfolio } from '../hooks/usePortfolio'
 import Modal from './Modal'
 import TiltCard from './TiltCard'
 import FloatingAccents from './FloatingAccents'
-
-const previewProjects = projectCases.slice(0, 3)
 
 const container = {
   hidden: { opacity: 0 },
@@ -31,6 +29,10 @@ const card = {
 }
 
 export default function Projects() {
+  const { projects } = usePortfolio()
+  const projectCases = projects.featured
+  const previewProjects = projectCases.slice(0, 3)
+  
   const [selectedProject, setSelectedProject] = useState<(typeof projectCases)[number] | null>(
     null,
   )

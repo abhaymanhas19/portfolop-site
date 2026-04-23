@@ -1,7 +1,6 @@
 import { useNavigate, Link } from 'react-router-dom'
 import { Github, Linkedin, Instagram, Twitter, Mail, type LucideIcon } from 'lucide-react'
-import { site } from '../data/site'
-import { socials } from '../data/content'
+import { usePortfolio } from '../hooks/usePortfolio'
 
 const socialIcons: Record<string, LucideIcon> = {
   Github,
@@ -22,6 +21,7 @@ const footerLinks = [
 
 export default function Footer() {
   const navigate = useNavigate()
+  const { branding, socials } = usePortfolio()
 
   const gotoContact = () => {
     navigate('/#contact')
@@ -34,7 +34,7 @@ export default function Footer() {
         {/* Brand Header */}
         <div className="flex items-center justify-center gap-3 mb-10">
           <img src="/favicon.svg" alt="Brand" className="h-8 w-8" />
-          <span className="font-display text-xl font-semibold text-[#2a3439]">{site.NAME}</span>
+          <span className="font-display text-xl font-semibold text-[#2a3439]">{branding.name}</span>
         </div>
 
         {/* Navigation and Social Links Row */}
@@ -57,7 +57,7 @@ export default function Footer() {
           <div className="flex flex-col items-center md:items-start gap-3">
             <h4 className="font-display text-sm font-semibold text-[#2a3439] uppercase tracking-wider mb-2">Connect</h4>
             {socials.map(handle => {
-              const Icon = socialIcons[handle.icon] ?? Mail
+              const Icon = socialIcons[handle.icon as keyof typeof socialIcons] ?? Mail
               return (
                 <a
                   key={handle.id}
@@ -99,7 +99,7 @@ export default function Footer() {
 
       {/* Copyright Bar */}
       <div className="relative bg-surface-container-high text-center text-xs text-[#565e74] py-4">
-        © {new Date().getFullYear()} {site.NAME}. All rights reserved.
+        © {new Date().getFullYear()} {branding.name}. All rights reserved.
       </div>
     </footer>
   )

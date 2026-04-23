@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, Sparkles, Target, Workflow, Heart, ExternalLink } from 'lucide-react'
 import MagicBento from '../components/MagicBento'
 import VantaRingsBackground from '../components/VantaRingsBackground'
-import { aboutContent, galleryContent } from '../data/content'
-import { site } from '../data/site'
+import { usePortfolio } from '../hooks/usePortfolio'
 
 export default function About() {
+  const { about: aboutContent, gallery: galleryContent, branding } = usePortfolio()
+  
   const focusItems = aboutContent.tiles.map((tile, index) => ({
     id: tile.title,
     badge: 'Focus area',
@@ -84,7 +85,7 @@ export default function About() {
             </div>
             <div className="flex flex-col items-start gap-3 md:items-end">
               <a
-                href={site.RESUME_PDF_PATH}
+                href={branding.resumePath}
                 target="_blank"
                 rel="noreferrer"
                 className="btn-secondary px-6 py-3 text-sm"

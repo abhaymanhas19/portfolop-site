@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ArrowUpRight, Menu, X } from 'lucide-react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { site } from '../data/site'
+import { usePortfolio } from '../hooks/usePortfolio'
 
 type NavItem = {
   label: string
@@ -19,6 +19,7 @@ const navItems: NavItem[] = [
 ]
 
 export default function Navbar() {
+  const { branding } = usePortfolio()
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
@@ -65,7 +66,7 @@ export default function Navbar() {
             <span className="grid h-10 w-10 place-items-center rounded-2xl bg-surface-container-low">
               <img src="/favicon.svg" alt="Brand" className="h-5 w-5" />
             </span>
-            <span className="font-display text-base font-semibold tracking-tight">{site.NAME}</span>
+            <span className="font-display text-base font-semibold tracking-tight">{branding.name}</span>
           </Link>
 
           <nav className="hidden items-center gap-7 lg:flex">

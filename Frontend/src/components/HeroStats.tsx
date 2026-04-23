@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import type { LucideIcon } from 'lucide-react'
 import { Building2, BriefcaseBusiness, UsersRound } from 'lucide-react'
-import { heroContent } from '../data/content'
+import { usePortfolio } from '../hooks/usePortfolio'
 
 const container = {
   hidden: { opacity: 0 },
@@ -25,7 +25,8 @@ const statIcons: Record<string, LucideIcon> = {
 }
 
 export default function HeroStats() {
-  if (!heroContent.stats?.length) return null
+  const { hero } = usePortfolio()
+  if (!hero.stats?.length) return null
 
   return (
     <section aria-label="Key delivery metrics" className="relative overflow-hidden bg-surface py-14 section-depth">
@@ -41,7 +42,7 @@ export default function HeroStats() {
             className="relative flex flex-wrap items-center justify-center gap-5 text-sm text-[#565e74] md:justify-between"
             variants={container}
           >
-            {heroContent.stats.map(stat => {
+            {hero.stats.map(stat => {
               const Icon = stat.icon ? statIcons[stat.icon] : undefined
               return (
                 <motion.div

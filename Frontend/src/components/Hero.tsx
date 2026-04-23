@@ -4,6 +4,7 @@ import { ArrowRight, Github, Linkedin, Mail, type LucideIcon } from 'lucide-reac
 import { Link } from 'react-router-dom'
 import useReducedMotion from '../hooks/useReducedMotion'
 import { ease, heroWord, staggerContainer } from '../lib/motion'
+import { usePortfolio } from '../hooks/usePortfolio'
 
 type SocialLink = {
   id: string
@@ -43,15 +44,14 @@ function WordReveal({ text, delay = 0 }: { text: string; delay?: number }) {
 
 export default function HeroSection() {
   const reducedMotion = useReducedMotion()
+  const { hero, socials } = usePortfolio()
 
   const socialLinks = useMemo<SocialLink[]>(
     () => [
-      { id: 'github', label: 'GitHub', href: 'https://github.com/abhaymanhas19' },
-      { id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/in/abhaymanhas19' },
+      ...socials.map(s => ({ id: s.social_id, label: s.label, href: s.url })),
       { id: 'blog', label: 'Blog', href: '/blogs', internal: true },
-      { id: 'email', label: 'Email', href: 'mailto:abhayramgarhia19@outlook.com' },
     ],
-    [],
+    [socials],
   )
 
   const motionProps = reducedMotion
@@ -89,7 +89,7 @@ export default function HeroSection() {
             className="tag-pill"
           >
             <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 hero-pulse" />
-            Available for Work
+            {hero.eyebrow}
           </motion.div>
 
           {/* Main heading block */}
@@ -102,22 +102,22 @@ export default function HeroSection() {
               transition={{ delay: 0.1, duration: 0.5, ease: ease.smooth }}
               className="text-sm font-medium uppercase tracking-[0.34em] text-white/70"
             >
-              Freelance Consultant
+              {hero.highlight}
             </motion.p>
 
             <h1 className="font-display text-display-lg font-semibold text-white">
               {reducedMotion ? (
-                'Abhay Manhas'
+                hero.title
               ) : (
-                <WordReveal text="Abhay Manhas" delay={0.15} />
+                <WordReveal text={hero.title} delay={0.15} />
               )}
             </h1>
 
             <h2 className="font-display text-headline-lg font-medium text-blue-300">
               {reducedMotion ? (
-                <>Python, AI &amp; Automation Engineer</>
+                hero.highlight
               ) : (
-                <WordReveal text="Python, AI & Automation Engineer" delay={0.35} />
+                <WordReveal text={hero.highlight} delay={0.35} />
               )}
             </h2>
 
@@ -129,7 +129,7 @@ export default function HeroSection() {
               transition={{ delay: 0.6, duration: 0.6, ease: ease.smooth }}
               className="max-w-xl text-body-lg text-white/80"
             >
-              I build intelligent software, automation systems, and AI-powered solutions for businesses and startups.
+              {hero.description}
             </motion.p>
           </div>
 
@@ -142,11 +142,11 @@ export default function HeroSection() {
             transition={{ delay: 0.72, duration: 0.6, ease: ease.smooth }}
             className="mt-10 flex flex-col items-start gap-4 sm:flex-row"
           >
-            <Link to="/#contact" className="btn-primary btn-glow px-6 py-3.5 text-sm sm:text-base">
-              Hire Me <ArrowRight className="h-4 w-4" />
+            <Link to={hero.primaryActionTo} className="btn-primary btn-glow px-6 py-3.5 text-sm sm:text-base">
+              {hero.primaryActionLabel} <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link to="/#projects" className="btn-ghost px-6 py-3.5 text-sm sm:text-base">
-              View Projects
+            <Link to={hero.secondaryActionTo} className="btn-ghost px-6 py-3.5 text-sm sm:text-base">
+              {hero.secondaryActionLabel}
             </Link>
           </motion.div>
 
@@ -161,7 +161,7 @@ export default function HeroSection() {
           >
             <div className="inline-flex flex-wrap items-center gap-2 rounded-full bg-white/10 p-2 backdrop-blur-sm">
               {socialLinks.map(link => {
-                const Icon = socialIcons[link.id] ?? GlobeIconFallback
+                const Icon = socialIcons[link.id as keyof typeof socialIcons] ?? GlobeIconFallback
                 return (
                   <SocialLinkButton key={link.id} href={link.href} label={link.label} internal={link.internal}>
                     <Icon className="h-4 w-4" />
@@ -184,7 +184,7 @@ export default function HeroSection() {
               Trusted Focus
             </p>
             <p className="mt-3 text-sm leading-7 text-white/80">
-              Intelligent systems for teams that need dependable automation, practical AI integration, and delivery that feels senior from day one.
+              {hero.aiSummary}
             </p>
           </motion.div>
         </div>

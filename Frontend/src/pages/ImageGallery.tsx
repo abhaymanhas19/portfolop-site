@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { galleryContent } from '../data/content'
+import { usePortfolio } from '../hooks/usePortfolio'
 import Modal from '../components/Modal'
 import VantaRingsBackground from '../components/VantaRingsBackground'
 
@@ -28,8 +28,9 @@ const itemVariants = {
 }
 
 export default function ImageGallery() {
-  const [selectedImage, setSelectedImage] = useState<(typeof galleryContent.images)[number] | null>(null)
-  const { images } = galleryContent
+  const { gallery } = usePortfolio()
+  const { images } = gallery
+  const [selectedImage, setSelectedImage] = useState<(typeof images)[number] | null>(null)
 
   return (
     <div className="bg-white text-slate-700">

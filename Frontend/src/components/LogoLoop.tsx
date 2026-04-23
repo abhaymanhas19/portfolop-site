@@ -1,12 +1,14 @@
 import { useMemo, useState } from 'react'
-import { logoLoopItems } from '../data/logoLoop'
+import { usePortfolio } from '../hooks/usePortfolio'
 
 const ITEM_WIDTH = 120
 const ITEM_HEIGHT = 70
 const ROTATION_DURATION = 22
 
 export default function LogoLoop() {
-  const duplicatedItems = useMemo(() => [...logoLoopItems, ...logoLoopItems], [])
+  const { logoLoop: logoLoopContent } = usePortfolio()
+  const logoLoopItems = logoLoopContent.items || []
+  const duplicatedItems = useMemo(() => [...logoLoopItems, ...logoLoopItems], [logoLoopItems])
   const [paused, setPaused] = useState(false)
 
   return (
@@ -48,12 +50,12 @@ export default function LogoLoop() {
                 <span className="text-[11px] font-medium uppercase tracking-[0.32em] text-[#565e74]/60">
                   {item.label}
                 </span>
-                <span className="mt-1 text-2xl font-semibold" style={{ color: item.foreground }}>
+                <span className="mt-1 text-2xl font-semibold" style={{ color: item.foreground || '#005bc4' }}>
                   {item.acronym}
                 </span>
                 <div
                   className="mt-1 h-1 w-12 rounded-full"
-                  style={{ background: `linear-gradient(90deg, ${item.accent}, transparent)` }}
+                  style={{ background: `linear-gradient(90deg, ${item.accent || '#0fb6c4'}, transparent)` }}
                 />
               </a>
             ))}

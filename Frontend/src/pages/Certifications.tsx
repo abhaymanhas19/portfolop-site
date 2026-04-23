@@ -3,31 +3,33 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ArrowLeft, ExternalLink, Sparkles } from 'lucide-react'
 import VantaRingsBackground from '../components/VantaRingsBackground'
-import { certificationBadges } from '../data/content'
+import { usePortfolio } from '../hooks/usePortfolio'
 
 type CategoryGroup = {
   name: string
-  badges: typeof certificationBadges
-}
-
-const buildCategories = (): CategoryGroup[] => {
-  const map = new Map<string, typeof certificationBadges>()
-  certificationBadges.forEach(badge => {
-    const existing = map.get(badge.category)
-    if (existing) {
-      existing.push(badge)
-    } else {
-      map.set(badge.category, [badge])
-    }
-  })
-  return Array.from(map.entries()).map(([name, badges]) => ({ name, badges }))
+  badges: any[]
 }
 
 export default function Certifications() {
-  const categories = useMemo(buildCategories, [])
+  const { achievements } = usePortfolio()
+  const certificationBadges = achievements.certifications
+
+  const categories = useMemo(() => {
+    const map = new Map<string, any[]>()
+    certificationBadges.forEach(badge => {
+      const existing = map.get(badge.category)
+      if (existing) {
+        existing.push(badge)
+      } else {
+        map.set(badge.category, [badge])
+      }
+    })
+    return Array.from(map.entries()).map(([name, badges]) => ({ name, badges }))
+  }, [certificationBadges])
+
   const allCategory: CategoryGroup = useMemo(
     () => ({ name: 'All Achievements', badges: certificationBadges }),
-    [],
+    [certificationBadges],
   )
   const categoriesWithAll = useMemo(() => [allCategory, ...categories], [allCategory, categories])
   const [activeCategory, setActiveCategory] = useState(categoriesWithAll[0]?.name ?? 'All Achievements')

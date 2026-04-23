@@ -2,10 +2,10 @@ import { useEffect, useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, BookOpen, Sparkles } from 'lucide-react'
-import { useBlogs } from '../hooks/useBlogs'
+import { usePortfolio } from '../hooks/usePortfolio'
 
 export default function BlogCarousel() {
-  const { blogs, loading, error } = useBlogs()
+  const { blogs, loading, error } = usePortfolio()
   const navigate = useNavigate()
   const featured = useMemo(() => blogs.slice(0, 4), [blogs])
   const [index, setIndex] = useState(0)
@@ -113,14 +113,14 @@ export default function BlogCarousel() {
                 </div>
                 <div className="flex h-full flex-col gap-3 px-6 py-6 md:py-10">
                   <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.24em] text-[#005bc4]">
-                    <BookOpen className="h-4 w-4" /> {active.category}
+                    <BookOpen className="h-4 w-4" /> {active.title.split(' ')[0]}
                   </div>
                   <h3 className="font-display text-2xl font-semibold text-[#2a3439]">{active.title}</h3>
                   <p className="text-sm leading-relaxed text-[#565e74]">{active.summary}</p>
                   <div className="mt-auto flex flex-wrap gap-3 text-xs font-semibold uppercase tracking-[0.24em] text-[#565e74]">
-                    {active.skills.map(skill => (
-                      <span key={skill} className="rounded-full bg-surface-container-low px-3 py-1 text-[#005bc4]">
-                        {skill}
+                    {active.tags.map(tag => (
+                      <span key={tag} className="rounded-full bg-surface-container-low px-3 py-1 text-[#005bc4]">
+                        {tag}
                       </span>
                     ))}
                   </div>
@@ -130,9 +130,9 @@ export default function BlogCarousel() {
 
             <div className="absolute inset-x-0 bottom-0 flex items-center justify-between px-4 pb-4 pt-2">
               <div className="flex gap-2 text-sm text-[#565e74]">
-                <span>{active.publishedAt}</span>
+                <span>{active.date}</span>
                 <span>·</span>
-                <span>{active.readTime} read</span>
+                <span>5 min read</span>
               </div>
               <div className="flex items-center gap-2">
                 <button
@@ -172,9 +172,9 @@ export default function BlogCarousel() {
               >
                 <div className="flex items-center justify-between gap-3">
                   <div className="space-y-1">
-                    <p className="text-xs uppercase tracking-[0.2em] text-[#005bc4]">{blog.category}</p>
+                    <p className="text-xs uppercase tracking-[0.2em] text-[#005bc4]">{blog.title.split(' ')[0]}</p>
                     <p className="text-sm font-semibold text-[#2a3439]">{blog.title}</p>
-                    <p className="text-xs text-[#565e74]">{blog.readTime} · {blog.publishedAt}</p>
+                    <p className="text-xs text-[#565e74]">5 min read · {blog.date}</p>
                   </div>
                   <img
                     src={blog.image}

@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Workflow, ExternalLink } from 'lucide-react'
-import { aboutContent } from '../data/content'
+import { usePortfolio } from '../hooks/usePortfolio'
 import TiltCard from './TiltCard'
 
 const cardVariants = {
@@ -23,6 +23,8 @@ const stagger = {
 }
 
 export default function AboutPreview() {
+  const { about: aboutContent } = usePortfolio()
+
   return (
     <section className="relative overflow-hidden bg-surface py-ds-16 section-depth">
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-12 px-6">

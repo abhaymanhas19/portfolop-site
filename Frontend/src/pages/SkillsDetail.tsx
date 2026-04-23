@@ -14,7 +14,7 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 import VantaRingsBackground from '../components/VantaRingsBackground'
-import { skillClusters } from '../data/content'
+import { usePortfolio } from '../hooks/usePortfolio'
 import LogoLoop from '../components/LogoLoop'
 
 const iconMap: Record<string, LucideIcon> = {
@@ -27,10 +27,12 @@ const iconMap: Record<string, LucideIcon> = {
 }
 
 export default function SkillsDetail() {
+  const { skills: skillsData } = usePortfolio()
+  const skillClusters = skillsData.categories
   const [active, setActive] = useState(skillClusters[0]?.id ?? 'backend')
   const activeCategory = useMemo(
     () => skillClusters.find(category => category.id === active) ?? skillClusters[0],
-    [active],
+    [active, skillClusters],
   )
 
   if (!activeCategory) return null

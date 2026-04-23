@@ -2,16 +2,19 @@ import { useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Award, ArrowRight, ExternalLink } from 'lucide-react'
-import { certificationBadges } from '../data/content'
+import { usePortfolio } from '../hooks/usePortfolio'
 
 type CategoryGroup = {
   name: string
-  badges: typeof certificationBadges
+  badges: any[]
 }
 
 export default function CertificationsPreview() {
+  const { achievements } = usePortfolio()
+  const certificationBadges = achievements.certifications
+
   const categories = useMemo<CategoryGroup[]>(() => {
-    const map = new Map<string, typeof certificationBadges>()
+    const map = new Map<string, any[]>()
     certificationBadges.forEach(badge => {
       const key = badge.category
       const existing = map.get(key)
@@ -22,9 +25,9 @@ export default function CertificationsPreview() {
       }
     })
     return Array.from(map.entries()).map(([name, badges]) => ({ name, badges }))
-  }, [])
+  }, [certificationBadges])
 
-  const allCategory: CategoryGroup = useMemo(() => ({ name: 'All Achievements', badges: certificationBadges }), [])
+  const allCategory: CategoryGroup = useMemo(() => ({ name: 'All Achievements', badges: certificationBadges }), [certificationBadges])
   const categoriesWithAll = useMemo(() => [allCategory, ...categories], [allCategory, categories])
 
   const [activeCategory, setActiveCategory] = useState(categoriesWithAll[0]?.name ?? 'All Achievements')

@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback, type MouseEvent as ReactMouseEvent } 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { galleryContent } from '../data/content'
+import { usePortfolio } from '../hooks/usePortfolio'
 
 const AUTOPLAY_MS = 5000
 
@@ -23,7 +23,8 @@ const bgVariants = {
 
 export default function ImageShowcase() {
   const navigate = useNavigate()
-  const { profile, carousel } = galleryContent
+  const { gallery } = usePortfolio()
+  const { profile, carousel } = gallery
   const [current, setCurrent] = useState(0)
   const [direction, setDirection] = useState(1)
   const [isPaused, setIsPaused] = useState(false)
@@ -63,6 +64,7 @@ export default function ImageShowcase() {
   const handlePointerLeave = () => setSpotlight((prev) => ({ ...prev, active: false }))
 
   const item = carousel[current]
+  if (!item) return null
 
   return (
     <section

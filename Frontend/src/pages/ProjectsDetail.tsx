@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, ExternalLink, Github, Sparkles, MapPin } from 'lucide-react'
 import VantaRingsBackground from '../components/VantaRingsBackground'
-import { projectCases } from '../data/content'
+import { usePortfolio } from '../hooks/usePortfolio'
 import Modal from '../components/Modal'
 
 const card = {
@@ -16,6 +16,8 @@ const card = {
 }
 
 export default function ProjectsDetail() {
+  const { projects: projectsData } = usePortfolio()
+  const projectCases = projectsData.featured
   const [selectedProject, setSelectedProject] = useState<(typeof projectCases)[number] | null>(null)
   const location = useLocation()
   const navigate = useNavigate()
@@ -29,7 +31,7 @@ export default function ProjectsDetail() {
       }
       navigate(location.pathname, { replace: true })
     }
-  }, [location.state, location.pathname, navigate])
+  }, [location.state, location.pathname, navigate, projectCases])
 
   return (
     <div className="bg-surface font-body">

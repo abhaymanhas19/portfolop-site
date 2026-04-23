@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { Document, Page, pdfjs } from 'react-pdf'
 import { Download, ExternalLink, Mail, MapPin } from 'lucide-react'
 import VantaRingsBackground from '../components/VantaRingsBackground'
-import { site } from '../data/site'
+import { usePortfolio } from '../hooks/usePortfolio'
 
 function usePdfWorker() {
   const [ready, setReady] = useState(false)
@@ -16,6 +16,7 @@ function usePdfWorker() {
 }
 
 export default function Resume() {
+  const { branding } = usePortfolio()
   const ready = usePdfWorker()
   const [numPages, setNumPages] = useState<number>(0)
   const [error, setError] = useState<string | null>(null)
@@ -50,7 +51,7 @@ export default function Resume() {
                   Resume Snapshot
                 </span>
                 <h1 className="font-display text-3xl font-semibold leading-tight md:text-4xl">
-                  {site.NAME} · {site.ROLE}
+                  {branding.name} · {branding.role}
                 </h1>
                 <p className="max-w-2xl text-sm text-white/85 md:text-base">
                   Highlights from shipping AI-led platforms, resilient Python systems, and observability-first operations across industries.
@@ -58,10 +59,10 @@ export default function Resume() {
               </div>
               <div className="flex flex-wrap gap-3">
                 <span className="inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-sm font-semibold text-[#2a3439] shadow-ambient-sm">
-                  <MapPin className="h-4 w-4 text-[#005bc4]" /> {site.LOCATION}
+                  <MapPin className="h-4 w-4 text-[#005bc4]" /> {branding.location}
                 </span>
                 <span className="inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-sm font-semibold text-[#2a3439] shadow-ambient-sm">
-                  <Mail className="h-4 w-4 text-[#005bc4]" /> {site.CONTACT_EMAIL}
+                  <Mail className="h-4 w-4 text-[#005bc4]" /> {branding.email}
                 </span>
               </div>
             </div>
@@ -76,24 +77,24 @@ export default function Resume() {
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <span className="inline-flex items-center gap-2 rounded-full bg-surface-container-lowest px-3 py-1 shadow-ambient-sm">
-              <MapPin className="h-4 w-4 text-[#005bc4]" /> {site.LOCATION}
+              <MapPin className="h-4 w-4 text-[#005bc4]" /> {branding.location}
             </span>
             <span className="inline-flex items-center gap-2 rounded-full bg-surface-container-lowest px-3 py-1 shadow-ambient-sm">
-              <Mail className="h-4 w-4 text-[#005bc4]" /> {site.CONTACT_EMAIL}
+              <Mail className="h-4 w-4 text-[#005bc4]" /> {branding.email}
             </span>
           </div>
         </div>
 
         <div className="mt-8 flex flex-wrap gap-3">
           <a
-            href={site.RESUME_PDF_PATH}
+            href={branding.resumePath}
             download
             className="btn-primary px-5 py-2.5 text-sm"
           >
             <Download className="h-4 w-4" /> Download PDF
           </a>
           <a
-            href={site.RESUME_PDF_PATH}
+            href={branding.resumePath}
             target="_blank"
             rel="noreferrer"
             className="btn-secondary px-5 py-2.5 text-sm"
@@ -121,15 +122,15 @@ export default function Resume() {
               <p>
                 Please use the download button above or open the resume in a new tab. If the issue persists, email me for a copy.
               </p>
-              <a href={`mailto:${site.CONTACT_EMAIL}`} className="inline-flex items-center gap-2 text-red-600">
-                <Mail className="h-4 w-4" /> {site.CONTACT_EMAIL}
+              <a href={`mailto:${branding.email}`} className="inline-flex items-center gap-2 text-red-600">
+                <Mail className="h-4 w-4" /> {branding.email}
               </a>
             </div>
           )}
 
           {ready && !error && (
             <Document
-              file={site.RESUME_PDF_PATH}
+              file={branding.resumePath}
               onLoadSuccess={({ numPages: pages }) => setNumPages(pages)}
               onLoadError={() => setError('PDF failed to load')}
               className="flex flex-col items-center gap-6"

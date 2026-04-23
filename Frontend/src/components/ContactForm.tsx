@@ -1,35 +1,35 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, CalendarCheck, Clock, MessageCircle } from 'lucide-react'
 import emailjs from '@emailjs/browser'
-import { site } from '../data/site'
-import { contactContent } from '../data/content'
-
-const detailCards = [
-  {
-    icon: Mail,
-    title: 'Primary inbox',
-    value: site.CONTACT_EMAIL,
-    description: 'Drop a line with project goals, timelines, or AI product ideas.',
-    href: `mailto:${site.CONTACT_EMAIL}`,
-  },
-  {
-    icon: CalendarCheck,
-    title: 'Availability',
-    value: 'Open for AI & backend collaborations',
-    description: 'Booking strategy calls and build partnerships for the next quarter.',
-  },
-  {
-    icon: Clock,
-    title: 'Response time',
-    value: 'Replies within 24 hours',
-    description: `${site.LOCATION} · IST (UTC+5:30)`,
-  },
-]
+import { usePortfolio } from '../hooks/usePortfolio'
 
 export default function ContactForm() {
+  const { branding } = usePortfolio()
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [error, setError] = useState<string>('')
+
+  const detailCards = useMemo(() => [
+    {
+      icon: Mail,
+      title: 'Primary inbox',
+      value: branding.email,
+      description: 'Drop a line with project goals, timelines, or AI product ideas.',
+      href: `mailto:${branding.email}`,
+    },
+    {
+      icon: CalendarCheck,
+      title: 'Availability',
+      value: 'Open for AI & backend collaborations',
+      description: 'Booking strategy calls and build partnerships for the next quarter.',
+    },
+    {
+      icon: Clock,
+      title: 'Response time',
+      value: 'Replies within 24 hours',
+      description: `${branding.location} · IST (UTC+5:30)`,
+    },
+  ], [branding])
 
   const pk = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
   const sid = import.meta.env.VITE_EMAILJS_SERVICE_ID
@@ -47,7 +47,7 @@ export default function ContactForm() {
     if (!hasEmailJs) {
       const subject = encodeURIComponent(`Portfolio Contact from ${name}`)
       const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`)
-      window.location.href = `mailto:${site.CONTACT_EMAIL}?subject=${subject}&body=${body}`
+      window.location.href = `mailto:${branding.email}?subject=${subject}&body=${body}`
       return
     }
 
@@ -89,10 +89,10 @@ export default function ContactForm() {
                   <MessageCircle className="h-3.5 w-3.5" /> Let's talk
                 </span>
                 <h2 className="font-display text-display-md font-semibold text-[#2a3439]">
-                  {contactContent.title}
+                  Reach out to build something senior
                 </h2>
                 <p className="max-w-2xl text-body-lg text-[#565e74]">
-                  {contactContent.subtitle}
+                  Whether you need a full-stack platform, an intelligent automation system, or just a technical second opinion, I'm here to help.
                 </p>
               </div>
 
@@ -138,7 +138,7 @@ export default function ContactForm() {
                     name="name"
                     required
                     className="rounded-2xl bg-surface-container-low px-4 py-3 text-sm text-[#2a3439] transition focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-[#005bc4]/20"
-                    placeholder={contactContent.form.namePlaceholder}
+                    placeholder="Your name"
                   />
                 </label>
                 <label className="flex flex-col gap-1 text-sm font-medium text-[#2a3439]" htmlFor="email">
@@ -149,7 +149,7 @@ export default function ContactForm() {
                     type="email"
                     required
                     className="rounded-2xl bg-surface-container-low px-4 py-3 text-sm text-[#2a3439] transition focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-[#005bc4]/20"
-                    placeholder={contactContent.form.emailPlaceholder}
+                    placeholder="Your email address"
                   />
                 </label>
               </div>
@@ -161,13 +161,13 @@ export default function ContactForm() {
                   rows={6}
                   required
                   className="rounded-2xl bg-surface-container-low px-4 py-3 text-sm text-[#2a3439] transition focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-[#005bc4]/20"
-                  placeholder={contactContent.form.messagePlaceholder}
+                  placeholder="Tell me about your project, goals, and any specific challenges you're facing."
                 />
               </label>
 
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                 <button type="submit" className="btn-primary">
-                  {status === 'sending' ? 'Sending…' : contactContent.form.submitText}
+                  {status === 'sending' ? 'Sending…' : 'Send Message'}
                 </button>
                 <span className="text-xs text-[#565e74]" aria-live="polite">
                   {status === 'success' && 'Thanks! Message delivered successfully.'}

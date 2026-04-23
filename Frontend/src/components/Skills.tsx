@@ -11,7 +11,7 @@ import {
   Layers,
   type LucideIcon,
 } from 'lucide-react'
-import { skillClusters } from '../data/content'
+import { usePortfolio } from '../hooks/usePortfolio'
 import FloatingAccents from './FloatingAccents'
 
 const iconMap: Record<string, LucideIcon> = {
@@ -23,13 +23,13 @@ const iconMap: Record<string, LucideIcon> = {
   Layers,
 }
 
-const categories = skillClusters
-
 export default function Skills() {
+  const { skills } = usePortfolio()
+  const categories = skills.categories
   const [active, setActive] = useState(categories[0]?.id ?? 'backend')
   const activeCategory = useMemo(
     () => categories.find(category => category.id === active) ?? categories[0],
-    [active],
+    [active, categories],
   )
 
   if (!activeCategory) return null
