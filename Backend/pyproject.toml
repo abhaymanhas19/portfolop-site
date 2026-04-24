@@ -5,9 +5,11 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
+    "cloudinary>=1.44.2",
     "fastapi>=0.136.0",
     "psycopg2-binary>=2.9.12",
     "python-dotenv>=1.2.2",
+    "python-multipart>=0.0.26",
     "sqladmin>=0.25.0",
     "sqlalchemy-utils>=0.42.1",
     "sqlmodel>=0.0.38",
