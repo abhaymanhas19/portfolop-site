@@ -1,5 +1,5 @@
 from sqladmin import ModelView
-from .models import (
+from app.models import (
     SkillCategory, Skill,
     Project, Achievement,
     Experience, ExperienceAchievement,

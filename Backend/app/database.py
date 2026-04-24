@@ -1,3 +1,4 @@
+"""Database configuration and session management."""
 import os
 from dotenv import load_dotenv
 from sqlmodel import SQLModel, create_engine, Session
@@ -18,8 +19,10 @@ DATABASE_URL = os.getenv(
 engine = create_engine(DATABASE_URL, echo=True)
 
 def init_db():
+    """Initializes the database by creating all tables defined in SQLModel metadata."""
     SQLModel.metadata.create_all(engine)
 
 def get_session():
+    """Provides a transactional scope around a series of operations."""
     with Session(engine) as session:
         yield session

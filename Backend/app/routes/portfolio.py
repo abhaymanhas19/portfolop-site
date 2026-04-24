@@ -1,7 +1,8 @@
+"""Portfolio routes for fetching dynamic data."""
 from fastapi import APIRouter, Depends
 from sqlmodel import Session, select
-from ..database import get_session
-from ..models import (
+from app.database import get_session
+from app.models import (
     SkillCategory, Skill, Project, Achievement, 
     Experience, ExperienceAchievement, AboutProfile, AboutTile, ValueStatement,
     ProductProfile, ProductCarousel, ProductImage, Blog
@@ -11,7 +12,8 @@ router = APIRouter()
 
 @router.get("/")
 def get_portfolio(session: Session = Depends(get_session)):
-    # Skills
+    """Fetches all portfolio data including skills, projects, achievements, and blogs."""
+   # Skills
     categories = session.exec(select(SkillCategory)).all()
     skills_data = []
     for cat in categories:
