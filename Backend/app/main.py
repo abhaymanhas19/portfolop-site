@@ -3,14 +3,15 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import engine, init_db
 from app.routes import portfolio
-from app.admin import setup_admin
+from app.admin import register_admin
+from sqladmin import Admin
 
 app = FastAPI(title="Portfolio Backend")
 
 # CORS setup
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Adjust this for production
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -24,7 +25,8 @@ def on_startup():
 app.include_router(portfolio.router)
 
 # Setup Admin
-setup_admin(app, engine)
+admin = Admin(app, engine)
+register_admin(admin)
 
 @app.get("/")
 async def root():

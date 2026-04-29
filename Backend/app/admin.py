@@ -8,7 +8,7 @@ from app.models import (
     Blog, BlogImage
 )
 from wtforms import FileField
-import cloudinary.uploader
+import cloudinary
 from starlette.requests import Request
 
 class SkillCategoryAdmin(ModelView, model=SkillCategory):
@@ -41,17 +41,29 @@ class BlogImageAdmin(ModelView, model=BlogImage):
 
     async def on_model_change(self, data: dict, model: any, is_created: bool, request: Request) -> None:
         file_obj = data.get("image_url")
-        # Check if a new file was actually uploaded
         if file_obj and hasattr(file_obj, "filename") and file_obj.filename:
             file_bytes = await file_obj.read()
             upload_result = cloudinary.uploader.upload(file_bytes)
             data["image_url"] = upload_result.get("secure_url")
         elif not is_created and model.image_url:
-            # If editing and no new file provided, retain the existing URL
             data["image_url"] = model.image_url
         else:
-            # Handle case where no file was provided on creation
             data["image_url"] = ""
+
+class ExperienceAchievementAdmin(ModelView, model=ExperienceAchievement):
+    column_list = [ExperienceAchievement.id, ExperienceAchievement.content, ExperienceAchievement.experience_id]
+
+class AboutTileAdmin(ModelView, model=AboutTile):
+    column_list = [AboutTile.id, AboutTile.title]
+
+class ValueStatementAdmin(ModelView, model=ValueStatement):
+    column_list = [ValueStatement.id, ValueStatement.title]
+
+class ProductCarouselAdmin(ModelView, model=ProductCarousel):
+    column_list = [ProductCarousel.id, ProductCarousel.title]
+
+class ProductImageAdmin(ModelView, model=ProductImage):
+    column_list = [ProductImage.id, ProductImage.src]
 
 def register_admin(admin):
     admin.add_view(SkillCategoryAdmin)
@@ -63,8 +75,8 @@ def register_admin(admin):
     admin.add_view(ProductProfileAdmin)
     admin.add_view(BlogAdmin)
     admin.add_view(BlogImageAdmin)
-    admin.add_view(ExperienceAchievement)
-    admin.add_view(AboutTile)
-    admin.add_view(ValueStatement)
-    admin.add_view(ProductCarousel)
-    admin.add_view(ProductImage)
+    admin.add_view(ExperienceAchievementAdmin)
+    admin.add_view(AboutTileAdmin)
+    admin.add_view(ValueStatementAdmin)
+    admin.add_view(ProductCarouselAdmin)
+    admin.add_view(ProductImageAdmin)

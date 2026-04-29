@@ -9,7 +9,7 @@ class Blog(SQLModel, table=True):
     content: str
     image: str
     date: str
-    tags: str # Comma-separated
+    tags: str
     author: str
 
     images: List["BlogImage"] = Relationship(back_populates="blog")

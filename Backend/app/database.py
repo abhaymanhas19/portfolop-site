@@ -5,7 +5,7 @@ from sqlmodel import SQLModel, create_engine, Session
 
 load_dotenv()
 
-DB_USER = os.getenv("DB_USER", "postgres")
+DB_USER = os.getenv("DB_USER", "abhaymanhas")
 DB_PASSWORD = os.getenv("DB_PASSWORD", "postgres")
 DB_HOST = os.getenv("DB_HOST", "localhost")
 DB_PORT = os.getenv("DB_PORT", "5432")
