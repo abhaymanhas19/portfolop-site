@@ -8,7 +8,7 @@ from app.models import (
     Blog, BlogImage
 )
 from wtforms import FileField
-import cloudinary
+import cloudinary.uploader
 from starlette.requests import Request
 
 class SkillCategoryAdmin(ModelView, model=SkillCategory):

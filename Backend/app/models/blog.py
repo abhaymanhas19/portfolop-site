@@ -1,5 +1,5 @@
 from typing import Optional, List
-from sqlmodel import SQLModel, Field, Relationship
+from sqlmodel import SQLModel, Field, Relationship, Column, JSON
 
 class Blog(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -7,11 +7,8 @@ class Blog(SQLModel, table=True):
     title: str
     summary: str
     content: str
-    image: str
     date: str
-    tags: str
-    author: str
-
+    tags: List[str] = Field(default_factory=list, sa_column=Column(JSON))
     images: List["BlogImage"] = Relationship(back_populates="blog")
 
 class BlogImage(SQLModel, table=True):
