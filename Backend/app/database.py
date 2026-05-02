@@ -18,7 +18,14 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 if not DATABASE_URL:
     DATABASE_URL = f"postgresql://{DB_USER}:{encoded_password}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
+ASYNC_DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+asyncpg://")
+
 engine = create_engine(DATABASE_URL, echo=True)
+
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from sqlalchemy.orm import sessionmaker
+
+async_engine = create_async_engine(ASYNC_DATABASE_URL, echo=True)
 
 def init_db():
     """Initializes the database by creating all tables defined in SQLModel metadata."""
@@ -27,4 +34,12 @@ def init_db():
 def get_session():
     """Provides a transactional scope around a series of operations."""
     with Session(engine) as session:
+        yield session
+
+async def get_async_session():
+    """Provides an async transactional scope."""
+    async_session_maker = sessionmaker(
+        async_engine, class_=AsyncSession, expire_on_commit=False
+    )
+    async with async_session_maker() as session:
         yield session

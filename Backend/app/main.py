@@ -21,12 +21,11 @@ def on_startup():
     """Initializes the database on application startup."""
     init_db()
 
-# app.include_router(portfolio.router)
+from app.routes.blog import router as blog_router
+
+app.include_router(blog_router)
 
 # Setup Admin
 admin = Admin(app, engine)
 register_admin(admin)
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
