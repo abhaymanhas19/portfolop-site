@@ -19,7 +19,8 @@ app.add_middleware(
 @app.on_event("startup")
 def on_startup():
     """Initializes the database on application startup."""
-    init_db()
+    # init_db()
+    pass
 
 from app.routes.blog import router as blog_router
 
