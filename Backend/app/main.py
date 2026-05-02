@@ -16,6 +16,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from starlette.middleware.sessions import SessionMiddleware
+from app.auth import AdminAuth
+import os
+
+# Add SessionMiddleware (required for SQLAdmin authentication)
+# It uses a secret key from your environment or defaults to a generic string
+app.add_middleware(
+    SessionMiddleware, 
+    secret_key=os.getenv("SESSION_SECRET", "super-secret-session-key")
+)
+
 @app.on_event("startup")
 def on_startup():
     """Initializes the database on application startup."""
@@ -25,7 +36,8 @@ from app.routes.blog import router as blog_router
 
 app.include_router(blog_router)
 
-# Setup Admin
-admin = Admin(app, engine)
+# Setup Admin with Authentication
+authentication_backend = AdminAuth(secret_key=os.getenv("SESSION_SECRET", "super-secret-session-key"))
+admin = Admin(app, engine, authentication_backend=authentication_backend)
 register_admin(admin)
 
