@@ -162,6 +162,11 @@ export default function BlogDetail() {
           </motion.div>
 
           <div>
+            {blog.summary && (
+              <p className="mb-8 text-lg font-medium text-slate-600 leading-relaxed italic border-l-4 border-slate-300 pl-4">
+                {blog.summary}
+              </p>
+            )}
             <Markdown content={blog.body} />
           </div>
           <div className="clear-both" />

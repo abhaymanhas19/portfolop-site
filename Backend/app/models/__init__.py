@@ -1,7 +1,7 @@
 from .skill import SkillCategory, Skill
-from .project import Project
+from .project import Project, ProjectImage
 from .achievement import Achievement
-from .experience import Experience, ExperienceAchievement
-from .about import AboutProfile, AboutTile, ValueStatement
+from .about import Experience, ExperienceAchievement, AboutTile, ValueStatement
 from .product import ProductProfile, ProductCarousel, ProductImage
 from .blog import Blog, BlogImage
+from .social import SocialLink

@@ -14,7 +14,7 @@ class BlogListResponse(BaseModel):
     id: int
     slug: str
     title: str
-    date: str
+    date: Optional[str] = None
     tags: List[str]
     images: List[BlogImageResponse] = []
 
@@ -24,5 +24,5 @@ class BlogListResponse(BaseModel):
 
 class BlogResponse(BlogListResponse):
     """Schema for validating and formatting a single Blog API response, including full content."""
-    summary: str
-    content: str
+    summary: Optional[str] = None
+    content: Optional[str] = None

@@ -15,7 +15,7 @@ class ProductProfile(SQLModel, table=True):
 class ProductCarousel(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     src: str
-    media_type: str  # 'image' or 'video'
+    media_type: str
     alt: str
     title: Optional[str] = None
     description: Optional[str] = None
