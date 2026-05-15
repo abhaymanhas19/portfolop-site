@@ -9,7 +9,6 @@ from app.models import (
     SocialLink
 )
 from wtforms import FileField
-import cloudinary.uploader
 from starlette.requests import Request
 
 class SkillCategoryAdmin(ModelView, model=SkillCategory):
@@ -40,8 +39,7 @@ class BlogImageAdmin(ModelView, model=BlogImage):
     async def on_model_change(self, data: dict, model: any, is_created: bool, request: Request) -> None:
         file_obj = data.get("image_url")
         if file_obj and hasattr(file_obj, "filename") and file_obj.filename:
-            file_bytes = await file_obj.read()
-            upload_result = cloudinary.uploader.upload(file_bytes)
+            upload_result = cloudinary_uploader(file_obj)
             data["image_url"] = upload_result.get("secure_url")
         elif not is_created and model.image_url:
             data["image_url"] = model.image_url
@@ -55,8 +53,7 @@ class ProjectImageAdmin(ModelView, model=ProjectImage):
     async def on_model_change(self, data: dict, model: any, is_created: bool, request: Request) -> None:
         file_obj = data.get("image_url")
         if file_obj and hasattr(file_obj, "filename") and file_obj.filename:
-            file_bytes = await file_obj.read()
-            upload_result = cloudinary.uploader.upload(file_bytes)
+            upload_result = cloudinary_uploader(file_obj)
             data["image_url"] = upload_result.get("secure_url")
         elif not is_created and model.image_url:
             data["image_url"] = model.image_url
