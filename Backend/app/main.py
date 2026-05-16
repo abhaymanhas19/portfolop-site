@@ -33,8 +33,10 @@ def on_startup():
     init_db()
 
 from app.routes.blog import router as blog_router
+from app.routes.mail import router as mail_router
 
 app.include_router(blog_router)
+app.include_router(mail_router)
 
 # Setup Admin with Authentication
 authentication_backend = AdminAuth(secret_key=os.getenv("SESSION_SECRET", "super-secret-session-key"))
