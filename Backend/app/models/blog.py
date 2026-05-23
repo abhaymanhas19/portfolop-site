@@ -1,6 +1,6 @@
 from typing import Optional, List
 from sqlmodel import SQLModel, Field, Relationship, Column, JSON
-
+from enum import Enum
 
 class BlogsCategory(str, Enum):
     BACKEND = "Backend"
