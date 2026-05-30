@@ -1,14 +1,14 @@
-import os
+from app.config import settings
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
 from app.schemas.mail import EmailSchema
 
-# Configuration (Ideally loaded from environment variables)
+# Configuration loaded from environment variables via Settings
 conf = ConnectionConfig(
-    MAIL_USERNAME = os.getenv("MAIL_USERNAME"),
-    MAIL_PASSWORD = os.getenv("MAIL_PASSWORD"),
-    MAIL_FROM = os.getenv("MAIL_FROM"),
-    MAIL_PORT = 587,
-    MAIL_SERVER = "smtp.office365.com",
+    MAIL_USERNAME = settings.mail_username or "",
+    MAIL_PASSWORD = settings.mail_password or "",
+    MAIL_FROM = settings.mail_from or "",
+    MAIL_PORT = settings.mail_port,
+    MAIL_SERVER = settings.mail_server,
     MAIL_STARTTLS = True,
     MAIL_SSL_TLS = False,
     USE_CREDENTIALS = True

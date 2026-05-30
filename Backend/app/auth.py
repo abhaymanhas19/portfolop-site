@@ -1,4 +1,4 @@
-import os
+from app.config import settings
 from sqladmin.authentication import AuthenticationBackend
 from starlette.requests import Request
 
@@ -7,8 +7,8 @@ class AdminAuth(AuthenticationBackend):
         form = await request.form()
         username, password = form.get("username"), form.get("password")
 
-        expected_user = os.getenv("ADMIN_USER", "abhayramgarhia19@outlook.com")
-        expected_pass = os.getenv("ADMIN_PASSWORD", "admin")
+        expected_user = settings.admin_user
+        expected_pass = settings.admin_password
 
         if username == expected_user and password == expected_pass:
             # Store a simple token in the session

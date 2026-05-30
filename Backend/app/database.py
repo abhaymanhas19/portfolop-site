@@ -1,24 +1,9 @@
 """Database configuration and session management."""
-import os
-import urllib.parse
-from dotenv import load_dotenv
 from sqlmodel import SQLModel, create_engine, Session
+from app.config import settings
 
-load_dotenv()
-
-DB_USER = os.getenv("DB_USER")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
-DB_HOST = os.getenv("DB_HOST")
-DB_PORT = os.getenv("DB_PORT")
-DB_NAME = os.getenv("DB_NAME")
-
-encoded_password = urllib.parse.quote_plus(DB_PASSWORD)
-
-DATABASE_URL = os.getenv("DATABASE_URL")
-if not DATABASE_URL:
-    DATABASE_URL = f"postgresql://{DB_USER}:{encoded_password}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-
-ASYNC_DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+asyncpg://")
+DATABASE_URL = settings.sync_database_url
+ASYNC_DATABASE_URL = settings.async_database_url
 
 engine = create_engine(DATABASE_URL, echo=True)
 

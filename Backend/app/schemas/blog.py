@@ -1,28 +1,50 @@
+"""Pydantic schemas for Blog and BlogImage models."""
 from pydantic import BaseModel
 from typing import List, Optional
 
-class BlogImageResponse(BaseModel):
-    id: int
+class BlogImageBase(BaseModel):
     image_url: str
-    
+    blog_id: Optional[int] = None
+
+class BlogImageCreate(BlogImageBase):
+    pass
+
+class BlogImageResponse(BlogImageBase):
+    id: int
+
     class Config:
-        orm_mode = True
         from_attributes = True
 
-class BlogListResponse(BaseModel):
-    """Schema for validating and formatting the Blog list API response, omitting heavy content."""
-    id: int
+class BlogBase(BaseModel):
     slug: str
     title: str
+    category: str
+    summary: Optional[str] = None
+    content: Optional[str] = None
     date: Optional[str] = None
-    tags: List[str]
+    tags: List[str] = []
+
+class BlogCreate(BlogBase):
+    pass
+
+class BlogUpdate(BaseModel):
+    slug: Optional[str] = None
+    title: Optional[str] = None
+    category: Optional[str] = None
+    summary: Optional[str] = None
+    content: Optional[str] = None
+    date: Optional[str] = None
+    tags: Optional[List[str]] = None
+
+class BlogResponse(BlogBase):
+    id: int
     images: List[BlogImageResponse] = []
 
     class Config:
-        orm_mode = True
         from_attributes = True
 
-class BlogResponse(BlogListResponse):
-    """Schema for validating and formatting a single Blog API response, including full content."""
-    summary: Optional[str] = None
-    content: Optional[str] = None
+class BlogListResponse(BlogBase):
+    id: int
+
+    class Config:
+        from_attributes = True
