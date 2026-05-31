@@ -34,8 +34,5 @@ ENV PYTHONUNBUFFERED=1
 # Copy the application code
 COPY . /app
 
-# Fly.io usually expects port 8080
-EXPOSE 8080
-
 # Command to run the application
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
