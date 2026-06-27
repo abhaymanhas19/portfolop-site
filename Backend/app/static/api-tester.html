@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio API Tester</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --surface2: #18181f;
+      --surface3: #1e1e28;
+      --border: #2a2a38;
+      --border2: #333344;
+      --accent: #7c6af7;
+      --accent2: #9d8fff;
+      --accent-glow: rgba(124,106,247,0.2);
+      --green: #22c55e;
+      --green-glow: rgba(34,197,94,0.15);
+      --red: #ef4444;
+      --red-glow: rgba(239,68,68,0.15);
+      --yellow: #f59e0b;
+      --blue: #3b82f6;
+      --cyan: #06b6d4;
+      --text: #e2e2f0;
+      --text2: #9494b8;
+      --text3: #5c5c7a;
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: -0.3px;
+    }
+    .brand-dot {
+      width: 28px; height: 28px;
+      background: linear-gradient(135deg, var(--accent), var(--cyan));
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+    .base-url-bar {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 6px 12px;
+      font-size: 13px;
+    }
+    .base-url-bar label { color: var(--text3); font-size: 11px; font-weight: 600; letter-spacing: 0.5px; }
+    .base-url-bar input {
+      background: transparent; border: none; outline: none;
+      color: var(--accent2); font-family: 'JetBrains Mono', monospace;
+      font-size: 13px; width: 220px;
+    }
+    .badge {
+      background: var(--green-glow);
+      color: var(--green);
+      border: 1px solid rgba(34,197,94,0.3);
+      border-radius: 20px;
+      padding: 2px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── Layout ── */
+    .layout {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: 240px;
+      min-width: 240px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      padding: 16px 0;
+    }
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-track { background: transparent; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+
+    .sidebar-group { margin-bottom: 4px; }
+    .sidebar-group-label {
+      padding: 6px 16px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--text3);
+      text-transform: uppercase;
+      margin-top: 8px;
+    }
+    .sidebar-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 16px;
+      cursor: pointer;
+      border-radius: 0;
+      transition: background 0.15s, color 0.15s;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text2);
+      border-left: 3px solid transparent;
+      position: relative;
+    }
+    .sidebar-item:hover { background: var(--surface2); color: var(--text); }
+    .sidebar-item.active {
+      background: var(--accent-glow);
+      color: var(--accent2);
+      border-left-color: var(--accent);
+    }
+    .sidebar-icon { font-size: 14px; width: 20px; text-align: center; }
+    .method-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 5px;
+      border-radius: 4px;
+      margin-left: auto;
+    }
+    .GET  { background: rgba(59,130,246,0.2); color: #60a5fa; }
+    .POST { background: rgba(34,197,94,0.2);  color: #4ade80; }
+    .PUT  { background: rgba(245,158,11,0.2); color: #fbbf24; }
+    .DEL  { background: rgba(239,68,68,0.2);  color: #f87171; }
+
+    /* ── Main ── */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Request panel ── */
+    .request-panel {
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .endpoint-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .endpoint-desc {
+      color: var(--text2);
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    .url-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .method-select {
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      padding: 10px 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      outline: none;
+      min-width: 100px;
+    }
+    .url-input {
+      flex: 1;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius-sm);
+      color: var(--accent2);
+      padding: 10px 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .url-input:focus { border-color: var(--accent); }
+    .send-btn {
+      background: linear-gradient(135deg, var(--accent), #5b4fd4);
+      border: none;
+      border-radius: var(--radius-sm);
+      color: #fff;
+      padding: 10px 24px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+      display: flex; align-items: center; gap: 6px;
+      white-space: nowrap;
+    }
+    .send-btn:hover { opacity: 0.9; }
+    .send-btn:active { transform: scale(0.98); }
+    .send-btn.loading { opacity: 0.7; cursor: not-allowed; }
+
+    .tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+    .tab {
+      padding: 8px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text2);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+      margin-bottom: -1px;
+    }
+    .tab.active { color: var(--accent2); border-bottom-color: var(--accent); }
+    .tab:hover:not(.active) { color: var(--text); }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .required { color: var(--red); }
+    .form-input, .form-select, .form-textarea {
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      padding: 9px 12px;
+      font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--accent);
+    }
+    .form-textarea { resize: vertical; min-height: 80px; }
+    .form-select { cursor: pointer; }
+    option { background: var(--surface2); }
+
+    .json-editor {
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius-sm);
+      color: #a78bfa;
+      padding: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      width: 100%;
+      min-height: 180px;
+      outline: none;
+      resize: vertical;
+      transition: border-color 0.2s;
+    }
+    .json-editor:focus { border-color: var(--accent); }
+
+    .params-section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .param-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .param-row input {
+      flex: 1;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      padding: 8px 12px;
+      font-size: 13px;
+      outline: none;
+    }
+
+    /* ── Response panel ── */
+    .response-panel {
+      flex: 1;
+      overflow: auto;
+      padding: 24px;
+      background: var(--bg);
+    }
+    .response-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .response-label { font-size: 11px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; }
+    .status-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .status-ok  { background: var(--green-glow); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+    .status-err { background: var(--red-glow);   color: var(--red);   border: 1px solid rgba(239,68,68,0.3); }
+    .status-warn{ background: rgba(245,158,11,0.15); color: var(--yellow); border: 1px solid rgba(245,158,11,0.3); }
+    .time-chip {
+      padding: 4px 12px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 11px;
+      color: var(--text2);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .copy-btn {
+      margin-left: auto;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius-sm);
+      color: var(--text2);
+      padding: 5px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .copy-btn:hover { color: var(--text); border-color: var(--accent); }
+
+    .response-body {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      line-height: 1.7;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      min-height: 120px;
+      max-height: calc(100vh - 400px);
+    }
+
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      height: 200px;
+      color: var(--text3);
+    }
+    .empty-icon { font-size: 40px; opacity: 0.5; }
+    .empty-state p { font-size: 14px; }
+
+    /* JSON syntax highlight */
+    .json-key   { color: #a78bfa; }
+    .json-str   { color: #4ade80; }
+    .json-num   { color: #fb923c; }
+    .json-bool  { color: #60a5fa; }
+    .json-null  { color: #f87171; }
+
+    /* ── Spinner ── */
+    .spinner {
+      width: 14px; height: 14px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed;
+      bottom: 24px; right: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius);
+      padding: 12px 20px;
+      font-size: 13px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 999;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* scrollbar global */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-brand">
+    <div class="brand-dot">⚡</div>
+    Portfolio API Tester
+  </div>
+  <div class="base-url-bar">
+    <label>BASE URL</label>
+    <input id="baseUrl" value="http://localhost:8000" />
+  </div>
+  <span class="badge" id="statusBadge">● READY</span>
+</header>
+
+<div class="layout">
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar"></nav>
+
+  <!-- Main content -->
+  <div class="main">
+    <div class="request-panel">
+      <div class="endpoint-title" id="epTitle">
+        <span class="method-badge POST" id="epMethodBadge">POST</span>
+        Select an endpoint
+      </div>
+      <div class="endpoint-desc" id="epDesc">Choose an endpoint from the sidebar to get started.</div>
+
+      <div class="url-row">
+        <select class="method-select" id="methodSelect">
+          <option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option>
+        </select>
+        <input class="url-input" id="urlInput" placeholder="/api/endpoint" />
+        <button class="send-btn" id="sendBtn" onclick="sendRequest()">
+          <span id="sendBtnText">▶ Send</span>
+        </button>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab('body', this)">Body</div>
+        <div class="tab" onclick="switchTab('form', this)">Form Fields</div>
+        <div class="tab" onclick="switchTab('params', this)">Path Params</div>
+        <div class="tab" onclick="switchTab('headers', this)">Headers</div>
+      </div>
+
+      <div id="tab-body" class="tab-content active">
+        <textarea class="json-editor" id="bodyEditor" placeholder='{ "key": "value" }'></textarea>
+      </div>
+      <div id="tab-form" class="tab-content">
+        <div id="formFields" class="form-grid"></div>
+      </div>
+      <div id="tab-params" class="tab-content">
+        <div id="pathParamsSection" class="params-section">
+          <div class="form-group">
+            <label class="form-label">ID <span class="required">*</span></label>
+            <input class="form-input" id="pathId" placeholder="e.g. 1" type="number" />
+          </div>
+        </div>
+      </div>
+      <div id="tab-headers" class="tab-content">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Content-Type</label>
+            <input class="form-input" id="headerContentType" value="application/json" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Authorization</label>
+            <input class="form-input" id="headerAuth" placeholder="Bearer token..." />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Response -->
+    <div class="response-panel" id="responsePanel">
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">🚀</div>
+        <p>Send a request to see the response</p>
+      </div>
+      <div id="responseContent" style="display:none;">
+        <div class="response-header">
+          <span class="response-label">Response</span>
+          <span id="statusChip" class="status-chip"></span>
+          <span id="timeChip" class="time-chip"></span>
+          <button class="copy-btn" onclick="copyResponse()">Copy</button>
+        </div>
+        <pre class="response-body" id="responseBody"></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── Endpoint Definitions ─────────────────────────────────────────────────────
+const ENDPOINTS = [
+  // Skills
+  { group: 'Skills', label: 'List Skills', method: 'GET',  path: '/skills/',           icon: '⚡', desc: 'Fetch all skills', fields: [] },
+  { group: 'Skills', label: 'Create Skill', method: 'POST', path: '/skills/',           icon: '⚡', desc: 'Create a new skill',
+    fields: [
+      { name:'name', label:'Name', type:'text', required:true },
+      { name:'level', label:'Level (1-100)', type:'number', required:true },
+      { name:'description', label:'Description', type:'text' },
+      { name:'highlight', label:'Highlight', type:'text' },
+      { name:'category_id', label:'Category ID', type:'number' },
+    ]
+  },
+  { group: 'Skills', label: 'Get Skill', method: 'GET',    path: '/skills/{id}',        icon: '⚡', desc: 'Get a skill by ID', needsId: true, fields: [] },
+  { group: 'Skills', label: 'Update Skill', method: 'PUT', path: '/skills/{id}',        icon: '⚡', desc: 'Update a skill by ID', needsId: true,
+    fields: [
+      { name:'name', label:'Name', type:'text' },
+      { name:'level', label:'Level (1-100)', type:'number' },
+      { name:'description', label:'Description', type:'text' },
+      { name:'highlight', label:'Highlight', type:'text' },
+    ]
+  },
+  { group: 'Skills', label: 'Delete Skill', method: 'DELETE', path: '/skills/{id}',    icon: '⚡', desc: 'Delete a skill by ID', needsId: true, fields: [] },
+
+  // Skill Categories
+  { group: 'Skill Categories', label: 'List Categories', method: 'GET',  path: '/skill-categories/', icon: '📂', desc: 'Fetch all skill categories', fields: [] },
+  { group: 'Skill Categories', label: 'Create Category', method: 'POST', path: '/skill-categories/', icon: '📂', desc: 'Create a skill category',
+    fields: [
+      { name:'category_id', label:'Category ID (slug)', type:'text', required:true },
+      { name:'label', label:'Label', type:'text', required:true },
+      { name:'icon', label:'Icon (emoji/text)', type:'text', required:true },
+      { name:'summary', label:'Summary', type:'textarea', required:true },
+      { name:'image', label:'Image URL', type:'text', required:true },
+      { name:'accent', label:'Accent Color', type:'text', required:true },
+      { name:'tint', label:'Tint Color', type:'text', required:true },
+    ]
+  },
+  { group: 'Skill Categories', label: 'Get Category', method: 'GET',    path: '/skill-categories/{id}', icon: '📂', desc: 'Get category with skills', needsId: true, fields: [] },
+
+  // Projects
+  { group: 'Projects', label: 'List Projects', method: 'GET',  path: '/projects/',      icon: '🛠', desc: 'Fetch all projects', fields: [] },
+  { group: 'Projects', label: 'Create Project', method: 'POST', path: '/projects/',     icon: '🛠', desc: 'Create a new project',
+    fields: [
+      { name:'slug', label:'Slug', type:'text', required:true },
+      { name:'title', label:'Title', type:'text', required:true },
+      { name:'summary', label:'Summary', type:'textarea', required:true },
+      { name:'description', label:'Description', type:'textarea', required:true },
+      { name:'backdrop', label:'Backdrop URL', type:'text', required:true },
+      { name:'demo_url', label:'Demo URL', type:'text' },
+      { name:'repo_url', label:'Repo URL', type:'text' },
+      { name:'category', label:'Category', type:'select', options:['WEB','MOBILE','BACKEND','AI','OTHER'], required:true },
+      { name:'tags', label:'Tags (JSON array)', type:'text', placeholder:'["react","python"]' },
+    ]
+  },
+  { group: 'Projects', label: 'Get Project',    method: 'GET',    path: '/projects/{id}',  icon: '🛠', desc: 'Get project by ID', needsId: true, fields: [] },
+  { group: 'Projects', label: 'Update Project', method: 'PUT',    path: '/projects/{id}',  icon: '🛠', desc: 'Update project by ID', needsId: true,
+    fields: [
+      { name:'slug', label:'Slug', type:'text' },
+      { name:'title', label:'Title', type:'text' },
+      { name:'summary', label:'Summary', type:'textarea' },
+      { name:'description', label:'Description', type:'textarea' },
+      { name:'category', label:'Category', type:'select', options:['WEB','MOBILE','BACKEND','AI','OTHER'] },
+    ]
+  },
+  { group: 'Projects', label: 'Delete Project', method: 'DELETE',  path: '/projects/{id}', icon: '🛠', desc: 'Delete project by ID', needsId: true, fields: [] },
+
+  // Achievements
+  { group: 'Achievements', label: 'List Achievements', method: 'GET',  path: '/achievements/',  icon: '🏆', desc: 'Fetch all achievements', fields: [] },
+  { group: 'Achievements', label: 'Create Achievement', method: 'POST', path: '/achievements/', icon: '🏆', desc: 'Create an achievement',
+    fields: [
+      { name:'title', label:'Title', type:'text', required:true },
+      { name:'issuer', label:'Issuer', type:'text', required:true },
+      { name:'year', label:'Year', type:'text', required:true },
+      { name:'summary', label:'Summary', type:'textarea', required:true },
+      { name:'badgeImage', label:'Badge Image URL', type:'text', required:true },
+      { name:'credentialUrl', label:'Credential URL', type:'text' },
+      { name:'category', label:'Category', type:'select', options:['FRONTEND','BACKEND','FULLSTACK','AI','CLOUD','OTHER'] },
+    ]
+  },
+  { group: 'Achievements', label: 'Get Achievement', method: 'GET',    path: '/achievements/{id}', icon: '🏆', desc: 'Get achievement by ID', needsId: true, fields: [] },
+  { group: 'Achievements', label: 'Update Achievement', method: 'PUT', path: '/achievements/{id}', icon: '🏆', desc: 'Update achievement', needsId: true,
+    fields: [
+      { name:'title', label:'Title', type:'text' },
+      { name:'issuer', label:'Issuer', type:'text' },
+      { name:'year', label:'Year', type:'text' },
+      { name:'summary', label:'Summary', type:'textarea' },
+    ]
+  },
+  { group: 'Achievements', label: 'Delete Achievement', method: 'DELETE', path: '/achievements/{id}', icon: '🏆', desc: 'Delete achievement', needsId: true, fields: [] },
+
+  // Experience
+  { group: 'Experience', label: 'List Experience', method: 'GET',  path: '/about/',     icon: '💼', desc: 'Fetch all experience entries', fields: [] },
+  { group: 'Experience', label: 'Create Experience', method: 'POST', path: '/about/',   icon: '💼', desc: 'Create experience entry',
+    fields: [
+      { name:'job_title', label:'Job Title', type:'text', required:true },
+      { name:'company_name', label:'Company Name', type:'text', required:true },
+      { name:'company_url', label:'Company URL', type:'text' },
+      { name:'summary', label:'Summary', type:'textarea', required:true },
+      { name:'start_date', label:'Start Date (YYYY-MM)', type:'text', required:true },
+      { name:'end_date', label:'End Date / Present', type:'text', required:true },
+    ]
+  },
+  { group: 'Experience', label: 'Get Experience', method: 'GET',    path: '/about/{id}', icon: '💼', desc: 'Get experience by ID', needsId: true, fields: [] },
+  { group: 'Experience', label: 'Update Experience', method: 'PUT', path: '/about/{id}', icon: '💼', desc: 'Update experience entry', needsId: true,
+    fields: [
+      { name:'job_title', label:'Job Title', type:'text' },
+      { name:'company_name', label:'Company Name', type:'text' },
+      { name:'summary', label:'Summary', type:'textarea' },
+      { name:'end_date', label:'End Date', type:'text' },
+    ]
+  },
+  { group: 'Experience', label: 'Delete Experience', method: 'DELETE', path: '/about/{id}', icon: '💼', desc: 'Delete experience', needsId: true, fields: [] },
+
+  // Blogs
+  { group: 'Blogs', label: 'List Blogs', method: 'GET',  path: '/blogs/',             icon: '📝', desc: 'Fetch all blog posts', fields: [] },
+  { group: 'Blogs', label: 'Create Blog', method: 'POST', path: '/blogs/',             icon: '📝', desc: 'Create a blog post',
+    fields: [
+      { name:'slug', label:'Slug', type:'text', required:true },
+      { name:'title', label:'Title', type:'text', required:true },
+      { name:'category', label:'Category', type:'text', required:true },
+      { name:'summary', label:'Summary', type:'textarea' },
+      { name:'content', label:'Content (Markdown)', type:'textarea' },
+      { name:'date', label:'Date (YYYY-MM-DD)', type:'text' },
+      { name:'tags', label:'Tags (JSON array)', type:'text', placeholder:'["react","tips"]' },
+    ]
+  },
+  { group: 'Blogs', label: 'Get Blog',    method: 'GET',    path: '/blogs/{id}',       icon: '📝', desc: 'Get blog by ID', needsId: true, fields: [] },
+  { group: 'Blogs', label: 'Update Blog', method: 'PUT',    path: '/blogs/{id}',       icon: '📝', desc: 'Update blog post', needsId: true,
+    fields: [
+      { name:'title', label:'Title', type:'text' },
+      { name:'category', label:'Category', type:'text' },
+      { name:'summary', label:'Summary', type:'textarea' },
+      { name:'content', label:'Content', type:'textarea' },
+    ]
+  },
+  { group: 'Blogs', label: 'Delete Blog', method: 'DELETE',  path: '/blogs/{id}',     icon: '📝', desc: 'Delete blog post', needsId: true, fields: [] },
+
+  // Social Links
+  { group: 'Social Links', label: 'List Links', method: 'GET',  path: '/social-links/',  icon: '🔗', desc: 'Fetch all social links', fields: [] },
+  { group: 'Social Links', label: 'Create Link', method: 'POST', path: '/social-links/', icon: '🔗', desc: 'Create a social link',
+    fields: [
+      { name:'platform', label:'Platform', type:'text', required:true, placeholder:'GitHub' },
+      { name:'url', label:'URL', type:'text', required:true, placeholder:'https://github.com/...' },
+      { name:'icon', label:'Icon', type:'text', placeholder:'github' },
+    ]
+  },
+  { group: 'Social Links', label: 'Get Link',    method: 'GET',    path: '/social-links/{id}',  icon: '🔗', desc: 'Get social link by ID', needsId: true, fields: [] },
+  { group: 'Social Links', label: 'Update Link', method: 'PUT',    path: '/social-links/{id}',  icon: '🔗', desc: 'Update social link', needsId: true,
+    fields: [
+      { name:'platform', label:'Platform', type:'text' },
+      { name:'url', label:'URL', type:'text' },
+      { name:'icon', label:'Icon', type:'text' },
+    ]
+  },
+  { group: 'Social Links', label: 'Delete Link', method: 'DELETE',  path: '/social-links/{id}', icon: '🔗', desc: 'Delete social link', needsId: true, fields: [] },
+  { group: 'Social Links', label: 'Cross-Check',  method: 'POST',   path: '/social-links/{id}/cross-check', icon: '🔗', desc: 'Validate URL accessibility', needsId: true, fields: [] },
+
+  // Products
+  { group: 'Products', label: 'List Products', method: 'GET',  path: '/products/',     icon: '📦', desc: 'Fetch all product profiles', fields: [] },
+  { group: 'Products', label: 'Create Product', method: 'POST', path: '/products/',    icon: '📦', desc: 'Create product profile',
+    fields: [
+      { name:'name', label:'Name', type:'text', required:true },
+      { name:'tagline', label:'Tagline', type:'text', required:true },
+      { name:'image', label:'Image URL', type:'text', required:true },
+      { name:'highlight', label:'Highlight', type:'text', required:true },
+      { name:'cta', label:'CTA Text', type:'text', required:true },
+    ]
+  },
+  { group: 'Products', label: 'Get Product',    method: 'GET',    path: '/products/{id}', icon: '📦', desc: 'Get product by ID', needsId: true, fields: [] },
+  { group: 'Products', label: 'Update Product', method: 'PUT',    path: '/products/{id}', icon: '📦', desc: 'Update product', needsId: true,
+    fields: [
+      { name:'name', label:'Name', type:'text' },
+      { name:'tagline', label:'Tagline', type:'text' },
+      { name:'highlight', label:'Highlight', type:'text' },
+      { name:'cta', label:'CTA Text', type:'text' },
+    ]
+  },
+  { group: 'Products', label: 'Delete Product', method: 'DELETE',  path: '/products/{id}', icon: '📦', desc: 'Delete product', needsId: true, fields: [] },
+];
+
+// ─── State ────────────────────────────────────────────────────────────────────
+let currentEndpoint = null;
+
+// ─── Build Sidebar ────────────────────────────────────────────────────────────
+function buildSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const groups = {};
+  ENDPOINTS.forEach((ep, idx) => {
+    if (!groups[ep.group]) groups[ep.group] = [];
+    groups[ep.group].push({ ep, idx });
+  });
+
+  let html = '';
+  for (const [group, items] of Object.entries(groups)) {
+    html += `<div class="sidebar-group">
+      <div class="sidebar-group-label">${items[0].ep.icon} ${group}</div>`;
+    items.forEach(({ ep, idx }) => {
+      const mc = ep.method === 'DELETE' ? 'DEL' : ep.method;
+      html += `<div class="sidebar-item" id="si-${idx}" onclick="selectEndpoint(${idx})">
+        <span class="sidebar-icon">${ep.icon}</span>
+        <span>${ep.label}</span>
+        <span class="method-badge ${mc}">${mc}</span>
+      </div>`;
+    });
+    html += '</div>';
+  }
+  sidebar.innerHTML = html;
+}
+
+// ─── Select Endpoint ──────────────────────────────────────────────────────────
+function selectEndpoint(idx) {
+  document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+  document.getElementById(`si-${idx}`).classList.add('active');
+
+  currentEndpoint = ENDPOINTS[idx];
+  const ep = currentEndpoint;
+
+  // Update header
+  document.getElementById('epTitle').innerHTML =
+    `<span class="method-badge ${ep.method === 'DELETE' ? 'DEL' : ep.method}">${ep.method}</span>${ep.label}`;
+  document.getElementById('epDesc').textContent = ep.desc;
+
+  // Method + URL
+  document.getElementById('methodSelect').value = ep.method;
+  document.getElementById('urlInput').value = ep.path.replace('{id}', '');
+
+  // Clear response
+  document.getElementById('emptyState').style.display = 'flex';
+  document.getElementById('responseContent').style.display = 'none';
+
+  // Build form fields
+  buildFormFields(ep.fields || []);
+
+  // Show/hide path params
+  document.getElementById('pathId').value = '';
+
+  // Pre-fill JSON body with field structure
+  if (ep.fields && ep.fields.length > 0 && ['POST','PUT'].includes(ep.method)) {
+    const template = {};
+    ep.fields.forEach(f => {
+      if (f.name === 'tags') template[f.name] = [];
+      else if (f.type === 'number') template[f.name] = null;
+      else template[f.name] = '';
+    });
+    document.getElementById('bodyEditor').value = JSON.stringify(template, null, 2);
+  } else {
+    document.getElementById('bodyEditor').value = '';
+  }
+}
+
+function buildFormFields(fields) {
+  const container = document.getElementById('formFields');
+  if (!fields.length) {
+    container.innerHTML = '<p style="color:var(--text3);font-size:13px;grid-column:1/-1;">No fields for this endpoint.</p>';
+    return;
+  }
+  container.innerHTML = fields.map(f => {
+    const full = (f.type === 'textarea') ? ' full' : '';
+    const req = f.required ? '<span class="required">*</span>' : '';
+    let input = '';
+    if (f.type === 'select') {
+      const opts = f.options.map(o => `<option value="${o}">${o}</option>`).join('');
+      input = `<select class="form-select" id="ff_${f.name}">${opts}</select>`;
+    } else if (f.type === 'textarea') {
+      input = `<textarea class="form-textarea" id="ff_${f.name}" placeholder="${f.placeholder||''}" oninput="syncFormToBody()"></textarea>`;
+    } else {
+      input = `<input class="form-input" type="${f.type||'text'}" id="ff_${f.name}" placeholder="${f.placeholder||''}" oninput="syncFormToBody()" />`;
+    }
+    return `<div class="form-group${full}">
+      <label class="form-label">${f.label} ${req}</label>
+      ${input}
+    </div>`;
+  }).join('');
+}
+
+function syncFormToBody() {
+  if (!currentEndpoint) return;
+  const fields = currentEndpoint.fields || [];
+  const obj = {};
+  fields.forEach(f => {
+    const el = document.getElementById(`ff_${f.name}`);
+    if (!el) return;
+    let val = el.value;
+    if (f.name === 'tags') {
+      try { val = JSON.parse(val || '[]'); } catch { val = []; }
+    } else if (f.type === 'number') {
+      val = val === '' ? null : Number(val);
+    }
+    if (val !== '' && val !== null) obj[f.name] = val;
+  });
+  document.getElementById('bodyEditor').value = JSON.stringify(obj, null, 2);
+}
+
+// ─── Tab switching ────────────────────────────────────────────────────────────
+function switchTab(name, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(`tab-${name}`).classList.add('active');
+}
+
+// ─── Send Request ─────────────────────────────────────────────────────────────
+async function sendRequest() {
+  const baseUrl = document.getElementById('baseUrl').value.replace(/\/$/, '');
+  const method  = document.getElementById('methodSelect').value;
+  const rawPath = document.getElementById('urlInput').value;
+  const pathId  = document.getElementById('pathId').value;
+  const authHdr = document.getElementById('headerAuth').value;
+
+  let path = rawPath;
+  if (pathId && path.includes('{id}')) path = path.replace('{id}', pathId);
+  else if (pathId) path = path.replace(/\/$/, '') + '/' + pathId;
+
+  const url = baseUrl + path;
+
+  const headers = { 'Content-Type': 'application/json' };
+  if (authHdr) headers['Authorization'] = authHdr;
+
+  let body = undefined;
+  if (['POST','PUT','PATCH'].includes(method)) {
+    const rawBody = document.getElementById('bodyEditor').value.trim();
+    if (rawBody) {
+      try { body = rawBody; } catch { showToast('⚠️ Invalid JSON in body'); return; }
+    }
+  }
+
+  // Loading state
+  const btn = document.getElementById('sendBtn');
+  btn.classList.add('loading');
+  document.getElementById('sendBtnText').innerHTML = '<div class="spinner"></div> Sending…';
+  document.getElementById('statusBadge').textContent = '● LOADING';
+  document.getElementById('statusBadge').style.color = 'var(--yellow)';
+
+  const t0 = Date.now();
+  try {
+    const resp = await fetch(url, { method, headers, body });
+    const elapsed = Date.now() - t0;
+
+    let text = await resp.text();
+    let pretty = text;
+    try { pretty = JSON.stringify(JSON.parse(text), null, 2); } catch {}
+
+    showResponse(resp.status, elapsed, pretty);
+    document.getElementById('statusBadge').textContent = '● ONLINE';
+    document.getElementById('statusBadge').style.color = 'var(--green)';
+  } catch (err) {
+    showResponse(0, Date.now() - t0, `Network Error:\n${err.message}`);
+    document.getElementById('statusBadge').textContent = '● ERROR';
+    document.getElementById('statusBadge').style.color = 'var(--red)';
+  } finally {
+    btn.classList.remove('loading');
+    document.getElementById('sendBtnText').textContent = '▶ Send';
+  }
+}
+
+function showResponse(status, ms, body) {
+  document.getElementById('emptyState').style.display = 'none';
+  document.getElementById('responseContent').style.display = 'block';
+
+  const chip = document.getElementById('statusChip');
+  const isOk = status >= 200 && status < 300;
+  const isErr = status >= 400 || status === 0;
+  chip.className = 'status-chip ' + (isOk ? 'status-ok' : isErr ? 'status-err' : 'status-warn');
+  chip.innerHTML = `<span>${isOk ? '✓' : '✗'}</span> ${status || 'ERR'} ${statusText(status)}`;
+  document.getElementById('timeChip').textContent = `${ms}ms`;
+
+  const el = document.getElementById('responseBody');
+  el.innerHTML = syntaxHighlight(body);
+}
+
+function statusText(s) {
+  const map = {200:'OK',201:'Created',204:'No Content',400:'Bad Request',401:'Unauthorized',403:'Forbidden',404:'Not Found',422:'Unprocessable Entity',500:'Internal Server Error'};
+  return map[s] || '';
+}
+
+function syntaxHighlight(json) {
+  if (!json.startsWith('{') && !json.startsWith('[')) return escHtml(json);
+  return escHtml(json).replace(
+    /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+    match => {
+      let cls = 'json-num';
+      if (/^"/.test(match)) cls = /:$/.test(match) ? 'json-key' : 'json-str';
+      else if (/true|false/.test(match)) cls = 'json-bool';
+      else if (/null/.test(match)) cls = 'json-null';
+      return `<span class="${cls}">${match}</span>`;
+    }
+  );
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function copyResponse() {
+  const text = document.getElementById('responseBody').textContent;
+  navigator.clipboard.writeText(text).then(() => showToast('✅ Copied to clipboard'));
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ─── Enter key on URL ─────────────────────────────────────────────────────────
+document.getElementById('urlInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') sendRequest();
+});
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+buildSidebar();
+selectEndpoint(0);
+</script>
+</body>
+</html>
