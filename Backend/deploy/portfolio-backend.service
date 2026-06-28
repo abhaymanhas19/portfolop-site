@@ -1,0 +1,41 @@
+[Unit]
+# systemd service that runs the FastAPI app with uvicorn (no Docker).
+# Install to: /etc/systemd/system/portfolio-backend.service
+Description=Portfolio FastAPI Backend
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=exec
+
+# Runs as your VM user.
+User=abhayramgarhia19
+Group=abhayramgarhia19
+
+# Absolute path to the Backend directory checked out on the VM.
+WorkingDirectory=/home/abhayramgarhia19/portfolop-site/Backend
+
+# No .env on disk. Secrets are pulled from GCP Secret Manager at start by
+# run-with-secrets.sh, using the VM's attached service account. The secret name:
+Environment=SECRET_NAME=portfolio-backend-env
+
+# run-with-secrets.sh loads the secrets into the env, then execs the venv binary.
+# Used for both the migration step and uvicorn so both get DATABASE_URL etc.
+ExecStartPre=/home/abhayramgarhia19/portfolop-site/Backend/deploy/run-with-secrets.sh \
+    /home/abhayramgarhia19/portfolop-site/Backend/.venv/bin/alembic upgrade head
+ExecStart=/home/abhayramgarhia19/portfolop-site/Backend/deploy/run-with-secrets.sh \
+    /home/abhayramgarhia19/portfolop-site/Backend/.venv/bin/uvicorn app.main:app \
+    --host 127.0.0.1 --port 8000 --workers 4 --proxy-headers \
+    --forwarded-allow-ips '127.0.0.1'
+
+# Restart on crash; give workers time to boot.
+Restart=on-failure
+RestartSec=5
+TimeoutStartSec=120
+
+# --- Hardening ---
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
