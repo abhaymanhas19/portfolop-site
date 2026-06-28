@@ -14,7 +14,7 @@
 #
 set -euo pipefail
 
-SECRET_NAME="${SECRET_NAME:-portfolio-backend-env}"
+SECRET_NAME="${SECRET_NAME:-mysitesecret-env}"
 GCLOUD="$(command -v gcloud || echo /usr/bin/gcloud)"
 
 # Fetch the latest secret version and export every variable into the process
