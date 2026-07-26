@@ -1,1 +1,1 @@
-# Portfolio site for showcase My skills [www.abhaymanhas.me]
+# My Portfolio site [www.abhaymanhas.me]
